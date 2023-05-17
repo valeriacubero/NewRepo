@@ -1,8 +1,11 @@
-﻿namespace ProyectoLenguajes.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace ProyectoLenguajes.Models;
+
+public partial class GENDER
 {
-    public class Gender
-    {
-        public int idGender;
-        public string typeG;
-    }
+    public int idGender { get; set; }
+
+    public string typeG { get; set; } = null!;
 }

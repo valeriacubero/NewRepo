@@ -1,14 +1,23 @@
-﻿namespace ProyectoLenguajes.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace ProyectoLenguajes.Models;
+
+public partial class AUDIT
 {
-    public class Audit
-    {
-        public int idAudit;
-        public string action;
-        public DateTime date;
-        public string tableName;
-        public string nameOf;
-        public int idOf;
-        public string description;
-        public int idUser;
-    }
+    public int idAudit { get; set; }
+
+    public string action { get; set; } = null!;
+
+    public DateTime? date { get; set; }
+
+    public string tableName { get; set; } = null!;
+
+    public string nameOf { get; set; } = null!;
+
+    public int idOf { get; set; }
+
+    public string? description { get; set; }
+
+    public int idUser { get; set; }
 }

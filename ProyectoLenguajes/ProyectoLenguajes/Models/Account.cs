@@ -1,14 +1,19 @@
-﻿namespace ProyectoLenguajes.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace ProyectoLenguajes.Models;
+
+public partial class ACCOUNT
 {
-    public class Account
-    {
-        public int idAccount;
-        public string name;
-        public string lastname;
-        public DateOnly birth;
-        public string email;
-        public string role;
-        public string userName;
-        public string password;
-    }
+    public int idAccount { get; set; }
+
+    public string name { get; set; } = null!;
+
+    public string email { get; set; } = null!;
+
+    public string? roll { get; set; }
+
+    public string userName { get; set; } = null!;
+
+    public string password { get; set; } = null!;
 }

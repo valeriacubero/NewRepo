@@ -1,10 +1,15 @@
-﻿namespace ProyectoLenguajes.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace ProyectoLenguajes.Models;
+
+public partial class ACTOR
 {
-    public class Actor
-    {
-        public int idAactor;
-        public string name;
-        public string lastName;
-        public DateOnly birth;
-    }
+    public int idActor { get; set; }
+
+    public string name { get; set; } = null!;
+
+    public string lastName { get; set; } = null!;
+
+    public DateTime birth { get; set; }
 }

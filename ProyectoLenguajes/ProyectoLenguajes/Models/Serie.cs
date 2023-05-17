@@ -1,14 +1,25 @@
-﻿namespace ProyectoLenguajes.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace ProyectoLenguajes.Models;
+
+public partial class SERIE
 {
-    public class Serie
-    {
-        public int idSerie;
-        public string name;
-        public int seasons;
-        public DateOnly year;
-        public string distributor;
-        public string awards;
-        public string img;
-        public string description;
-    }
+    public int idSerie { get; set; }
+
+    public string name { get; set; } = null!;
+
+    public int seasons { get; set; }
+
+    public DateTime year { get; set; }
+
+    public string director { get; set; } = null!;
+
+    public string? distributor { get; set; }
+
+    public string img { get; set; } = null!;
+
+    public string? description { get; set; }
+
+    public virtual ICollection<CHAPTER> CHAPTERs { get; set; } = new List<CHAPTER>();
 }
