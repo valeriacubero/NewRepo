@@ -1,7 +1,7 @@
-CREATE DATABASE Lenguajes_Proyecto_VJE
+--CREATE DATABASE Lenguajes_Proyecto_VJE
 
-USE Lenguajes_Proyecto_VJE
-GO
+--USE Lenguajes_Proyecto_VJE
+--GO
 
 ---------------------------------------------------
 -------------------TABLES--------------------------
@@ -11,11 +11,9 @@ GO
 CREATE TABLE ACCOUNT
 (
  idAccount INT IDENTITY(1000,1) NOT NULL PRIMARY KEY, 
- name VARCHAR(20) NOT NULL,
- lastName VARCHAR(20) NOT NULL,
- birth DATE NOT NULL,
- email VARCHAR(30) NOT NULL,
- roll VARCHAR(10) DEFAULT 'User',
+ name VARCHAR(70) NOT NULL,
+ email VARCHAR(50) NOT NULL,
+ roll VARCHAR(10) DEFAULT 'user',
  userName VARCHAR(20) NOT NULL,
  password VARCHAR(20) NOT NULL
 )
@@ -25,10 +23,10 @@ CREATE TABLE MOVIE
 (
  idMovie INT IDENTITY(2000,1) NOT NULL PRIMARY KEY, 
  name VARCHAR(50) NOT NULL,
- duration VARCHAR(20) NOT NULL,
+ duration VARCHAR(30) NOT NULL,
  year DATE NOT NULL,
- distributor VARCHAR(35) NULL,
- awards VARCHAR(10) NULL,
+ director VARCHAR(50) NOT NULL,
+ distributor VARCHAR(50) NULL,
  img VARCHAR(100) NOT NULL,
  description VARCHAR(2000) NULL
 )
@@ -40,8 +38,8 @@ CREATE TABLE SERIE
  name VARCHAR(50) NOT NULL,
  seasons INT NOT NULL,
  year DATE NOT NULL,
- distributor VARCHAR(35) NULL,
- awards VARCHAR(10) NULL,
+ director VARCHAR(50) NOT NULL,
+ distributor VARCHAR(50) NULL,
  img VARCHAR(100) NOT NULL,
  description VARCHAR(2000) NULL
 )
@@ -52,7 +50,7 @@ CREATE TABLE CHAPTER
  idChapter INT IDENTITY(4000,1) NOT NULL PRIMARY KEY,
  numChapter INT NOT NULL,
  name VARCHAR(50) NOT NULL,
- duration VARCHAR(20) NOT NULL,
+ duration VARCHAR(30) NOT NULL,
  season INT NOT NULL,
  idSerie INT NOT NULL,
  img VARCHAR(100) NOT NULL,
@@ -71,8 +69,8 @@ CREATE TABLE GENDER
 CREATE TABLE ACTOR
 (
  idActor INT IDENTITY(6000,1) NOT NULL PRIMARY KEY, 
- name VARCHAR(20) NOT NULL,
- lastName VARCHAR(20) NOT NULL,
+ name VARCHAR(50) NOT NULL,
+ lastName VARCHAR(50) NOT NULL,
  birth DATE NOT NULL
 )
 
@@ -98,7 +96,7 @@ CREATE TABLE UserMovie
 (--ESTA TABLA SE LLENA CUANDO EL USER CIERRA LA PESTAÑA DE VER PELICULA Y DEJÓ SU RESEÑA Y VALORACIÓN
  idUser INT NOT NULL,
  idMovie INT NOT NULL,
- times DATETIME DEFAULT GETDATE(),
+ times DATETIME DEFAULT GETDATE(),--Hora en que puso su reseña
  stars INT NOT NULL CHECK (stars >= 0 AND stars <= 5),
  review VARCHAR(8000) NULL,
  CONSTRAINT fk_idUserM FOREIGN KEY (idUser) REFERENCES ACCOUNT (idAccount) ON DELETE CASCADE,
@@ -110,7 +108,7 @@ CREATE TABLE UserChapter
 (--ESTA TABLA SE LLENA CUANDO EL USER CIERRA LA PESTAÑA DE VER CAPITULO Y DEJÓ SU RESEÑA Y VALORACIÓN
  idUser INT NOT NULL,
  idChapter INT NOT NULL,
- times DATETIME DEFAULT GETDATE(),
+ times DATETIME DEFAULT GETDATE(),--Hora en que puso su reseña
  stars INT NOT NULL CHECK (stars >= 0 AND stars <= 5),
  review VARCHAR(8000) NULL,
  CONSTRAINT fk_idUserC FOREIGN KEY (idUser) REFERENCES ACCOUNT (idAccount) ON DELETE CASCADE,
@@ -152,3 +150,20 @@ CREATE TABLE ActorSerie
  CONSTRAINT fk_idActorS FOREIGN KEY (idActor) REFERENCES ACTOR (idActor) ON DELETE CASCADE,
  CONSTRAINT fk_idSerieA FOREIGN KEY (idSerie) REFERENCES SERIE (idSerie) ON DELETE CASCADE
 )
+
+------------------------------------------------------------------------
+-----------------------------DROP TABLES--------------------------------
+------------------------------------------------------------------------
+--DROP TABLE ActorSerie
+--DROP TABLE ActorMovie
+--DROP TABLE GenderSerie
+--DROP TABLE GenderMovie
+--DROP TABLE UserChapter
+--DROP TABLE UserMovie
+--DROP TABLE AUDIT
+--DROP TABLE ACTOR
+--DROP TABLE GENDER
+--DROP TABLE CHAPTER
+--DROP TABLE SERIE
+--DROP TABLE MOVIE
+--DROP TABLE ACCOUNT
