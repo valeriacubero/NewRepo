@@ -421,9 +421,9 @@ EXEC InsertMovie --MOVIE, ACTOR, ActorMovie, GenderMovie, AUDIT
 --4.
 DECLARE @actors ActorList;
 INSERT INTO @actors (nameT, lastNameT, birthT)
-VALUES ('Tom', 'Hanks', '1956-07-09'), 
-       ('Laurie', 'Metcalf', '1995-06-16'), 
-	   ('Donald', 'Reignoux', '1982-05-20');
+VALUES ('Owen', 'Wilson', '1968-11-18'), 
+       ('Paul', 'Newman', '1925-01-26'), 
+	   ('Bonnie', 'Hunt', '1961-07-22');
 	   
 DECLARE @genders GenderList;
 INSERT INTO @genders (typeG)
@@ -431,12 +431,265 @@ VALUES ('Animated'), ('Comedy');
 
 EXEC InsertMovie --MOVIE, ACTOR, ActorMovie, GenderMovie, AUDIT
 	1001,
-	'Toy Story',
-	'1h 21m',
-	'1995-11-22',
+	'Cars',
+	'1h 57m',
+	'2006-05-09',
 	'John Lasseter',
 	'Walt Disney Studios',
-	'yyy',
-	'A cowboy doll is profoundly threatened and jealous when a new spaceman action figure supplants him as top toy in a boy''s bedroom.',
+	'yyyy',
+	'On the way to the biggest race of his life, a hotshot rookie race car gets stranded in a rundown town, and learns that winning isn''t everything in life.',
+	@actors, --Actors List
+	@genders --Gender List
+
+--5.
+DECLARE @actors ActorList;
+INSERT INTO @actors (nameT, lastNameT, birthT)
+VALUES ('Neil Patrick', 'Harris', '1973-06-15'), 
+       ('Jayma', 'Mays', '1979-07-16'), 
+	   ('Katy', 'Perry', '1984-10-25');
+	   
+DECLARE @genders GenderList;
+INSERT INTO @genders (typeG)
+VALUES ('Animated'), ('Comedy');
+
+EXEC InsertMovie --MOVIE, ACTOR, ActorMovie, GenderMovie, AUDIT
+	1001,
+	'The Smurfs',
+	'1h 43m',
+	'2011-08-05',
+	'Raja Gosnell',
+	'Columbia Pictures',
+	'yyyyy',
+	'When the evil wizard Gargamel chases the tiny blue Smurfs out of their village, they tumble from their magical world into New York City.',
+	@actors, --Actors List
+	@genders --Gender List
+
+--6.
+DECLARE @actors ActorList;
+INSERT INTO @actors (nameT, lastNameT, birthT)
+VALUES ('Ben', 'Burtt', '1948-07-12'), 
+       ('Andrew', 'Stanton', '1965-12-03'), 
+	   ('Elissa', 'Knight', '1975-04-15');
+	   
+DECLARE @genders GenderList;
+INSERT INTO @genders (typeG)
+VALUES ('Animated');
+
+EXEC InsertMovie --MOVIE, ACTOR, ActorMovie, GenderMovie, AUDIT
+	1001,
+	'Wall-e',
+	'1h 38m',
+	'2008-06-27',
+	'Andrew Stanton',
+	'Walt Disney Studios',
+	'yyyyyy',
+	'In the distant future, a small waste-collecting robot inadvertently embarks on a space journey that will ultimately decide the fate of mankind.',
+	@actors, --Actors List
+	@genders --Gender List
+
+--7.
+DECLARE @actors ActorList;
+INSERT INTO @actors (nameT, lastNameT, birthT)
+VALUES ('Stephen', 'Hillenburg', '1961-08-21'), 
+       ('Tom', 'Kenny', '1962-07-13'), 
+	   ('Bill', 'Fagerbakke', '1957-10-04');
+	   
+DECLARE @genders GenderList;
+INSERT INTO @genders (typeG)
+VALUES ('Animated');
+
+EXEC InsertMovie --MOVIE, ACTOR, ActorMovie, GenderMovie, AUDIT
+	1001,
+	'The SpongeBob SquarePants Movie',
+	'1h 38m',
+	'2004-11-19',
+	'Stephen Hillenburg',
+	'Paramount Pictures',
+	'yyyyyyy',
+	'SpongeBob SquarePants takes leave from the town of Bikini Bottom in order to track down King Neptune''s stolen crown.',
+	@actors, --Actors List
+	@genders --Gender List
+
+--8.
+DECLARE @actors ActorList;
+INSERT INTO @actors (nameT, lastNameT, birthT)
+VALUES ('Bill', 'Hader', '1978-06-07'), 
+       ('Anna', 'Faris', '1976-11-29'), 
+	   ('Neil Patrick', 'Harris', '1973-06-15');
+	   
+DECLARE @genders GenderList;
+INSERT INTO @genders (typeG)
+VALUES ('Animated');
+
+EXEC InsertMovie --MOVIE, ACTOR, ActorMovie, GenderMovie, AUDIT
+	1001,
+	'Cloudy with a Chance of Meatballs',
+	'1h 30m',
+	'2009-09-18',
+	'Phil Lord',
+	'Sony Pictures',
+	'yyyyyyyy',
+	'A local scientist is often regarded as a failure until he invents a machine that can make food fall from the sky. But little does he know that things are about to take a turn for the worst.',
+	@actors, --Actors List
+	@genders --Gender List
+
+--9.
+DECLARE @actors ActorList;
+INSERT INTO @actors (nameT, lastNameT, birthT)
+VALUES ('Jonah', 'Hill', '1983-12-20'), 
+       ('Jay', 'Baruchel', '1982-04-09'), 
+	   ('Gerard', 'Butler', '1969-11-13');
+	   
+DECLARE @genders GenderList;
+INSERT INTO @genders (typeG)
+VALUES ('Animated'), ('Action');
+
+EXEC InsertMovie --MOVIE, ACTOR, ActorMovie, GenderMovie, AUDIT
+	1001,
+	'How to Train Your Dragon',
+	'1h 38m',
+	'2010-03-21',
+	'Dean DeBlois',
+	'Paramount Pictures',
+	'yyyyyyyyy',
+	'A hapless young Viking who aspires to hunt dragons becomes the unlikely friend of a young dragon himself, and learns there may be more to the creatures than he assumed.',
+	@actors, --Actors List
+	@genders --Gender List
+
+--10.
+DECLARE @actors ActorList;
+INSERT INTO @actors (nameT, lastNameT, birthT)
+VALUES ('Jack', 'Black', '1969-08-28'), 
+       ('Jackie', 'Chan', '1954-04-07'), 
+	   ('James', 'Hong', '1929-02-22');
+	   
+DECLARE @genders GenderList;
+INSERT INTO @genders (typeG)
+VALUES ('Animated'), ('Action');
+
+EXEC InsertMovie --MOVIE, ACTOR, ActorMovie, GenderMovie, AUDIT
+	1001,
+	'Kung Fu Panda',
+	'1h 32m',
+	'2008-07-06',
+	'Jack Black',
+	'Paramount Pictures',
+	'yyyyyyyyyy',
+	'To everyone''s surprise, including his own, Po, an overweight, clumsy panda, is chosen as protector of the Valley of Peace. His suitability will soon be tested as the valley''s arch-enemy is on his way.',
+	@actors, --Actors List
+	@genders --Gender List
+
+--11.
+DECLARE @actors ActorList;
+INSERT INTO @actors (nameT, lastNameT, birthT)
+VALUES ('Pete', 'Docter', '1968-10-09'), 
+       ('Ed', 'Asner', '1929-11-15'), 
+	   ('Bob', 'Peterson', '1961-01-18');
+	   
+DECLARE @genders GenderList;
+INSERT INTO @genders (typeG)
+VALUES ('Animated'), ('Action');
+
+EXEC InsertMovie --MOVIE, ACTOR, ActorMovie, GenderMovie, AUDIT
+	1001,
+	'Up',
+	'1h 36m',
+	'2009-05-29',
+	'Pete Docter',
+	'Walt Disney Pictures',
+	'yyyyyyyyyyy',
+	'78-year-old Carl Fredricksen travels to Paradise Falls in his house equipped with balloons, inadvertently taking a young stowaway.',
+	@actors, --Actors List
+	@genders --Gender List
+
+--12.
+DECLARE @actors ActorList;
+INSERT INTO @actors (nameT, lastNameT, birthT)
+VALUES ('Bill', 'Hader', '1978-06-07'), 
+       ('Mindy', 'Kaling', '1979-06-24'), 
+	   ('Amy', 'Poehler', '1971-09-16');
+	   
+DECLARE @genders GenderList;
+INSERT INTO @genders (typeG)
+VALUES ('Animated'), ('Action');
+
+EXEC InsertMovie --MOVIE, ACTOR, ActorMovie, GenderMovie, AUDIT
+	1001,
+	'Inside Out',
+	'1h 35m',
+	'2015-06-19',
+	'Pete Docter',
+	'Walt Disney Pictures',
+	'yyyyyyyyyyyy',
+	'After young Riley is uprooted from her Midwest life and moved to San Francisco, her emotions - Joy, Fear, Anger, Disgust and Sadness - conflict on how best to navigate a new city, house, and school.',
+	@actors, --Actors List
+	@genders --Gender List
+
+--13.
+DECLARE @actors ActorList;
+INSERT INTO @actors (nameT, lastNameT, birthT)
+VALUES ('Dakota', 'Fanning', '1994-02-23'), 
+       ('Jennifer', 'Saunders', '1958-07-06'), 
+	   ('Teri', 'Hatcher', '1964-12-08');
+	   
+DECLARE @genders GenderList;
+INSERT INTO @genders (typeG)
+VALUES ('Animated'), ('Drama');
+
+EXEC InsertMovie --MOVIE, ACTOR, ActorMovie, GenderMovie, AUDIT
+	1001,
+	'Coraline',
+	'1h 40m',
+	'2009-02-06',
+	'Henry Selick',
+	'Focus Features',
+	'yyyyyyyyyyyyy',
+	'An adventurous 11-year-old girl finds another world that is a strangely idealized version of her frustrating home, but it has sinister secrets.',
+	@actors, --Actors List
+	@genders --Gender List
+
+--14.
+DECLARE @actors ActorList;
+INSERT INTO @actors (nameT, lastNameT, birthT)
+VALUES ('Joaquin', 'Phoenix', '1974-10-28'), 
+       ('Jeremy', 'Suarez', '1990-07-06'), 
+	   ('Rick', 'Moranis', '1953-04-18');
+	   
+DECLARE @genders GenderList;
+INSERT INTO @genders (typeG)
+VALUES ('Animated'), ('Drama'), ('Comedy');
+
+EXEC InsertMovie --MOVIE, ACTOR, ActorMovie, GenderMovie, AUDIT
+	1001,
+	'Brother Bear',
+	'1h 25m',
+	'2003-10-20',
+	'Aaron Blaise',
+	'Buena Vista Pictures',
+	'yyyyyyyyyyyyyy',
+	'When a young Inuit hunter needlessly kills a bear, he is magically changed into a bear himself as punishment with a talkative cub being his only guide to changing back.',
+	@actors, --Actors List
+	@genders --Gender List
+
+--15.
+DECLARE @actors ActorList;
+INSERT INTO @actors (nameT, lastNameT, birthT)
+VALUES ('Pete', 'Docter', '1968-10-09'), 
+       ('Bonnie', 'Hunt', '1961-07-22'), 
+	   ('Bob', 'Peterson', '1961-01-18');
+	   
+DECLARE @genders GenderList;
+INSERT INTO @genders (typeG)
+VALUES ('Animated'), ('Comedy');
+
+EXEC InsertMovie --MOVIE, ACTOR, ActorMovie, GenderMovie, AUDIT
+	1001,
+	'Monsters, Inc.',
+	'1h 32m',
+	'2001-11-02',
+	'Pete Docter',
+	'Walt Disney Pictures',
+	'yyyyyyyyyyyyyyy',
+	'In order to power the city, monsters have to scare children so that they scream. However, the children are toxic to the monsters, and after a child gets through, two monsters realize things may not be what they think.',
 	@actors, --Actors List
 	@genders --Gender List
