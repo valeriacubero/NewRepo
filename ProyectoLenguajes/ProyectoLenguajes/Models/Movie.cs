@@ -15,9 +15,11 @@ public partial class MOVIE
 
     public string director { get; set; } = null!;
 
-    public string? distributor { get; set; }
+    public string distributor { get; set; }
 
-    public string img { get; set; } = null!;
+    public string img { get; set; }
 
-    public string? description { get; set; }
+    public string description { get; set; }
+
+    public string trailer { get; set; }
 }

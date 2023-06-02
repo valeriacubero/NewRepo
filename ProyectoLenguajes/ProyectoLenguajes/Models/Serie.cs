@@ -17,7 +17,7 @@ public partial class SERIE
 
     public string? distributor { get; set; }
 
-    public string img { get; set; } = null!;
+    public string? img { get; set; }
 
     public string? description { get; set; }
 

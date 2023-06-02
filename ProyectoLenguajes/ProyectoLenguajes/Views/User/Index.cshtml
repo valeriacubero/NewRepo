@@ -1,0 +1,348 @@
+﻿
+@using ProyectoLenguajes.Data;
+@using Microsoft.AspNetCore.Mvc;
+@using Microsoft.EntityFrameworkCore;
+
+@{
+    ViewData["Title"] = "Index";
+    TestUCRContext db = new TestUCRContext();
+}
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/user.css">
+
+    <title>App</title>
+
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.3.11/slick.css" />
+    <link rel="stylesheet" type="text/css" href="slick/slick.css" />
+    <link rel="stylesheet" type="text/css" href="slick/slick-theme.css" />
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h2 class="title">Hello!</h2>
+                <a href="Index" class="active">Home</a>
+                <a href="#">Profile</a>
+                <a href="#">Search</a>
+                <a href="#">My List</a>
+                <a href="#">Log Out</a>
+        </div>
+        <hr />
+    </header>
+    <br />
+    <main>
+        <!--MOVIES-->
+        <!--comedy-->
+        <div class="box-wrap">
+        <section class="container">
+            <h1 class="subtitle">Comedy Movies</h1>
+            <div class="slider">
+                
+                @{
+                    var comedyMoviesList = new List<MOVIE>();
+                    comedyMoviesList = db.MOVIEs.FromSqlRaw(@"EXEC GetComedyMovies").ToList();
+                }
+                @foreach (var item in comedyMoviesList)
+                {
+
+                    <div class="card">
+                        <div class="cardContent">
+                            <div class="image">
+                                <img src="@item.img">
+                            </div>
+                            <div class="infoMovie">
+                                <h2>@item.name</h2>
+                                <h3>@item.distributor</h3>
+                                <h3>@item.duration</h3>
+                                <h3>Director: @item.director</h3>
+                            </div>
+                                <button class="more">
+                                    <a asp-action="MovieDetails"
+                                    asp-route-id="@item.idMovie" style="text-align: center;">
+                                        View More
+                                    </a>
+                                </button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </section>
+
+        <!--animated-->
+        <section class="container">
+            <h1 class="subtitle">Animated Movies</h1>
+            <div class="slider">
+
+                @{
+                    var animatedMoviesList = new List<MOVIE>();
+                    animatedMoviesList = db.MOVIEs.FromSqlRaw(@"EXEC GetAnimatedMovies").ToList();
+                }
+                @foreach (var item in animatedMoviesList)
+                {
+
+                    <div class="card">
+                        <div class="cardContent">
+                            <div class="image">
+                                <img src="@item.img">
+                            </div>
+                            <div class="infoMovie">
+                                <h2>@item.name</h2>
+                                <h3>@item.distributor</h3>
+                                <h3>@item.duration</h3>
+                                <h3>Director: @item.director</h3>
+                            </div>
+                                <button class="more">
+                                    <a asp-action="MovieDetails"
+                                   asp-route-id="@item.idMovie" style="text-align: center;">
+                                        View More
+                                    </a>
+                                </button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </section>
+
+        <!--SUSPENSE MOVIES-->
+        <!--ROMANCE MOVIES-->
+
+        <!--drama-->
+        <section class="container">
+            <h1 class="subtitle">Drama Movies</h1>
+            <div class="slider">
+
+                @{
+                    var dramaMoviesList = new List<MOVIE>();
+                    dramaMoviesList = db.MOVIEs.FromSqlRaw(@"EXEC GetDramaMovies").ToList();
+                }
+                @foreach (var item in dramaMoviesList)
+                {
+
+                    <div class="card">
+                        <div class="cardContent">
+                            <div class="image">
+                                <img src="@item.img">
+                            </div>
+                            <div class="infoMovie">
+                                <h2>@item.name</h2>
+                                <h3>@item.distributor</h3>
+                                <h3>@item.duration</h3>
+                                <h3>Director: @item.director</h3>
+                            </div>
+                                <button class="more">
+                                    <a asp-action="MovieDetails"
+                                   asp-route-id="@item.idMovie" style="text-align: center;">
+                                        View More
+                                    </a>
+                                </button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </section>
+
+        <!--action-->
+        <section class="container">
+            <h1 class="subtitle">Action Movies</h1>
+            <div class="slider">
+
+                @{
+                    var actionMoviesList = new List<MOVIE>();
+                    actionMoviesList = db.MOVIEs.FromSqlRaw(@"EXEC GetActionMovies").ToList();
+                }
+                @foreach (var item in actionMoviesList)
+                {
+
+                    <div class="card">
+                        <div class="cardContent">
+                            <div class="image">
+                                <img src="@item.img">
+                            </div>
+                            <div class="infoMovie">
+                                <h2>@item.name</h2>
+                                <h3>@item.distributor</h3>
+                                <h3>@item.duration</h3>
+                                <h3>Director: @item.director</h3>
+                            </div>
+                                <button class="more">
+                                    <a asp-action="MovieDetails"
+                                   asp-route-id="@item.idMovie" style="text-align: center;">
+                                        View More
+                                    </a>
+                                </button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </section>
+
+        <!--adventure-->
+        <section class="container">
+            <h1 class="subtitle">Adventure Movies</h1>
+            <div class="slider">
+
+                @{
+                    var adventureMoviesList = new List<MOVIE>();
+                    adventureMoviesList = db.MOVIEs.FromSqlRaw(@"EXEC GetAdventureMovies").ToList();
+                }
+                @foreach (var item in adventureMoviesList)
+                {
+
+                    <div class="card">
+                        <div class="cardContent">
+                            <div class="image">
+                                <img src="@item.img">
+                            </div>
+                            <div class="infoMovie">
+                                <h2>@item.name</h2>
+                                <h3>@item.distributor</h3>
+                                <h3>@item.duration</h3>
+                                <h3>Director: @item.director</h3>
+                            </div>
+                                <button class="more">
+                                    <a asp-action="MovieDetails"
+                                   asp-route-id="@item.idMovie" style="text-align: center;">
+                                        View More
+                                    </a>
+                                </button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </section>
+
+        <!--science fiction-->
+        <section class="container">
+            <h1 class="subtitle">Science Fiction Movies</h1>
+            <div class="slider">
+
+                @{
+                    var scienceMoviesList = new List<MOVIE>();
+                    scienceMoviesList = db.MOVIEs.FromSqlRaw(@"EXEC GetScienceMovies").ToList();
+                }
+                @foreach (var item in scienceMoviesList)
+                {
+
+                    <div class="card">
+                        <div class="cardContent">
+                            <div class="image">
+                                <img src="@item.img">
+                            </div>
+                            <div class="infoMovie">
+                                <h2>@item.name</h2>
+                                <h3>@item.distributor</h3>
+                                <h3>@item.duration</h3>
+                                <h3>Director: @item.director</h3>
+                            </div>
+                                <button class="more">
+                                    <a asp-action="MovieDetails"
+                                   asp-route-id="@item.idMovie" style="text-align: center;">
+                                        View More
+                                    </a>
+                                </button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </section>
+
+        <!--horror-->
+        <section class="container">
+            <h1 class="subtitle">Horror Movies</h1>
+            <div class="slider">
+
+                @{
+                    var horrorMoviesList = new List<MOVIE>();
+                    horrorMoviesList = db.MOVIEs.FromSqlRaw(@"EXEC GetHorrorMovies").ToList();
+                }
+                @foreach (var item in horrorMoviesList)
+                {
+
+                    <div class="card">
+                        <div class="cardContent">
+                            <div class="image">
+                                <img src="@item.img">
+                            </div>
+                            <div class="infoMovie">
+                                <h2>@item.name</h2>
+                                <h3>@item.distributor</h3>
+                                <h3>@item.duration</h3>
+                                <h3>Director: @item.director</h3>
+                            </div>
+                                <button class="more">
+                                    <a asp-action="MovieDetails"
+                                   asp-route-id="@item.idMovie" style="text-align: center;">
+                                        View More
+                                    </a>
+                                </button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </section>
+
+        </div>
+
+        <!--SERIES-->
+
+    </main>
+
+    
+    <!--JS-->
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.3.11/slick.min.js"></script>
+
+    @{
+        var slidernum = 4;
+    }
+    <script type="text/javascript">
+        //RESPONSIVE SLIDER
+        $(document).ready(function () {
+            $('.slider').slick({
+                infinite: true,
+                autoplay: true,
+                arrow: true,
+                slidesToShow: @slidernum,
+                slidesToScroll: 1,
+                adaptiveHeight: true,
+                adaptiveWidth: true,
+                responsive: [
+                    {
+                        breakpoint: 1024,
+                        settings: {
+                            slidesToShow: 3,
+                            slidesToScroll: 3,
+                            infinite: true
+                        }
+                    },
+                    {
+                        breakpoint: 600,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 2
+                        }
+                    },
+                    {
+                        breakpoint: 480,
+                        settings: {
+                            slidesToShow: 1,
+                            slidesToScroll: 1
+                        }
+                    }
+                ]
+            });
+        });
+
+        //RANDOM
+        var random = $("section.container").get().sort(function(){
+            return Math.round(Math.random())-0.5;
+        }).slice(0.4)
+        $(random).appendTo(random[0].parentNode).show();
+    </script>
+
+</body>

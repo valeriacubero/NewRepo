@@ -1,0 +1,86 @@
+﻿@using ProyectoLenguajes.Data;
+@using Microsoft.AspNetCore.Mvc;
+@using Microsoft.EntityFrameworkCore;
+@model ProyectoLenguajes.Models.MOVIE
+
+
+@{
+    ViewData["Title"] = "MovieDetails";
+    var date = DateOnly.FromDateTime(Model.year);
+}
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/user.css">
+
+    <title>Movie Information</title>
+
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.3.11/slick.css" />
+    <link rel="stylesheet" type="text/css" href="slick/slick.css" />
+    <link rel="stylesheet" type="text/css" href="slick/slick-theme.css" />
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h2 class="title">Hello!</h2>
+            <a href="Index">Home</a>
+            <a href="#">Profile</a>
+            <a href="#">Search</a>
+            <a href="#">My List</a>
+            <a href="#">Log Out</a>
+        </div>
+        <hr />
+    </header>
+    
+    <main>
+        <h1 class="subtitle">Movie Details: @Model.name</h1>
+
+        <div class="movieContainer">
+            <iframe class="trailer" src="@Model.trailer" frameborder="1"></iframe>
+            <div class="movieInfo">
+                <h2 class="subtitle">Description</h2>
+                <span>@Model.description</span>
+                <br />
+
+                <h2 class="subtitle">Details</h2>
+                <span>Duration: @Model.duration</span>
+                <br />
+                <span>Director: @Model.director</span>
+                <br />
+                <span>Distributor: @Model.distributor</span>
+                <br />
+                <span>Release date: @date</span>
+                <br />
+
+                <h2 class="subtitle">Rate this movie for 1 to 10</h2>
+                <br />
+                <div class="circularButtons">
+                    <button class="circular" style="background-color: #EC7063">1</button>
+                    <button class="circular" style="background-color: #F5B7B1">2</button>
+                    <button class="circular" style="background-color: #FADBD8">3</button>
+                    <button class="circular" style="background-color: #FCF3CF">4</button>
+                    <button class="circular" style="background-color: #F9E79F">5</button>
+                    <button class="circular" style="background-color: #F9E79F">6</button>
+                    <button class="circular" style="background-color: #FCF3CF">7</button>
+                    <button class="circular" style="background-color: #7DCEA0 ">8</button>
+                    <button class="circular" style="background-color: #52BE80">9</button>
+                    <button class="circular" style="background-color: #27AE60">10</button>
+                </div>
+                
+            </div>
+        </div>
+
+        <div>
+            <button class="moreButton glyphicon glyphicon-heart-empty"><br>Cast</button>
+            <button class="moreButton glyphicon glyphicon-thumbs-up"><br>Reviews</button>
+            <button class="moreButton glyphicon glyphicon-bookmark"><br>Save</button>
+        </div>
+        
+    </main>
+    
+</body>

@@ -224,10 +224,13 @@ public partial class TestUCRContext : DbContext
                 .HasMaxLength(30)
                 .IsUnicode(false);
             entity.Property(e => e.img)
-                .HasMaxLength(100)
+                .HasMaxLength(2000)
                 .IsUnicode(false);
             entity.Property(e => e.name)
                 .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.trailer)
+                .HasMaxLength(5000)
                 .IsUnicode(false);
             entity.Property(e => e.year).HasColumnType("date");
         });
@@ -248,7 +251,7 @@ public partial class TestUCRContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.img)
-                .HasMaxLength(100)
+                .HasMaxLength(2000)
                 .IsUnicode(false);
             entity.Property(e => e.name)
                 .HasMaxLength(50)

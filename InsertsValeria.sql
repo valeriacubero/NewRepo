@@ -693,3 +693,373 @@ EXEC InsertMovie --MOVIE, ACTOR, ActorMovie, GenderMovie, AUDIT
 	'In order to power the city, monsters have to scare children so that they scream. However, the children are toxic to the monsters, and after a child gets through, two monsters realize things may not be what they think.',
 	@actors, --Actors List
 	@genders --Gender List
+
+/*****ACTION*****/
+--1.
+DECLARE @actors ActorList;
+INSERT INTO @actors (nameT, lastNameT, birthT)
+VALUES ('Ana', 'de Armas', '1988-04-30'), 
+       ('Chris', 'Evans', '1981-06-13'), 
+	   ('Lizzie', 'Broadway', '1998-02-16');
+	   
+DECLARE @genders GenderList;
+INSERT INTO @genders (typeG)
+VALUES ('Comedy'), ('Action');
+
+EXEC InsertMovie --MOVIE, ACTOR, ActorMovie, GenderMovie, AUDIT
+	1001,
+	'Ghosted',
+	'1h 56m',
+	'2023-04-21',
+	'Dexter Fletcher',
+	'Apple Studios Skydance',
+	'https://images.thedirect.com/media/photos/ghosted.jpg',
+	'Cole, an easygoing guy, falls head over heels for the emigmatic Sadie, who, to his shock, turns out to be a secret agent. Before a second date can arise, the two must embark on an international adventure to save the world.',
+	@actors, --Actors List
+	@genders --Gender List
+
+--2.
+DECLARE @actors ActorList;
+INSERT INTO @actors (nameT, lastNameT, birthT)
+VALUES ('Zoe', 'Saldaña', '1978-06-19'), 
+       ('Michelle', 'Rodriguez', '1978-07-12'), 
+	   ('Joel', 'Moore', '1977-09-25');
+	   
+DECLARE @genders GenderList;
+INSERT INTO @genders (typeG)
+VALUES ('Action');
+
+EXEC InsertMovie --MOVIE, ACTOR, ActorMovie, GenderMovie, AUDIT
+	1001,
+	'Avatar',
+	'2h 42m',
+	'2009-12-17',
+	'James Cameron',
+	'Twentieth Century Fox',
+	'https://m.media-amazon.com/images/I/71Lvqoov42L.jpg',
+	'A paraplegic marine sent to the moon Pandora on a unique mission is torn between following his orders and protecting the world he calls home.',
+	@actors, --Actors List
+	@genders --Gender List
+
+--3.
+DECLARE @actors ActorList;
+INSERT INTO @actors (nameT, lastNameT, birthT)
+VALUES ('Patrick', 'Wilson', '1973-06-03'), 
+       ('Haile', 'Berry', '1966-08-14'), 
+	   ('John', 'Bradley-West', '1988-09-15');
+	   
+DECLARE @genders GenderList;
+INSERT INTO @genders (typeG)
+VALUES ('Action');
+
+EXEC InsertMovie --MOVIE, ACTOR, ActorMovie, GenderMovie, AUDIT
+	1001,
+	'Moonfall',
+	'2h 10m',
+	'2022-02-03',
+	'Roland Emmerich',
+	'Lionsgate Films',
+	'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcR-XqVXZ0iIsZhUa4OX9qdJBj11wnKMvuzC7aCeP4I2lmM7iPz5',
+	'A mysterious force knocks the Moon out of its orbit around Earth and sends it crashing on a collision course with life as we know it.',
+	@actors, --Actors List
+	@genders --Gender List
+
+--4.
+DECLARE @actors ActorList;
+INSERT INTO @actors (nameT, lastNameT, birthT)
+VALUES ('Dwayne', 'Johnson', '1972-05-02'), 
+       ('Sarah', 'Shahi', '1980-01-10'), 
+	   ('Henry', 'Cavill', '1983-05-05');
+	   
+DECLARE @genders GenderList;
+INSERT INTO @genders (typeG)
+VALUES ('Action'), ('Adventure');
+
+EXEC InsertMovie --MOVIE, ACTOR, ActorMovie, GenderMovie, AUDIT
+	1001,
+	'Black Adam',
+	'2h 05m',
+	'2022-10-21',
+	'Jaume Collet-Serra',
+	'Warner Bros. Pictures',
+	'https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRshWaUPfERijlnKVcPYBM4N37_7s4Fgo-o3g055p_H7kgP_JzS',
+	'Freed from his grave nearly 5,000 years after being imprisoned and receiving his powers from the old gods, Black Adam is now ready to unleash his unique brand of justice on the world.',
+	@actors, --Actors List
+	@genders --Gender List
+
+--5.
+DECLARE @actors ActorList;
+INSERT INTO @actors (nameT, lastNameT, birthT)
+VALUES ('Paul', 'Rudd', '1969-04-06'), 
+       ('Evangeline', 'Lilly', '1979-08-03'), 
+	   ('Michael ', 'Douglas', '1944-09-27');
+	   
+DECLARE @genders GenderList;
+INSERT INTO @genders (typeG)
+VALUES ('Action'), ('Comedy'), ('Science fiction');
+
+EXEC InsertMovie --MOVIE, ACTOR, ActorMovie, GenderMovie, AUDIT
+	1001,
+	'Ant-Man',
+	'1h 58m',
+	'2015-06-29',
+	'Peyton Reed',
+	'Walt Disney Studios',
+	'https://i3.wp.com/raisingwhasians.com/wp-content/uploads/2017/07/Ant-Man-Avengers-movie-poster.jpg',
+	'Armed with a super suit with the amazing ability to reduce the size but increase the strength of its wearer, smart-collar burglar Scott Lang must embrace his inner hero and help his mentor, Dr. Hank Pym, plan and pull off a heist that will save the world.',
+	@actors, --Actors List
+	@genders --Gender List
+
+--6. 
+DECLARE @actors ActorList;
+INSERT INTO @actors (nameT, lastNameT, birthT)
+VALUES ('Chris', 'Evans', '1981-06-13'), 
+       ('Scarlett', 'Johansson', '1984-11-22'), 
+	   ('Jeremy', 'Renner', '1971-01-07');
+	   
+DECLARE @genders GenderList;
+INSERT INTO @genders (typeG)
+VALUES ('Action'), ('Science fiction');
+
+EXEC InsertMovie --MOVIE, ACTOR, ActorMovie, GenderMovie, AUDIT
+	1001,
+	'Avengers',
+	'2h 23m',
+	'2012-04-27',
+	'Joss Whedon',
+	'Walt Disney Studios',
+	'https://image.tmdb.org/t/p/original/qMxAmzGQO722q0UlssCOPhrXmvX.jpg',
+	'Earth''s mightiest heroes must come together and learn to fight as a team if they are going to stop the mischievous Loki and his alien army from enslaving humanity.',
+	@actors, --Actors List
+	@genders --Gender List
+
+--7.
+DECLARE @actors ActorList;
+INSERT INTO @actors (nameT, lastNameT, birthT)
+VALUES ('Jared', 'Leto', '1971-12-26'), 
+       ('Matt', 'Smith', '1982-10-28'), 
+	   ('Adria', 'Arjona', '1992-04-25');
+	   
+DECLARE @genders GenderList;
+INSERT INTO @genders (typeG)
+VALUES ('Action'), ('Adventure'), ('Horror');
+
+EXEC InsertMovie --MOVIE, ACTOR, ActorMovie, GenderMovie, AUDIT
+	1001,
+	'Morbius',
+	'1h 44m',
+	'2022-04-01',
+	'Daniel Espinosa',
+	'Sony Pictures',
+	'https://image.tmdb.org/t/p/original/6JjfSchsU6daXk2AKX8EEBjO3Fm.jpg',
+	'Biochemist Michael Morbius tries to cure himself of a rare blood disease, but he inadvertently infects himself with a form of vampirism instead.',
+	@actors, --Actors List
+	@genders --Gender List
+
+--8.
+DECLARE @actors ActorList;
+INSERT INTO @actors (nameT, lastNameT, birthT)
+VALUES ('Leeza', 'Gibbons', '1957-03-26'), 
+       ('Peter', 'Weller', '1947-06-24'), 
+	   ('Nancy', 'Allen', '1950-06-24');
+	   
+DECLARE @genders GenderList;
+INSERT INTO @genders (typeG)
+VALUES ('Action'), ('Science fiction');
+
+EXEC InsertMovie --MOVIE, ACTOR, ActorMovie, GenderMovie, AUDIT
+	1001,
+	'RoboCop',
+	'1h 42m',
+	'1987-07-17',
+	'Daniel Espinosa',
+	'Orion Pictures',
+	'https://cdn.europosters.eu/image/750/posters/robocop-1987-one-sheet-i16501.jpg',
+	'In a dystopic and crime-ridden Detroit, a terminally wounded cop returns to the force as a powerful cyborg haunted by submerged memories.',
+	@actors, --Actors List
+	@genders --Gender List
+
+--9.
+DECLARE @actors ActorList;
+INSERT INTO @actors (nameT, lastNameT, birthT)
+VALUES ('Keanu', 'Reeves', '1964-09-02'), 
+       ('Carrie-Anne', 'Moss', '1967-08-21'), 
+	   ('Laurence', 'Fishburne', '1961-07-30');
+	   
+DECLARE @genders GenderList;
+INSERT INTO @genders (typeG)
+VALUES ('Action'), ('Science fiction');
+
+EXEC InsertMovie --MOVIE, ACTOR, ActorMovie, GenderMovie, AUDIT
+	1001,
+	'Matrix',
+	'2h 16m',
+	'1999-03-31',
+	'Lana Wachowski',
+	'Warner Bros',
+	'https://m.media-amazon.com/images/I/51unGrb-AAL._AC_.jpg',
+	'When a beautiful stranger leads computer hacker Neo to a forbidding underworld, he discovers the shocking truth--the life he knows is the elaborate deception of an evil cyber-intelligence.',
+	@actors, --Actors List
+	@genders --Gender List
+
+--10.
+DECLARE @actors ActorList;
+INSERT INTO @actors (nameT, lastNameT, birthT)
+VALUES ('Vin', 'Diesel', '1968-07-18'), 
+       ('Paul', 'Walker', '1973-09-12'), 
+	   ('Michelle', 'Rodriguez', '1978-07-12');
+	   
+DECLARE @genders GenderList;
+INSERT INTO @genders (typeG)
+VALUES ('Action');
+
+EXEC InsertMovie --MOVIE, ACTOR, ActorMovie, GenderMovie, AUDIT
+	1001,
+	'The Fast and the Furious',
+	'1h 46m',
+	'2001-06-22',
+	'Rob Cohen',
+	'Universal Pictures',
+	'https://m.media-amazon.com/images/I/51vx0VklkZL.jpg',
+	'Los Angeles police officer Brian O''Conner must decide where his loyalty really lies when he becomes enamored with the street racing world he has been sent undercover to destroy.',
+	@actors, --Actors List
+	@genders --Gender List
+
+--11.
+DECLARE @actors ActorList;
+INSERT INTO @actors (nameT, lastNameT, birthT)
+VALUES ('Hugh', 'Jackman', '1968-10-12'), 
+       ('Dafne', 'Keen', '2005-01-04'), 
+	   ('Boyd', 'Holbrook', '1981-09-01');
+	   
+DECLARE @genders GenderList;
+INSERT INTO @genders (typeG)
+VALUES ('Action'), ('Drama'), ('Science fiction');
+
+EXEC InsertMovie --MOVIE, ACTOR, ActorMovie, GenderMovie, AUDIT
+	1001,
+	'Logan',
+	'2h 17m',
+	'2017-03-03',
+	'James Mangold',
+	'20th Century Studios',
+	'https://m.media-amazon.com/images/I/71HCwLMPJVL.jpg',
+	'In a future where mutants are nearly extinct, an elderly and weary Logan leads a quiet life. But when Laura, a mutant child pursued by scientists, comes to him for help, he must get her to safety.',
+	@actors, --Actors List
+	@genders --Gender List
+
+--12.
+DECLARE @actors ActorList;
+INSERT INTO @actors (nameT, lastNameT, birthT)
+VALUES ('Russell', 'Crowe', '1964-04-07'), 
+       ('Joaquin', 'Phoenix', '1974-10-28'), 
+	   ('Connie', 'Nielsen', '1965-07-03');
+	   
+DECLARE @genders GenderList;
+INSERT INTO @genders (typeG)
+VALUES ('Action'), ('Drama'), ('Adventure');
+
+EXEC InsertMovie --MOVIE, ACTOR, ActorMovie, GenderMovie, AUDIT
+	1001,
+	'Gladiator',
+	'2h 35m',
+	'2000-05-05',
+	'Ridley Scott',
+	'Universal Pictures',
+	'https://i.ebayimg.com/images/g/EoAAAOSw5htgqj0s/s-l1600.jpg',
+	'A former Roman General sets out to exact vengeance against the corrupt emperor who murdered his family and sent him into slavery.',
+	@actors, --Actors List
+	@genders --Gender List
+
+--13.
+DECLARE @actors ActorList;
+INSERT INTO @actors (nameT, lastNameT, birthT)
+VALUES ('Al', 'Pacino', '1940-04-25'), 
+       ('Marlon', 'Brando', '1924-04-03'), 
+	   ('James', 'Cann', '1940-03-26');
+	   
+DECLARE @genders GenderList;
+INSERT INTO @genders (typeG)
+VALUES ('Action'), ('Drama');
+
+EXEC InsertMovie --MOVIE, ACTOR, ActorMovie, GenderMovie, AUDIT
+	1001,
+	'The Godfather',
+	'2h 55m',
+	'1972-03-24',
+	'Francis Ford Coppola',
+	'Paramount Pictures',
+	'https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg',
+	'Don Vito Corleone, head of a mafia family, decides to hand over his empire to his youngest son Michael. However, his decision unintentionally puts the lives of his loved ones in grave danger.',
+	@actors, --Actors List
+	@genders --Gender List
+
+--14.
+DECLARE @actors ActorList;
+INSERT INTO @actors (nameT, lastNameT, birthT)
+VALUES ('Tom', 'Berenger', '1949-05-31'), 
+       ('Billy', 'Zane', '1966-02-24'), 
+	   ('Aden', 'Young', '1971-11-30');
+	   
+DECLARE @genders GenderList;
+INSERT INTO @genders (typeG)
+VALUES ('Action');
+
+EXEC InsertMovie --MOVIE, ACTOR, ActorMovie, GenderMovie, AUDIT
+	1001,
+	'Sniper',
+	'1h 38m',
+	'1993-01-29',
+	'Luis Llosa',
+	'TriStar Pictures',
+	'https://m.media-amazon.com/images/M/MV5BZWUzOGNjMzItZmM5MC00NTQzLTk3YjQtZWMwZmRhOGJhZDczXkEyXkFqcGdeQXVyNzc5MjA3OA@@._V1_.jpg',
+	'A veteran US Marine sniper is partnered with a rookie sniper as his spotter to take out a politician and a rebel leader in the jungles of Panama.',
+	@actors, --Actors List
+	@genders --Gender List
+
+--15.
+DECLARE @actors ActorList;
+INSERT INTO @actors (nameT, lastNameT, birthT)
+VALUES ('Will', 'Smith', '1968-09-25'), 
+       ('Tommy', 'Lee Jones', '1946-09-15'), 
+	   ('Tony', 'Shalhoub', '1953-10-09');
+	   
+DECLARE @genders GenderList;
+INSERT INTO @genders (typeG)
+VALUES ('Action'), ('Adventure'), ('Comedy');
+
+EXEC InsertMovie --MOVIE, ACTOR, ActorMovie, GenderMovie, AUDIT
+	1001,
+	'Men in Black',
+	'1h 38m',
+	'1997-07-02',
+	'Barry Sonnenfeld',
+	'Columbia Pictures',
+	'https://m.media-amazon.com/images/I/61ILcasnX7L.jpg',
+	'A police officer joins a secret organization that polices and monitors extraterrestrial interactions on Earth.',
+	@actors, --Actors List
+	@genders --Gender List
+
+/*****DRAMA*****/
+--1.
+DECLARE @actors ActorList;
+INSERT INTO @actors (nameT, lastNameT, birthT)
+VALUES ('Emile', 'Hirsch', '1985-03-13'), 
+       ('Kristen', 'Stewart', '1990-04-09'), 
+	   ('Vince', 'Vaughn', '1970-03-28');
+	   
+DECLARE @genders GenderList;
+INSERT INTO @genders (typeG)
+VALUES ('Drama'), ('Adventure');
+
+EXEC InsertMovie --MOVIE, ACTOR, ActorMovie, GenderMovie, AUDIT
+	1001,
+	'Into the Wild',
+	'2h 28m',
+	'2007-09-21',
+	'Sean Penn',
+	'Paramount Vantage',
+	'https://m.media-amazon.com/images/I/51jIDks7NAL._AC_UF894,1000_QL80_.jpg',
+	'After graduating from Emory University, top student and athlete Christopher McCandless abandons his possessions, gives his entire $24,000 savings account to charity and hitchhikes to Alaska to live in the wilderness. Along the way, Christopher encounters a series of characters that shape his life.',
+	@actors, --Actors List
+	@genders --Gender List
