@@ -17,7 +17,7 @@ public partial class CHAPTER
 
     public int idSerie { get; set; }
 
-    public string img { get; set; } = null!;
+    public string? img { get; set; }
 
     public string? description { get; set; }
 

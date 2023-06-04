@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using ProyectoLenguajes.Models;
 using ProyectoLenguajes.Models.Domain;
 using ProyectoLenguajes.Models.DTO;
 using ProyectoLenguajes.Repositories.Abstract;
@@ -11,12 +12,14 @@ namespace ProyectoLenguajes.Repositories.Implementation
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly MyUserManager myUserManager;
 
-        public UserAuthenticationService(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        public UserAuthenticationService(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, MyUserManager myUserManager)
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.myUserManager = myUserManager;
         }
         public async Task<Status> LoginAsync(LoginModel model)
         {
@@ -117,6 +120,67 @@ namespace ProyectoLenguajes.Repositories.Implementation
             return status;
         }
 
-        
+        public async Task<Status> UpdateUserAsync(ACCOUNT acc, string currentUsername)
+        {
+            var status = new Status();
+            var user = await myUserManager.FindByUsernameAsync(currentUsername); // acc.userName
+
+            if (user == null)
+            {
+                status.StatusCode = 0;
+                status.Message = "User Not Found";
+                return status;
+            }
+
+            // Actualizar los campos necesarios del usuario existente
+            user.Name = acc.name;
+            user.Email = acc.email;
+            user.UserName = acc.userName;
+
+            // Si se proporciona una contraseña no encriptada, encriptarla antes de actualizarla
+            if (!string.IsNullOrEmpty(acc.password))
+            {
+                user.PasswordHash = userManager.PasswordHasher.HashPassword(user, acc.password);
+            }
+
+            var result = await userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+            {
+                status.StatusCode = 0;
+                status.Message = "User Updated Failed";
+                return status;
+            }
+
+            status.StatusCode = 1;
+            status.Message = "User Updated Successfully";
+            return status;
+        }
+
+        public async Task<Status> DeleteUserAsync(ACCOUNT acc)
+        {
+            var status = new Status();
+            var user = await myUserManager.FindByUsernameAsync(acc.userName); // acc.userName
+
+            if (user == null)
+            {
+                status.StatusCode = 0;
+                status.Message = "User Not Found";
+                return status;
+            }
+
+            var result = await userManager.DeleteAsync(user);
+            if (!result.Succeeded)
+            {
+                status.StatusCode = 0;
+                status.Message = "User Deletion Failed";
+                return status;
+            }
+
+            status.StatusCode = 1;
+            status.Message = "User Deleted Successfully";
+            return status;
+        }
+
+
     }
 }

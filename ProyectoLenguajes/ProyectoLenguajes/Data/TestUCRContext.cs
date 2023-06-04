@@ -41,6 +41,7 @@ public partial class TestUCRContext : DbContext
     public virtual DbSet<UserChapter> UserChapters { get; set; }
 
     public virtual DbSet<UserMovie> UserMovies { get; set; }
+    public virtual DbSet<Errors> ERRORs { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
@@ -48,6 +49,15 @@ public partial class TestUCRContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Errors>(entity =>
+        {
+            entity.HasNoKey();
+
+            entity.Property(e => e.error)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+        });
+
         modelBuilder.Entity<ACCOUNT>(entity =>
         {
             entity.HasKey(e => e.idAccount).HasName("PK__ACCOUNT__DA18132CEC720622");
@@ -57,6 +67,10 @@ public partial class TestUCRContext : DbContext
             entity.Property(e => e.email)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+            entity.Property(e => e.img)
+                .HasMaxLength(2000)
+                .IsUnicode(false)
+                .HasDefaultValueSql("('https://png.pngtree.com/element_origin_min_pic/00/00/06/12575cb97a22f0f.jpg')");
             entity.Property(e => e.name)
                 .HasMaxLength(70)
                 .IsUnicode(false);
@@ -79,6 +93,9 @@ public partial class TestUCRContext : DbContext
             entity.ToTable("ACTOR");
 
             entity.Property(e => e.birth).HasColumnType("date");
+            entity.Property(e => e.img)
+                .HasMaxLength(2000)
+                .IsUnicode(false);
             entity.Property(e => e.lastName)
                 .HasMaxLength(50)
                 .IsUnicode(false);
@@ -153,7 +170,7 @@ public partial class TestUCRContext : DbContext
                 .HasMaxLength(30)
                 .IsUnicode(false);
             entity.Property(e => e.img)
-                .HasMaxLength(100)
+                .HasMaxLength(2000)
                 .IsUnicode(false);
             entity.Property(e => e.name)
                 .HasMaxLength(50)
@@ -278,6 +295,7 @@ public partial class TestUCRContext : DbContext
 
             entity.HasOne(d => d.idUserNavigation).WithMany()
                 .HasForeignKey(d => d.idUser)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_idUserC");
         });
 
@@ -300,6 +318,7 @@ public partial class TestUCRContext : DbContext
 
             entity.HasOne(d => d.idUserNavigation).WithMany()
                 .HasForeignKey(d => d.idUser)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_idUserM");
         });
 

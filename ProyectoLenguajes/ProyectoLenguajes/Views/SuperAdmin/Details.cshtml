@@ -1,0 +1,63 @@
+﻿@model ProyectoLenguajes.Models.ACCOUNT
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/superadmin.css">
+
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.3.11/slick.css" />
+    <link rel="stylesheet" type="text/css" href="slick/slick.css" />
+    <link rel="stylesheet" type="text/css" href="slick/slick-theme.css" />
+</head>
+
+<h1><center>@Model.userName</center></h1>
+
+<div class="greater d-flex justify-content-center flex-wrap">
+
+<div class="image">
+    <img src=@Model.img>
+</div>
+
+<div>
+    <h4><center>Personal Information</center></h4>
+
+    <hr />
+    <dl class="row">
+        <dt class = "color1 col-sm-2">
+            @Html.DisplayNameFor(model => model.name)
+        </dt>
+            <dd class="color1 col-sm-10">
+            @Html.DisplayFor(model => model.name)
+        </dd>
+            <dt class="color1 col-sm-2">
+            @Html.DisplayNameFor(model => model.email)
+        </dt>
+            <dd class="color1 col-sm-10">
+            @Html.DisplayFor(model => model.email)
+        </dd>
+            <dt class="color1 col-sm-2">
+            @Html.DisplayNameFor(model => model.roll)
+        </dt>
+            <dd class="color1 col-sm-10">
+            @Html.DisplayFor(model => model.roll)
+        </dd>
+            <dt class="color1 col-sm-2">
+            @Html.DisplayNameFor(model => model.userName)
+        </dt>
+            <dd class="color1 col-sm-10">
+            @Html.DisplayFor(model => model.userName)
+        </dd>
+    </dl>
+</div>
+</div>
+<div class="buttoms d-flex text-center" style="height: 100vh;">
+    <a class="btn btn-info btn-primary m-2" asp-action="Edit" asp-route-id="@Model?.idAccount">Edit</a> |
+    <a class="btn btn-info btn-primary m-2" href="/SuperAdmin/Display">Back to List</a>
+</div>

@@ -16,4 +16,6 @@ public partial class ACCOUNT
     public string userName { get; set; } = null!;
 
     public string password { get; set; } = null!;
+
+    public string? img { get; set; }
 }

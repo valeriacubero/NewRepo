@@ -1,0 +1,203 @@
+﻿body {
+}
+:root {
+    --titlesFont: "Bebas Neue";
+    --subtitlesFont: "Rajdhani";
+    --generalTextFont: "Calibri";
+    --backgroundColor: linear-gradient(to top, #30cfd0 0%, #330867 100%);
+    --titlesColor: #65C0BA;
+    --cardsAndBtnsColor: #DDE9F8;
+    --generalTextColor: #ffffff;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    background-image: var(--backgroundColor);
+    font-family: var(--generalTextFont);
+    color: var(--generalTextColor);
+}
+
+.container {
+    width: 98%;
+    margin: auto;
+    align-items: center;
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .title {
+    font-family: var(--titlesFont);
+    font-weight: normal;
+    color: var(--titlesColor);
+    font-size: 45px;
+}
+
+header a {
+    color: var(--generalTextColor);
+    font-family: var(--subtitlesFont);
+    text-decoration: none;
+    margin-right: 20px;
+    color: white;
+    font-size: 20px;
+}
+
+    header a:hover {
+        color: var(--titlesColor);
+    }
+
+    header a.active {
+        font-style: italic;
+    }
+
+h1 {
+    border-radius: 50%;
+    font-style: italic;
+    background: linear-gradient(to left, #A9CCE3 30%, #330867 80%);
+    color: black;
+}
+
+.greater {
+    margin-top: 10em;
+    display: flex;
+    justify-content: space-between;
+}
+
+.color1 {
+    font-style: italic;
+    color: black;
+}
+
+img {
+    height: 160px;
+    width: 160px;
+    object-fit: cover;
+    border-radius: 80px;
+    align-content: center;
+}
+
+.buttoms{
+    margin-top: 3em;
+}
+
+.image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 1em;
+}
+
+.cardContent {
+    border-width: 5px;
+    border-color: white;
+    background-color: var(--cardsAndBtnsColor);
+    color: black;
+    font-family: var(--generalTextFont);
+    max-width: 250px;
+    height: 450px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    margin: 10px;
+    font-size: 20%;
+}
+
+
+h2 {
+    font-size: 20px;
+    margin-bottom: 4px;
+    text-align: center;
+}
+
+h3 {
+    font-size: 15px;
+    margin-top: 1px;
+    text-align: center;
+}
+h4 {
+    font-style: italic;
+    color: black;
+}
+
+.more {
+    width: 150px;
+    height: 35px;
+    color: black;
+    font-family: var(--generalTextFont);
+    background-color: #bbd9ff;
+    border-width: 0px;
+    border-radius: 2px;
+    font-size: 15px;
+    text-align: center;
+    align-items: center;
+}
+
+.slider {
+    margin: 10px;
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    align-items: center;
+}
+
+.subtitle {
+    font-family: var(--subtitlesFont);
+    color: #ffffff;
+    font-style: italic;
+    font-size: 25px;
+}
+
+/*MOVIE DETAILS*/
+.trailer {
+    min-width: 45%;
+    max-width: 45%;
+    height: 350px;
+}
+
+.movieContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 5px;
+    max-height: 400px;
+}
+
+.movieInfo {
+    margin-left: 20px;
+    font-size: 16px;
+}
+
+/*Circular buttons*/
+.circular {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    color: black;
+}
+
+.circularButtons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+/*Other options*/
+.moreButton {
+    width: 100px;
+    height: 50px;
+    color: black;
+    padding: 10px;
+    background-color: #A9CCE3;
+    border-color: #A9CCE3;
+    border-radius: 5px;
+}

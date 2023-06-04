@@ -97,9 +97,9 @@ CREATE TABLE UserMovie
  idUser INT NOT NULL,
  idMovie INT NOT NULL,
  times DATETIME DEFAULT GETDATE(),--Hora en que puso su reseña
- stars INT NOT NULL CHECK (stars >= 0 AND stars <= 5),
+ stars INT NOT NULL,
  review VARCHAR(8000) NULL,
- CONSTRAINT fk_idUserM FOREIGN KEY (idUser) REFERENCES ACCOUNT (idAccount) ON DELETE CASCADE,
+ CONSTRAINT fk_idUserM FOREIGN KEY (idUser) REFERENCES ACCOUNT (idAccount),
  CONSTRAINT fk_idMovieU FOREIGN KEY (idMovie) REFERENCES MOVIE (idMovie) ON DELETE CASCADE
 )
 
@@ -109,9 +109,9 @@ CREATE TABLE UserChapter
  idUser INT NOT NULL,
  idChapter INT NOT NULL,
  times DATETIME DEFAULT GETDATE(),--Hora en que puso su reseña
- stars INT NOT NULL CHECK (stars >= 0 AND stars <= 5),
+ stars INT NOT NULL,
  review VARCHAR(8000) NULL,
- CONSTRAINT fk_idUserC FOREIGN KEY (idUser) REFERENCES ACCOUNT (idAccount) ON DELETE CASCADE,
+ CONSTRAINT fk_idUserC FOREIGN KEY (idUser) REFERENCES ACCOUNT (idAccount),
  CONSTRAINT fk_idChapterU FOREIGN KEY (idChapter) REFERENCES CHAPTER (idChapter) ON DELETE CASCADE
 )
 

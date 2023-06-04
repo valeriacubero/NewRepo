@@ -12,6 +12,7 @@ builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(b
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<DatabaseContext>()
     .AddDefaultTokenProviders();
+builder.Services.AddScoped<MyUserManager>();//////////
 builder.Services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
 builder.Services.ConfigureApplicationCookie(op => op.LoginPath = "/UserAuthentication/Login"); //cookies
 

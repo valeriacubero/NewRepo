@@ -12,4 +12,6 @@ public partial class ACTOR
     public string lastName { get; set; } = null!;
 
     public DateTime birth { get; set; }
+
+    public string? img { get; set; }
 }
