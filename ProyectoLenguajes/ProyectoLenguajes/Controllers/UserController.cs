@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using ProyectoLenguajes.Data;
 using ProyectoLenguajes.Models;
@@ -12,8 +13,18 @@ namespace ProyectoLenguajes.Controllers
 
         public IActionResult Index()
         {
+            var list = new List<GenderMovies>();
+            var gender = new List<GENDER>();
+            var moviesList = new List<MOVIE>();
 
-            return View();
+            gender = db.GENDERs.FromSqlRaw("SELECT * FROM GENDER").ToList();
+
+            foreach(var g in gender)
+            {
+                moviesList = db.MOVIEs.FromSqlRaw("EXEC GetMoviesByGender @typeG", new SqlParameter("@typeG", g.typeG)).ToList();
+                list.Add(new GenderMovies() { genderName = g.typeG, movies = moviesList });
+            }
+            return View(list);
         }
 
         public ActionResult MovieDetails(int id)

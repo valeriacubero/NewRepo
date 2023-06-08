@@ -1,11 +1,9 @@
-﻿
-@using ProyectoLenguajes.Data;
+﻿@using ProyectoLenguajes.Data;
 @using Microsoft.AspNetCore.Mvc;
 @using Microsoft.EntityFrameworkCore;
-
+@model IEnumerable<ProyectoLenguajes.Models.GenderMovies>
 @{
     ViewData["Title"] = "Index";
-    TestUCRContext db = new TestUCRContext();
 }
 
 <head>
@@ -25,11 +23,11 @@
     <header>
         <div class="container">
             <h2 class="title">Hello!</h2>
-                <a href="Index" class="active">Home</a>
-                <a href="#">Profile</a>
-                <a href="#">Search</a>
-                <a href="#">My List</a>
-                <a href="#">Log Out</a>
+            <a href="Index" class="active">Home</a>
+            <a href="#">Profile</a>
+            <a href="#">Search</a>
+            <a href="#">My List</a>
+            <a href="#">Log Out</a>
         </div>
         <hr />
     </header>
@@ -38,252 +36,48 @@
         <!--MOVIES-->
         <!--comedy-->
         <div class="box-wrap">
-        <section class="container">
-            <h1 class="subtitle">Comedy Movies</h1>
-            <div class="slider">
+
+            @foreach (var item in Model)
+            {
+                <section class="container">
+                    <h1 class="subtitle">@item.genderName Movies</h1>
+                    <div id="slider-@item.genderName" class="slider">
+                        @if (@item.movies.Count() > 0)
+                        {
+                            @foreach (var movie in @item.movies)
+                            {
+
+                                <div class="card">
+                                    <div class="cardContent">
+                                        <div class="image">
+                                            <img src="@movie.img">
+                                        </div>
+                                        <div class="infoMovie">
+                                            <h2>@movie.name</h2>
+                                            <h3>@movie.distributor</h3>
+                                            <h3>@movie.duration</h3>
+                                            <h3>Director: @movie.director</h3>
+                                        </div>
+                                        <button class="more">
+                                            <a asp-action="MovieDetails"
+                                   asp-route-id="@movie.idMovie" style="text-align: center;">
+                                                View More
+                                            </a>
+                                        </button>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <h2 class="subtitle">No movies in this gender</h2>
+                        }
+
+                    </div>
+                </section>
                 
-                @{
-                    var comedyMoviesList = new List<MOVIE>();
-                    comedyMoviesList = db.MOVIEs.FromSqlRaw(@"EXEC GetComedyMovies").ToList();
-                }
-                @foreach (var item in comedyMoviesList)
-                {
+            }
 
-                    <div class="card">
-                        <div class="cardContent">
-                            <div class="image">
-                                <img src="@item.img">
-                            </div>
-                            <div class="infoMovie">
-                                <h2>@item.name</h2>
-                                <h3>@item.distributor</h3>
-                                <h3>@item.duration</h3>
-                                <h3>Director: @item.director</h3>
-                            </div>
-                                <button class="more">
-                                    <a asp-action="MovieDetails"
-                                    asp-route-id="@item.idMovie" style="text-align: center;">
-                                        View More
-                                    </a>
-                                </button>
-                        </div>
-                    </div>
-                }
-            </div>
-        </section>
-
-        <!--animated-->
-        <section class="container">
-            <h1 class="subtitle">Animated Movies</h1>
-            <div class="slider">
-
-                @{
-                    var animatedMoviesList = new List<MOVIE>();
-                    animatedMoviesList = db.MOVIEs.FromSqlRaw(@"EXEC GetAnimatedMovies").ToList();
-                }
-                @foreach (var item in animatedMoviesList)
-                {
-
-                    <div class="card">
-                        <div class="cardContent">
-                            <div class="image">
-                                <img src="@item.img">
-                            </div>
-                            <div class="infoMovie">
-                                <h2>@item.name</h2>
-                                <h3>@item.distributor</h3>
-                                <h3>@item.duration</h3>
-                                <h3>Director: @item.director</h3>
-                            </div>
-                                <button class="more">
-                                    <a asp-action="MovieDetails"
-                                   asp-route-id="@item.idMovie" style="text-align: center;">
-                                        View More
-                                    </a>
-                                </button>
-                        </div>
-                    </div>
-                }
-            </div>
-        </section>
-
-        <!--SUSPENSE MOVIES-->
-        <!--ROMANCE MOVIES-->
-
-        <!--drama-->
-        <section class="container">
-            <h1 class="subtitle">Drama Movies</h1>
-            <div class="slider">
-
-                @{
-                    var dramaMoviesList = new List<MOVIE>();
-                    dramaMoviesList = db.MOVIEs.FromSqlRaw(@"EXEC GetDramaMovies").ToList();
-                }
-                @foreach (var item in dramaMoviesList)
-                {
-
-                    <div class="card">
-                        <div class="cardContent">
-                            <div class="image">
-                                <img src="@item.img">
-                            </div>
-                            <div class="infoMovie">
-                                <h2>@item.name</h2>
-                                <h3>@item.distributor</h3>
-                                <h3>@item.duration</h3>
-                                <h3>Director: @item.director</h3>
-                            </div>
-                                <button class="more">
-                                    <a asp-action="MovieDetails"
-                                   asp-route-id="@item.idMovie" style="text-align: center;">
-                                        View More
-                                    </a>
-                                </button>
-                        </div>
-                    </div>
-                }
-            </div>
-        </section>
-
-        <!--action-->
-        <section class="container">
-            <h1 class="subtitle">Action Movies</h1>
-            <div class="slider">
-
-                @{
-                    var actionMoviesList = new List<MOVIE>();
-                    actionMoviesList = db.MOVIEs.FromSqlRaw(@"EXEC GetActionMovies").ToList();
-                }
-                @foreach (var item in actionMoviesList)
-                {
-
-                    <div class="card">
-                        <div class="cardContent">
-                            <div class="image">
-                                <img src="@item.img">
-                            </div>
-                            <div class="infoMovie">
-                                <h2>@item.name</h2>
-                                <h3>@item.distributor</h3>
-                                <h3>@item.duration</h3>
-                                <h3>Director: @item.director</h3>
-                            </div>
-                                <button class="more">
-                                    <a asp-action="MovieDetails"
-                                   asp-route-id="@item.idMovie" style="text-align: center;">
-                                        View More
-                                    </a>
-                                </button>
-                        </div>
-                    </div>
-                }
-            </div>
-        </section>
-
-        <!--adventure-->
-        <section class="container">
-            <h1 class="subtitle">Adventure Movies</h1>
-            <div class="slider">
-
-                @{
-                    var adventureMoviesList = new List<MOVIE>();
-                    adventureMoviesList = db.MOVIEs.FromSqlRaw(@"EXEC GetAdventureMovies").ToList();
-                }
-                @foreach (var item in adventureMoviesList)
-                {
-
-                    <div class="card">
-                        <div class="cardContent">
-                            <div class="image">
-                                <img src="@item.img">
-                            </div>
-                            <div class="infoMovie">
-                                <h2>@item.name</h2>
-                                <h3>@item.distributor</h3>
-                                <h3>@item.duration</h3>
-                                <h3>Director: @item.director</h3>
-                            </div>
-                                <button class="more">
-                                    <a asp-action="MovieDetails"
-                                   asp-route-id="@item.idMovie" style="text-align: center;">
-                                        View More
-                                    </a>
-                                </button>
-                        </div>
-                    </div>
-                }
-            </div>
-        </section>
-
-        <!--science fiction-->
-        <section class="container">
-            <h1 class="subtitle">Science Fiction Movies</h1>
-            <div class="slider">
-
-                @{
-                    var scienceMoviesList = new List<MOVIE>();
-                    scienceMoviesList = db.MOVIEs.FromSqlRaw(@"EXEC GetScienceMovies").ToList();
-                }
-                @foreach (var item in scienceMoviesList)
-                {
-
-                    <div class="card">
-                        <div class="cardContent">
-                            <div class="image">
-                                <img src="@item.img">
-                            </div>
-                            <div class="infoMovie">
-                                <h2>@item.name</h2>
-                                <h3>@item.distributor</h3>
-                                <h3>@item.duration</h3>
-                                <h3>Director: @item.director</h3>
-                            </div>
-                                <button class="more">
-                                    <a asp-action="MovieDetails"
-                                   asp-route-id="@item.idMovie" style="text-align: center;">
-                                        View More
-                                    </a>
-                                </button>
-                        </div>
-                    </div>
-                }
-            </div>
-        </section>
-
-        <!--horror-->
-        <section class="container">
-            <h1 class="subtitle">Horror Movies</h1>
-            <div class="slider">
-
-                @{
-                    var horrorMoviesList = new List<MOVIE>();
-                    horrorMoviesList = db.MOVIEs.FromSqlRaw(@"EXEC GetHorrorMovies").ToList();
-                }
-                @foreach (var item in horrorMoviesList)
-                {
-
-                    <div class="card">
-                        <div class="cardContent">
-                            <div class="image">
-                                <img src="@item.img">
-                            </div>
-                            <div class="infoMovie">
-                                <h2>@item.name</h2>
-                                <h3>@item.distributor</h3>
-                                <h3>@item.duration</h3>
-                                <h3>Director: @item.director</h3>
-                            </div>
-                                <button class="more">
-                                    <a asp-action="MovieDetails"
-                                   asp-route-id="@item.idMovie" style="text-align: center;">
-                                        View More
-                                    </a>
-                                </button>
-                        </div>
-                    </div>
-                }
-            </div>
-        </section>
 
         </div>
 
@@ -291,7 +85,7 @@
 
     </main>
 
-    
+
     <!--JS-->
     <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
@@ -339,10 +133,11 @@
         });
 
         //RANDOM
-        var random = $("section.container").get().sort(function(){
-            return Math.round(Math.random())-0.5;
+        var random = $("section.container").get().sort(function () {
+            return Math.round(Math.random()) - 0.5;
         }).slice(0.4)
         $(random).appendTo(random[0].parentNode).show();
     </script>
 
 </body>
+

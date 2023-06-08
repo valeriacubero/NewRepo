@@ -131,9 +131,9 @@ h3 {
 
 /*MOVIE DETAILS*/
 .trailer{
-    min-width: 45%;
-    max-width: 45%;
-    height: 350px;
+    min-width: 50%;
+    max-width: 50%;
+    height: 375px;
 }
 .movieContainer {
     display: flex;
