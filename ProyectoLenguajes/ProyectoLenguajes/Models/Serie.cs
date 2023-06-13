@@ -21,5 +21,9 @@ public partial class SERIE
 
     public string? description { get; set; }
 
+    public double? punctuation { get; set; }
+
+    public string? trailer { get; set; }
+
     public virtual ICollection<CHAPTER> CHAPTERs { get; set; } = new List<CHAPTER>();
 }

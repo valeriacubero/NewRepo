@@ -9,9 +9,9 @@ public partial class UserMovie
 
     public int idMovie { get; set; }
 
-    public DateTime? times { get; set; }
+    public DateTime? reviewTime { get; set; }
 
-    public int stars { get; set; }
+    public int? stars { get; set; }
 
     public string? review { get; set; }
 

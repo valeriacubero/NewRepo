@@ -9,9 +9,9 @@ public partial class UserChapter
 
     public int idChapter { get; set; }
 
-    public DateTime? times { get; set; }
+    public DateTime? reviewTime { get; set; }
 
-    public int stars { get; set; }
+    public int? stars { get; set; }
 
     public string? review { get; set; }
 

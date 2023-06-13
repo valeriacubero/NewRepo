@@ -32,7 +32,7 @@ header .container {
     align-items: center;
 }
 
-header .title {
+.title {
     font-family: var(--titlesFont);
     font-weight: normal;
     color: var(--titlesColor);
@@ -172,3 +172,89 @@ h3 {
     border-color: #A9CCE3;
     border-radius: 5px;
 }
+
+/* MODALS */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+.modal-content {
+    background-image: var(--backgroundColor);
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 800px; /* Could be more or less, depending on screen size */
+}
+
+/* MODAL 1 */
+.closeModal1 {
+    color: white;
+    float: right;
+    font-size: 28px;
+    padding: 15px;
+}
+.closeModal1:hover,
+.closeModal1:focus {
+    color: red;
+    text-decoration: none;
+    cursor: pointer;
+}
+.castDiv {
+    display: flex;
+    flex-direction: row;
+    padding:20px;
+    justify-content: space-around;
+}
+
+/* MODAL 2 */
+.closeModal2 {
+    color: white;
+    float: right;
+    font-size: 28px;
+    padding: 15px;
+}
+
+.closeModal2:hover,
+.closeModal2:focus {
+    color: red;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.commentDiv {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    justify-content: space-around;
+}
+.textC {
+    padding: 20px;
+    margin-bottom: 10px;
+    color: black;
+}
+
+/*COMMENTS*/
+.reviewsDiv {
+    width: 500px;
+    background-color: var(--cardsAndBtnsColor);
+    margin-top: 20px;
+    padding: 20px;
+    color: black;
+    border-radius: 5px;
+    display:flex;
+}
+
+.infoComment span hr{
+    font-size: 17px;
+    color: black;
+}
+
+

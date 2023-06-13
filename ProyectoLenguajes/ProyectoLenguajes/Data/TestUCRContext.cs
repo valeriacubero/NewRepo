@@ -26,6 +26,8 @@ public partial class TestUCRContext : DbContext
 
     public virtual DbSet<ActorSerie> ActorSeries { get; set; }
 
+    public virtual DbSet<AuditUser> AuditUsers { get; set; }
+
     public virtual DbSet<CHAPTER> CHAPTERs { get; set; }
 
     public virtual DbSet<GENDER> GENDERs { get; set; }
@@ -41,7 +43,6 @@ public partial class TestUCRContext : DbContext
     public virtual DbSet<UserChapter> UserChapters { get; set; }
 
     public virtual DbSet<UserMovie> UserMovies { get; set; }
-    public virtual DbSet<Errors> ERRORs { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
@@ -49,15 +50,6 @@ public partial class TestUCRContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Errors>(entity =>
-        {
-            entity.HasNoKey();
-
-            entity.Property(e => e.error)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-        });
-
         modelBuilder.Entity<ACCOUNT>(entity =>
         {
             entity.HasKey(e => e.idAccount).HasName("PK__ACCOUNT__DA18132CEC720622");
@@ -155,6 +147,29 @@ public partial class TestUCRContext : DbContext
             entity.HasOne(d => d.idSerieNavigation).WithMany()
                 .HasForeignKey(d => d.idSerie)
                 .HasConstraintName("fk_idSerieA");
+        });
+
+        modelBuilder.Entity<AuditUser>(entity =>
+        {
+            entity.HasKey(e => e.idAuditUser).HasName("PK__AuditUse__CB5F1DCA69189EE5");
+
+            entity.ToTable("AuditUser");
+
+            entity.Property(e => e.action)
+                .HasMaxLength(10)
+                .IsUnicode(false);
+            entity.Property(e => e.date)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.description)
+                .HasMaxLength(1000)
+                .IsUnicode(false);
+            entity.Property(e => e.nameOf)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.tableName)
+                .HasMaxLength(20)
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<CHAPTER>(entity =>
@@ -273,6 +288,9 @@ public partial class TestUCRContext : DbContext
             entity.Property(e => e.name)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+            entity.Property(e => e.trailer)
+                .HasMaxLength(5000)
+                .IsUnicode(false);
             entity.Property(e => e.year).HasColumnType("date");
         });
 
@@ -285,9 +303,8 @@ public partial class TestUCRContext : DbContext
             entity.Property(e => e.review)
                 .HasMaxLength(8000)
                 .IsUnicode(false);
-            entity.Property(e => e.times)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
+            entity.Property(e => e.reviewTime).HasColumnType("datetime");
+            entity.Property(e => e.stars).HasDefaultValueSql("((0))");
 
             entity.HasOne(d => d.idChapterNavigation).WithMany()
                 .HasForeignKey(d => d.idChapter)
@@ -303,14 +320,13 @@ public partial class TestUCRContext : DbContext
         {
             entity
                 .HasNoKey()
-                .ToTable("UserMovie");
+                .ToTable("UserMovie", tb => tb.HasTrigger("UserMovieRepit"));
 
             entity.Property(e => e.review)
                 .HasMaxLength(8000)
                 .IsUnicode(false);
-            entity.Property(e => e.times)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
+            entity.Property(e => e.reviewTime).HasColumnType("datetime");
+            entity.Property(e => e.stars).HasDefaultValueSql("((0))");
 
             entity.HasOne(d => d.idMovieNavigation).WithMany()
                 .HasForeignKey(d => d.idMovie)

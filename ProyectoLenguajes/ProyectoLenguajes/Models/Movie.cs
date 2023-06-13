@@ -22,4 +22,6 @@ public partial class MOVIE
     public string? description { get; set; }
 
     public string? trailer { get; set; }
+
+    public double? punctuation { get; set; }
 }

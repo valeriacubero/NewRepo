@@ -36,8 +36,8 @@ namespace ProyectoLenguajes.Controllers
             }
             catch (Exception ex)
             {
-                var result = db.ERRORs.FromSqlRaw("exec dbo.GetUsersAccounts").ToList();
-                var a = ViewBag.Error = result[0].error.ToString();
+                /*var result = db.ERRORs.FromSqlRaw("exec dbo.GetUsersAccounts").ToList();
+                var a = ViewBag.Error = result[0].error.ToString();*/
                 return View(personList);
             }
         }
@@ -79,8 +79,8 @@ namespace ProyectoLenguajes.Controllers
             }
             catch (Exception ex)
             {
-                var rr = db.ERRORs.FromSqlRaw("exec InsertAccounts @userID, @name, @email, @roll, @userName, @password").ToList();
-                var a = ViewBag.Error = rr[0].error.ToString();
+                /*var rr = db.ERRORs.FromSqlRaw("exec InsertAccounts @userID, @name, @email, @roll, @userName, @password").ToList();
+                var a = ViewBag.Error = rr[0].error.ToString();*/
                 return View();
             }
         }
@@ -143,8 +143,8 @@ namespace ProyectoLenguajes.Controllers
             }
             catch (Exception e)
             {
-                var rr = db.ERRORs.FromSqlRaw("exec UpdateAccount @userID, @idAccount, @name, @email, @username, @password, @img").ToList();
-                var a = ViewBag.Error = rr[0].error.ToString();
+                /*var rr = db.ERRORs.FromSqlRaw("exec UpdateAccount @userID, @idAccount, @name, @email, @username, @password, @img").ToList();
+                var a = ViewBag.Error = rr[0].error.ToString();*/
                 return View();
             }
         }
@@ -183,8 +183,8 @@ namespace ProyectoLenguajes.Controllers
             }
             catch (Exception ex)
             {
-                var rr = db.ERRORs.FromSqlRaw("exec DeleteAccount @userID, @idAccount").ToList();
-                var a = ViewBag.Error = rr[0].error.ToString();
+                /*var rr = db.ERRORs.FromSqlRaw("exec DeleteAccount @userID, @idAccount").ToList();
+                var a = ViewBag.Error = rr[0].error.ToString();*/
                 return View();
             }
         }

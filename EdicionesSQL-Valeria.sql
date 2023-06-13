@@ -35,6 +35,32 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE GetMoviesInfo (
+ @id int
+)
+AS
+BEGIN
+	SELECT * FROM MOVIE WHERE idMovie = @id
+END
+
+ALTER PROCEDURE GetMovieCast(
+ @id int
+)
+AS
+BEGIN
+	SELECT A.* FROM ACTOR A, ActorMovie WHERE  ActorMovie.idMovie = @id AND ActorMovie.idActor= A.idActor
+END
+
+ALTER PROCEDURE GetMovieReviews(
+ @id int
+)
+AS
+BEGIN
+	SELECT top 10 R.* FROM UserMovie R WHERE  R.idMovie = @id ORDER BY r.reviewTime
+END
+
+
+
 
 --UPDATES COMEDY
 UPDATE MOVIE SET img = 
