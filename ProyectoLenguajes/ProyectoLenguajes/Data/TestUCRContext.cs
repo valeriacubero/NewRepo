@@ -43,6 +43,7 @@ public partial class TestUCRContext : DbContext
     public virtual DbSet<UserChapter> UserChapters { get; set; }
 
     public virtual DbSet<UserMovie> UserMovies { get; set; }
+    public virtual DbSet<Errors> ERRORs { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
@@ -50,6 +51,13 @@ public partial class TestUCRContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Errors>(entity =>
+        {
+            entity.HasNoKey();
+            entity.Property(e => e.error);
+                
+        });
+
         modelBuilder.Entity<ACCOUNT>(entity =>
         {
             entity.HasKey(e => e.idAccount).HasName("PK__ACCOUNT__DA18132CEC720622");

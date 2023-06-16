@@ -12,7 +12,16 @@ using System.Security.Claims;
 
 namespace ProyectoLenguajes.Controllers
 {
-    public class SuperAdminController : Controller
+    //Poner en TestUCRContext.cs:
+    //    public virtual DbSet<Errors> ERRORs { get; set; }
+
+    //    modelBuilder.Entity<Errors>(entity =>
+    //    {
+    //        entity.HasNoKey();
+    //        entity.Property(e => e.error);
+                
+    //    });
+public class SuperAdminController : Controller
     {
         private TestUCRContext db = new TestUCRContext();
         private readonly IUserAuthenticationService _service;
@@ -37,8 +46,8 @@ namespace ProyectoLenguajes.Controllers
             }
             catch (Exception ex)
             {
-                /*var result = db.ERRORs.FromSqlRaw("exec dbo.GetAllAccounts").ToList();
-                var a = ViewBag.Error = result[0].error.ToString();*/
+                var result = db.ERRORs.FromSqlRaw("exec dbo.GetAllAccounts").ToList();
+                var a = ViewBag.Error = result[0].error.ToString();
                 return View(personList);
             }
 
@@ -81,8 +90,8 @@ namespace ProyectoLenguajes.Controllers
             }
             catch (Exception ex)
             {
-                /*var rr = db.ERRORs.FromSqlRaw("exec InsertAccounts @userID, @name, @email, @roll, @userName, @password").ToList();
-                var a = ViewBag.Error = rr[0].error.ToString();*/
+                var rr = db.ERRORs.FromSqlRaw("exec InsertAccounts @userID, @name, @email, @roll, @userName, @password").ToList();
+                var a = ViewBag.Error = rr[0].error.ToString();
                 return View();
             }
         }
@@ -145,8 +154,8 @@ namespace ProyectoLenguajes.Controllers
             }
             catch (Exception e)
             {
-                /*var rr = db.ERRORs.FromSqlRaw("exec UpdateAccount @userID, @idAccount, @name, @email, @username, @password, @img").ToList();
-                var a = ViewBag.Error = rr[0].error.ToString();*/
+                var rr = db.ERRORs.FromSqlRaw("exec UpdateAccount @userID, @idAccount, @name, @email, @username, @password, @img").ToList();
+                var a = ViewBag.Error = rr[0].error.ToString();
                 return View();
             }
         }
@@ -183,8 +192,8 @@ namespace ProyectoLenguajes.Controllers
             }
             catch (Exception ex)
             {
-                /*var rr = db.ERRORs.FromSqlRaw("exec DeleteAccount @userID, @idAccount").ToList();
-                var a = ViewBag.Error = rr[0].error.ToString();*/
+                var rr = db.ERRORs.FromSqlRaw("exec DeleteAccount @userID, @idAccount").ToList();
+                var a = ViewBag.Error = rr[0].error.ToString();
                 return View();
             }
         }

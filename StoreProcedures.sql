@@ -126,6 +126,112 @@ DECLARE @ErrorMessage VARCHAR(200)
 SELECT @ErrorMessage AS ErrorMessage
 END
 GO
+--SP TO UPDATE ACCOUNTS
+--DROP PROCEDURE UpdateAccount
+CREATE PROCEDURE UpdateAccount
+(
+	@userAccount VARCHAR(50),
+	@idAccount VARCHAR(50),
+	@name VARCHAR(70),
+	@email VARCHAR(50),
+	@username VARCHAR(20),
+	@password VARCHAR(20),
+	@img VARCHAR(2000)
+)
+AS
+BEGIN
+DECLARE @ErrorMessage VARCHAR(200)
+	BEGIN TRY
+		BEGIN TRANSACTION
+
+		DECLARE @userID INT, @role VARCHAR(20)
+
+		SET @userID = (SELECT idAccount FROM ACCOUNT WHERE userName like @userAccount)
+		SET @idAccount = CAST(@idAccount AS INT)
+		SET @role = (SELECT roll FROM ACCOUNT WHERE idAccount = @idAccount)
+
+		IF EXISTS(SELECT [idAccount] FROM [dbo].[ACCOUNT]
+				  WHERE [idAccount] = @idAccount AND dbo.HasNumbers(@name) = 0)
+		   BEGIN
+				IF EXISTS(SELECT [idAccount] FROM [dbo].[ACCOUNT]
+						  WHERE [idAccount] = @userID AND [roll] = 'superA')
+				   BEGIN
+						UPDATE ACCOUNT SET name = @name WHERE idAccount = @idAccount
+						UPDATE ACCOUNT SET email = @email WHERE idAccount = @idAccount
+						UPDATE ACCOUNT SET username = @username WHERE idAccount = @idAccount
+						UPDATE ACCOUNT SET password = @password WHERE idAccount = @idAccount
+						UPDATE ACCOUNT SET img = @img WHERE idAccount = @idAccount
+
+						INSERT INTO [dbo].[AUDIT]
+					           ([action]
+					           ,[tableName]
+					           ,[nameOf]
+					           ,[idOf]
+					           ,[description]
+					           ,[idUser])
+					     VALUES
+					           ('UPDATE'
+					           ,'ACCOUNT'
+					           ,@name
+					           ,@idAccount
+					           ,'Updated account.'
+					           ,@userID)
+				   END
+				ELSE
+				IF EXISTS(SELECT [idAccount] FROM [dbo].[ACCOUNT]
+						  WHERE [idAccount] = @userID AND [roll] = 'admin' AND @role = 'user')
+				   BEGIN
+						UPDATE ACCOUNT SET name = @name WHERE idAccount = @idAccount
+						UPDATE ACCOUNT SET email = @email WHERE idAccount = @idAccount
+						UPDATE ACCOUNT SET username = @username WHERE idAccount = @idAccount
+						UPDATE ACCOUNT SET password = @password WHERE idAccount = @idAccount
+						UPDATE ACCOUNT SET img = @img WHERE idAccount = @idAccount
+
+						INSERT INTO [dbo].[AUDIT]
+					           ([action]
+					           ,[tableName]
+					           ,[nameOf]
+					           ,[idOf]
+					           ,[description]
+					           ,[idUser])
+					     VALUES
+					           ('UPDATE'
+					           ,'ACCOUNT'
+					           ,@name
+					           ,@idAccount
+					           ,'Updated account.'
+					           ,@userID)
+				   END
+				ELSE
+					BEGIN
+						 SET @ErrorMessage = 'Error: You do not have permission to perform this action'
+						 ROLLBACK TRANSACTION
+					END
+		END
+		ELSE 
+			BEGIN
+				 SET @ErrorMessage = 'Error: The account does not exist or the name it is not correct'
+				 ROLLBACK TRANSACTION
+			END
+	COMMIT TRANSACTION
+	END TRY
+	BEGIN CATCH
+		IF (@ErrorMessage != 'NULL')
+			BEGIN
+				SET @ErrorMessage = @ErrorMessage + ' ' +ERROR_MESSAGE()
+			END
+		ELSE 
+			BEGIN
+				SET @ErrorMessage = ERROR_MESSAGE()
+			END
+		IF @@TRANCOUNT > 0
+			BEGIN
+				ROLLBACK TRANSACTION
+			END
+	END CATCH
+SELECT @ErrorMessage AS ErrorMessage
+END
+GO
 --SP TO DELETE ACCOUNTS
 --DROP PROCEDURE DeleteAccount
 CREATE PROCEDURE DeleteAccount
