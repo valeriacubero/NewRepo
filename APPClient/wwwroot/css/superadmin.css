@@ -84,17 +84,27 @@ img {
     align-content: center;
 }
 
+.images {
+   margin-right: 5em;
+}
+
+.trailer {
+    min-width: 50%;
+    max-width: 50%;
+    height: 500px;
+}
+
 .buttoms{
     margin-top: 3em;
 }
 
-.image {
+/*.image {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-left: 1em;
     padding-right: 5em;
-}
+}*/
 
 .cardContent {
     border-width: 5px;
@@ -259,4 +269,8 @@ td {
     background-color: #A9CCE3;
     border-color: #A9CCE3;
     border-radius: 5px;
+}
+
+.extra{
+    padding-top: 10em;
 }

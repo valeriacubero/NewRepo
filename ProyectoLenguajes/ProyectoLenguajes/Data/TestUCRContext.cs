@@ -40,10 +40,11 @@ public partial class TestUCRContext : DbContext
 
     public virtual DbSet<SERIE> SERIEs { get; set; }
 
-    public virtual DbSet<UserChapter> UserChapters { get; set; }
-
     public virtual DbSet<UserMovie> UserMovies { get; set; }
-    public virtual DbSet<Errors> ERRORs { get; set; }
+
+    public virtual DbSet<UserSerie> UserSeries { get; set; }
+
+    public virtual DbSet<movie1> movies1 { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
@@ -51,13 +52,6 @@ public partial class TestUCRContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Errors>(entity =>
-        {
-            entity.HasNoKey();
-            entity.Property(e => e.error);
-                
-        });
-
         modelBuilder.Entity<ACCOUNT>(entity =>
         {
             entity.HasKey(e => e.idAccount).HasName("PK__ACCOUNT__DA18132CEC720622");
@@ -302,33 +296,11 @@ public partial class TestUCRContext : DbContext
             entity.Property(e => e.year).HasColumnType("date");
         });
 
-        modelBuilder.Entity<UserChapter>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToTable("UserChapter");
-
-            entity.Property(e => e.review)
-                .HasMaxLength(8000)
-                .IsUnicode(false);
-            entity.Property(e => e.reviewTime).HasColumnType("datetime");
-            entity.Property(e => e.stars).HasDefaultValueSql("((0))");
-
-            entity.HasOne(d => d.idChapterNavigation).WithMany()
-                .HasForeignKey(d => d.idChapter)
-                .HasConstraintName("fk_idChapterU");
-
-            entity.HasOne(d => d.idUserNavigation).WithMany()
-                .HasForeignKey(d => d.idUser)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_idUserC");
-        });
-
         modelBuilder.Entity<UserMovie>(entity =>
         {
             entity
                 .HasNoKey()
-                .ToTable("UserMovie", tb => tb.HasTrigger("UserMovieRepit"));
+                .ToTable("UserMovie");
 
             entity.Property(e => e.review)
                 .HasMaxLength(8000)
@@ -344,6 +316,36 @@ public partial class TestUCRContext : DbContext
                 .HasForeignKey(d => d.idUser)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_idUserM");
+        });
+
+        modelBuilder.Entity<UserSerie>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToTable("UserSerie");
+
+            entity.Property(e => e.review)
+                .HasMaxLength(8000)
+                .IsUnicode(false);
+            entity.Property(e => e.times)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+
+            entity.HasOne(d => d.idSerieNavigation).WithMany()
+                .HasForeignKey(d => d.idSerie)
+                .HasConstraintName("fk_idSerieU");
+
+            entity.HasOne(d => d.idUserNavigation).WithMany()
+                .HasForeignKey(d => d.idUser)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_idUserS");
+        });
+
+        modelBuilder.Entity<movie1>(entity =>
+        {
+            entity.HasKey(e => e.idMovie);
+
+            entity.ToTable("movies");
         });
 
         OnModelCreatingPartial(modelBuilder);
