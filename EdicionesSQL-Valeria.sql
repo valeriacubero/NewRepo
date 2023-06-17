@@ -16,6 +16,15 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE GetSeriesByGender (
+	@typeG varchar(30))
+AS
+BEGIN
+	SELECT S.* FROM SERIE S, GENDER, GenderSerie WHERE GENDER.typeG = @typeG AND
+	GenderSerie.idGender = GENDER.idGender AND S.idSerie = GenderSerie.idSerie
+END
+GO
+
 CREATE PROCEDURE GetMovie(
 	@id int
 )
@@ -51,6 +60,14 @@ BEGIN
 	SELECT A.* FROM ACTOR A, ActorMovie WHERE  ActorMovie.idMovie = @id AND ActorMovie.idActor= A.idActor
 END
 
+CREATE PROCEDURE GetSerieCast(
+ @id int
+)
+AS
+BEGIN
+	SELECT A.* FROM ACTOR A, ActorSerie WHERE  ActorSerie.idSerie = @id AND ActorSerie.idActor= A.idActor
+END
+
 ALTER PROCEDURE GetMovieReviews(
  @id int
 )
@@ -59,7 +76,43 @@ BEGIN
 	SELECT top 10 R.* FROM UserMovie R WHERE  R.idMovie = @id ORDER BY r.reviewTime
 END
 
+CREATE PROCEDURE GetSerieReviews(
+ @id int
+)
+AS
+BEGIN
+	SELECT top 10 R.* FROM UserSerie R WHERE  R.idSerie = @id ORDER BY R.times
+END
 
+CREATE PROCEDURE GetSerieChapters (
+	@id int
+)
+AS 
+BEGIN
+	SELECT C.* FROM CHAPTER C WHERE C.idSerie = @id
+END
+
+EXEC GetSerieChapters 3000
+
+
+ALTER PROCEDURE CommentMovie (
+	@idAccount varchar(20),
+	@idMovie int,
+	@review varchar(8000),
+	@stars int
+)
+AS
+BEGIN
+	DECLARE @userID INT
+	SET @userID = (SELECT idAccount FROM ACCOUNT WHERE userName like @idAccount)
+	INSERT INTO UserMovie VALUES (@userID, @idMovie, GETDATE(), @stars, @review)
+END
+
+
+--
+UPDATE SERIE SET trailer = 
+	'https://www.youtube.com/embed/xCwwxNbtK6Y' 
+	WHERE name = 'Cobra Kai'
 
 
 --UPDATES COMEDY
@@ -517,3 +570,4 @@ UPDATE ACTOR SET img = '' WHERE idActor = '6146';
 UPDATE ACTOR SET img = '' WHERE idActor = '6147';
 UPDATE ACTOR SET img = '' WHERE idActor = '6148';
 
+DELETE GENDER WHERE idGender = 5005

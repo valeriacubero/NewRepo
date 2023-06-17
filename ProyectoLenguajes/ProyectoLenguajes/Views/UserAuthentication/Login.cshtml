@@ -6,7 +6,6 @@
 
 <!DOCTYPE html>
 
-<html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Login</title>
@@ -15,7 +14,7 @@
             border: 3px solid #f1f1f1;
             width: 60%;
             margin: auto;
-            margin-top: 10%;
+            margin-top: 10px;
         }
 
         input[type=text], input[type=password] {
@@ -28,8 +27,8 @@
         }
 
         button {
-            background-color: lightblue;
-            color: white;
+            background-color: #DDE9F8;
+            color: black;
             padding: 14px 29px;
             margin: 8px 0;
             border: none;
@@ -41,6 +40,10 @@
             padding: 16px;
         }
 
+        body {
+            background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%);
+            height: 100%;
+        }
         .msg {
             padding: 0px;
         }
@@ -49,9 +52,34 @@
             color: red;
         }
 
+        .title {
+            color: #65C0BA;
+            font-family: "Bebas Neue";
+            font-size: 60px;
+            margin-bottom: 5px
+        }
+
+        .texto {
+            align-content: center;
+            margin-left: 18px;
+            text-align:center;
+        }
+
+        .texto p {
+                font-family: "Calibri";
+                font-size: 18px;
+                color:aliceblue;
+        }
+
     </style>
 </head>
 <body>
+    <div class="allContainer">
+        <div class="texto">
+        <h1 class="title">Hello!</h1>
+        <p>Sign up or log in</p>
+        </div>
+
     <form asp-action="Login" method="post">
         <div class="container">
 
@@ -67,17 +95,18 @@
                 <span class="err" asp-validation-for="Password"></span>
             </div>
 
-            @if (TempData["msg"] != null)
-            {
-                    <div class="msg">
-                        <span class="err">@TempData["msg"]</span>
-                    </div>
-            }
+                @if (TempData["msg"] != null)
+                {
+                        <div class="msg">
+                            <span class="err">@TempData["msg"]</span>
+                        </div>
+                }
 
             <button type="submit">Login</button>
             <a href="/UserAuthentication/Registration">Not a User? Click Here to Sign Up</a>
 
         </div>
     </form>
+    </div>
+    
 </body>
-</html>

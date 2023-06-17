@@ -148,20 +148,6 @@ h3 {
     font-size: 16px;
 }
 
-/*Circular buttons*/
-.circular {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    color: black;
-}
-
-.circularButtons {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-}
-
 /*Other options*/
 .moreButton {
     width: 100px;
@@ -241,20 +227,80 @@ h3 {
     color: black;
 }
 
+
 /*COMMENTS*/
 .reviewsDiv {
-    width: 500px;
-    background-color: var(--cardsAndBtnsColor);
+    width: 600px;
     margin-top: 20px;
     padding: 20px;
+    background-color: #ffffff;
     color: black;
     border-radius: 5px;
-    display:flex;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    margin-left: 225px;
+    opacity: 0.3;
 }
 
-.infoComment span hr{
-    font-size: 17px;
+hr {
+    background-color: black;
+}
+
+
+.textS {
+    width: 150px;
+    height: 35px;
     color: black;
 }
 
+.inputRate {
+    margin: 20px;
+    align-self: center;
+}
 
+
+
+/* MODAL 3 */
+.closeModal3 {
+    color: white;
+    float: right;
+    font-size: 28px;
+    padding: 15px;
+}
+
+    .closeModal3:hover,
+    .closeModal3:focus {
+        color: red;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+.cardChapterContent {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color:black;
+}
+
+.cardChapter {
+    background-color: var(--cardsAndBtnsColor);
+    padding: 20px;
+    width: 700px;
+    margin: 20px;
+    border-radius: 5px;
+}
+
+.imageChapter {
+    margin-right: 20px;
+}
+
+.infoChapter .h2 {
+    font-family: Rajdhani;
+    color: black;
+    font-size: 15px;
+}
+
+.infoChapter .span {
+    font-family: var(--generalTextFont);
+}

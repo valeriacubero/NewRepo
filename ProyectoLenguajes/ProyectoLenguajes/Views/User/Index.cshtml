@@ -1,7 +1,7 @@
 ﻿@using ProyectoLenguajes.Data;
 @using Microsoft.AspNetCore.Mvc;
 @using Microsoft.EntityFrameworkCore;
-@model IEnumerable<ProyectoLenguajes.Models.GenderMovies>
+@model IEnumerable<ProyectoLenguajes.Models.MoviesAndSeries>
 @{
     ViewData["Title"] = "Index";
 }
@@ -23,7 +23,7 @@
     <header>
         <div class="container">
             <h2 class="title">Hello!</h2>
-            <a href="Index" class="active">Home</a>
+            <a href="#" class="active">Home</a>
             <a href="#">Profile</a>
             <a href="#">Search</a>
             <a href="#">My List</a>
@@ -33,8 +33,8 @@
     </header>
     <br />
     <main>
-        <!--MOVIES-->
-        <!--comedy-->
+
+        <!--MOVIES AND SERIES-->
         <div class="box-wrap">
 
             @foreach (var item in Model)
@@ -74,6 +74,41 @@
                         }
 
                     </div>
+
+                    <h1 class="subtitle">@item.genderName Series</h1>
+                    <div id="slider-@item.genderName" class="slider">
+                        @if (@item.series.Count() > 0)
+                        {
+                            @foreach (var serie in @item.series)
+                            {
+
+                                <div class="card">
+                                    <div class="cardContent">
+                                        <div class="image">
+                                            <img src="@serie.img">
+                                        </div>
+                                        <div class="infoMovie">
+                                            <h2>@serie.name</h2>
+                                            <h3>@serie.distributor</h3>
+                                            <h3>Seasons: @serie.seasons</h3>
+                                            <h3>Director: @serie.director</h3>
+                                        </div>
+                                        <button class="more">
+                                            <a asp-action="SerieDetails"
+                                   asp-route-id="@serie.idSerie" style="text-align: center;">
+                                                View More
+                                            </a>
+                                        </button>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <h2 class="subtitle">No series in this gender</h2>
+                        }
+
+                    </div>
                 </section>
                 
             }
@@ -81,7 +116,6 @@
 
         </div>
 
-        <!--SERIES-->
 
     </main>
 
@@ -109,16 +143,16 @@
                     {
                         breakpoint: 1024,
                         settings: {
-                            slidesToShow: 3,
-                            slidesToScroll: 3,
+                            slidesToShow: 1,
+                            slidesToScroll: 1,
                             infinite: true
                         }
                     },
                     {
                         breakpoint: 600,
                         settings: {
-                            slidesToShow: 2,
-                            slidesToScroll: 2
+                            slidesToShow: 1,
+                            slidesToScroll: 1
                         }
                     },
                     {

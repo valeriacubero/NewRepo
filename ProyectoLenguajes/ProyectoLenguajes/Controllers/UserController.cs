@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using ProyectoLenguajes.Data;
 using ProyectoLenguajes.Models;
 using System.Security.Claims;
+using System.Security.Principal;
+using Microsoft.AspNetCore.Identity;
 
 namespace ProyectoLenguajes.Controllers
 {
@@ -14,16 +16,18 @@ namespace ProyectoLenguajes.Controllers
 
         public IActionResult Index()
         {
-            var list = new List<GenderMovies>();
+            var list = new List<MoviesAndSeries>();
             var gender = new List<GENDER>();
             var moviesList = new List<MOVIE>();
+            var seriesList = new List<SERIE>();
 
             gender = db.GENDERs.FromSqlRaw("SELECT * FROM GENDER").ToList();
 
             foreach (var g in gender)
             {
                 moviesList = db.MOVIEs.FromSqlRaw("EXEC GetMoviesByGender @typeG", new SqlParameter("@typeG", g.typeG)).ToList();
-                list.Add(new GenderMovies() { genderName = g.typeG, movies = moviesList });
+                seriesList = db.SERIEs.FromSqlRaw("EXEC GetSeriesByGender @typeG", new SqlParameter("@typeG", g.typeG)).ToList();
+                list.Add(new MoviesAndSeries() { genderName = g.typeG, movies = moviesList, series = seriesList });
             }
             return View(list);
         }
@@ -46,22 +50,59 @@ namespace ProyectoLenguajes.Controllers
             return View(movieFinal);
         }
 
-        [HttpPost]
-        public ActionResult Comment(string text, int id)
+        public ActionResult SerieDetails(int id)
         {
-            var userId = User.FindFirstValue(ClaimTypes.Name);//aqui me traigo el id del usuario que está logeado por asi decirlo
+            var serie = db.SERIEs.Find(id);
+            db.SERIEs.Where(m => m.idSerie == id);
 
-            var parameter = new List<SqlParameter>();
-            parameter.Add(new SqlParameter("@userAccount", userId));//le asigno el usuario que está logeado
-            parameter.Add(new SqlParameter("@idMovie", id));//suponiendo que de verdad me trae el id de la pelicula, se lo asigno
-            parameter.Add(new SqlParameter("@review", text));//le asiigno el comentario si es que no viene null al llamarlo
+            var actors = new List<ACTOR>();
+            actors = db.ACTORs.FromSqlRaw("EXEC GetSerieCast @id", new SqlParameter("@id", id)).ToList();
 
-            var rs = Task.Run(() => db.Database
-                .ExecuteSqlRaw(@"exec CommentedMovie @userAccount, @idMovie, @review", parameter.ToArray()));//se lo meto al SP uwu
 
-            return View();
+            var reviews = new List<UserSerie>();
+            reviews = db.UserSeries.FromSqlRaw("EXEC GetSerieReviews @id", new SqlParameter("@id", id)).ToList();
+
+            var chapters = new List<CHAPTER>();
+            chapters = db.CHAPTERs.FromSqlRaw("EXEC GetSerieChapters @id", new SqlParameter("@id", id)).ToList();
+
+            var serieFinal = new SerieFinal() { serie = serie, actors = actors, reviews = reviews, chapters = chapters };
+
+            return View(serieFinal);
         }
 
         
+        public ActionResult Comment(string text, int id, int stars)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.Name);
+
+
+            var parameter = new List<SqlParameter>();
+            parameter.Add(new SqlParameter("@idAccount", userId));
+            parameter.Add(new SqlParameter("@idMovie", id));
+            parameter.Add(new SqlParameter("@review", text));
+            parameter.Add(new SqlParameter("@stars", stars));
+
+            db.Database.ExecuteSqlRaw("EXEC CommentMovie @idAccount, @idMovie, @review, @stars", parameter.ToArray());
+
+            return Json(new { mensaje = "Datos recibidos correctamente" });
+        }
+
+        public ActionResult CommentSerie(string text, int id, int stars)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.Name);
+
+
+            var parameter = new List<SqlParameter>();
+            parameter.Add(new SqlParameter("@idAccount", userId));
+            parameter.Add(new SqlParameter("@idSerie", id));
+            parameter.Add(new SqlParameter("@review", text));
+            parameter.Add(new SqlParameter("@stars", stars));
+
+            db.Database.ExecuteSqlRaw("EXEC CommentSerie @idAccount, @idSerie, @review, @stars", parameter.ToArray());
+
+            return Json(new { mensaje = "Datos recibidos correctamente" });
+        }
+
+
     }
 }

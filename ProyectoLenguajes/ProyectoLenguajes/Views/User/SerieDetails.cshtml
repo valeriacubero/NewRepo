@@ -1,17 +1,18 @@
 ﻿@using ProyectoLenguajes.Data;
 @using Microsoft.AspNetCore.Mvc;
 @using Microsoft.EntityFrameworkCore;
-@model ProyectoLenguajes.Models.MovieFinal
+@model ProyectoLenguajes.Models.SerieFinal
 
 
 @{
-    ViewData["Title"] = "MovieDetails";
-    var dateMovie = DateOnly.FromDateTime(Model.movie.year);
+    ViewData["Title"] = "SerieDetails";
+    var dateSerie = DateOnly.FromDateTime(Model.serie.year);
     DateOnly dateActor;
     @foreach (var actor in Model.actors)
     {
         dateActor = DateOnly.FromDateTime(actor.birth);
     }
+
 
 }
 
@@ -25,9 +26,10 @@
 
     <title>Movie Information</title>
 
-    
-    
-    
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.3.11/slick.css" />
+    <link rel="stylesheet" type="text/css" href="slick/slick.css" />
+    <link rel="stylesheet" type="text/css" href="slick/slick-theme.css" />
+
 </head>
 
 <body>
@@ -42,31 +44,28 @@
         </div>
         <hr />
     </header>
-    
+
     <main>
-        @{
-            
-        }
-        <h1 class="subtitle">Movie Details: @Model.movie.name</h1>
+        <h1 class="subtitle">Serie Details: @Model.serie.name</h1>
 
         <div class="movieContainer">
-            <iframe class="trailer" src="@Model.movie.trailer" frameborder="1"></iframe>
+            <iframe class="trailer" src="@Model.serie.trailer" frameborder="1"></iframe>
             <div class="movieInfo">
                 <h2 class="subtitle">Description</h2>
-                <span>@Model.movie.description</span>
+                <span>@Model.serie.description</span>
                 <br />
 
                 <h2 class="subtitle">Details</h2>
-                <span>Duration: @Model.movie.duration</span>
+                <span>Seasons: @Model.serie.seasons</span>
                 <br />
-                <span>Director: @Model.movie.director</span>
+                <span>Director: @Model.serie.director</span>
                 <br />
-                <span>Distributor: @Model.movie.distributor</span>
+                <span>Distributor: @Model.serie.distributor</span>
                 <br />
-                <span>Release date: @dateMovie</span>
+                <span>Release date: @dateSerie</span>
                 <br />
 
-                <span>Punctuation: @Model.movie.punctuation</span>
+                <span>Punctuation: @Model.serie.punctuation</span>
                 <br />
                 
             </div>
@@ -74,7 +73,6 @@
 
         <div>
             <!--modal button 1-->
-            
             <!-- Trigger/Open The Modal -->
             <button id="openModal1" class="moreButton glyphicon glyphicon-heart-empty"><br>Cast</button>
 
@@ -113,10 +111,10 @@
                 <div class="modal-content">
                     <span class="closeModal2">&times;</span>
                     <div class="commentDiv">
-                        <label for="comment" class="subtitle">Comment on this movie</label>
-                        <textarea id="@Model.movie.idMovie" class="textC" required></textarea>
-                        
-                        <h2 class="subtitle">Rate this movie for 1 to 10</h2>
+                        <label for="comment" class="subtitle">Comment on this serie</label>
+                        <textarea id="@Model.serie.idSerie" class="textC" required></textarea>
+
+                        <h2 class="subtitle">Rate this serie for 1 to 10</h2>
                         <br />
                         <div class="inputRate">
                             <input type="number" class="textS" id="tentacles" name="tentacles" min="0" max="10" style="width: 150px;height: 35px;color: black;">
@@ -128,31 +126,75 @@
 
             </div>
 
+            <!--modal button 3-->
+            <!-- Trigger/Open The Modal -->
+            <button id="openModal3" class="moreButton glyphicon glyphicon-facetime-video"><br>Chapters</button>
+
+            <!-- The Modal 1 -->
+            <div id="modal3" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <span class="closeModal3">&times;</span>
+                    <div class="chaptersDiv">
+                        @foreach (var chapter in Model.chapters)
+                        {
+                            <div class="cardChapter">
+                                <div class="cardChapterContent">
+                                        <div class="imageChapter">
+                                            <img src="@chapter.img">
+                                        </div>
+                                        <div class="infoChapter">
+                                            <h2>@chapter.name</h2>
+                                            <br>
+                                            <span>Description: @chapter.description</span>
+                                            <br>
+                                            <br>
+                                            <span>Season: @chapter.season</span>
+                                            <br>
+                                            <span>Chapter number: @chapter.numChapter</span>
+                                            <br>
+                                            <span>Duration: @chapter.duration</span>
+                                            <br>
+                                        </div>
+                                        
+                                </div>
+                             </div>
+                        }
+                    </div>
+                </div>
+
+            </div>
+
             <!--My List-->
             <button class="moreButton glyphicon glyphicon-bookmark"><br>MyList</button>
 
 
             <!--Comments-->
             <div class="reviews">
-                
+
                 <div class="reviewsDiv">
-                    <h2 class="subtitle" style="color: black;">Last 10 movie reviews</h2>
+                    <h2 class="subtitle" style="color: black;">Last 10 serie reviews</h2>
                     <div class="cardReview">
                         <div class="cardReviewContent">
-                            @foreach(var review in Model.reviews)
+                            @foreach (var review in Model.reviews)
                             {
                                 <div class="infoComment">
                                     <span>@review.review</span>
                                     <br>
-                                    <span>@review.reviewTime</span>
-                                    <hr/>
+                                    <span>@review.times</span>
+                                    <hr />
                                 </div>
                             }
                         </div>
                     </div>
                 </div>
             </div>
+            </div>
         </div>
+
+
+
 
     </main>
 
@@ -173,13 +215,13 @@
 
             //ajax request
             $.ajax({
-                url: '/User/Comment',
+                url: '/User/CommentSerie',
                 type: 'GET',
                 data: datos
-                
-                
+
+
             });
-            
+
             swal("YAY", "Thank you for you review!", "success")
 
             $('.textC').val("");
@@ -188,7 +230,7 @@
 
 
     </script>
-        
+
     <script>
 
         /***SCRIPT MODALS***/
@@ -248,5 +290,32 @@
         }
 
 
+    </script>
+
+    <script>
+        //MODAL 3
+        // Get the modal
+        var modal2 = document.getElementById("modal3");
+        // Get the button that opens the modal
+        var btn2 = document.getElementById("openModal3");
+        // Get the <span> element that closes the modal
+        var span2 = document.getElementsByClassName("closeModal3")[0];
+
+        // When the user clicks on the button, open the modal
+        btn2.onclick = function () {
+            modal2.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span2.onclick = function () {
+            modal2.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal2) {
+                modal2.style.display = "none";
+            }
+        }
     </script>
 </body>
