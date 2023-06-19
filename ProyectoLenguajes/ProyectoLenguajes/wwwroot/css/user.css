@@ -1,4 +1,6 @@
-﻿:root {
+﻿
+/*variables*/
+:root {
     --titlesFont: "Bebas Neue";
     --subtitlesFont: "Rajdhani";
     --generalTextFont: "Calibri";
@@ -24,6 +26,7 @@ body {
     width: 98%;
     margin: auto;
     align-items: center;
+    align-self:center;
 }
 
 header .container {
@@ -68,6 +71,10 @@ img {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.navbar {
+    margin-top: 20px;
 }
 
 
@@ -303,4 +310,52 @@ hr {
 
 .infoChapter .span {
     font-family: var(--generalTextFont);
+}
+
+/*SEARCH PAGE*/
+#searchContainer h2 {
+    font-family: var(--generalTextFont);
+    color: white;
+    font-size: 17px;
+    text-align: left;
+}
+
+form {
+    margin: 20px;
+}
+
+.space {
+    color: black;
+    font-size: 13px;
+    width: 200px;
+    height: 30px;
+}
+
+#searchContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.searchButton {
+    width: 100px;
+    height: 25px;
+    color: black;
+    padding: 2px;
+    background-color: #A9CCE3;
+    border-color: #A9CCE3;
+    border-radius: 5px;
+    font-family: var(--generalTextFont);
+    font-size: 15px;
+    margin: 10px;
+}
+
+
+/*******************************RESPONSIVE USER**********************************/
+/* Estilos para dispositivos móviles pequeños */
+@media (max-width: 576px) {
+}
+
+/* Estilos para dispositivos móviles medianos */
+@media (min-width: 577px) and (max-width: 768px) {
 }

@@ -60,6 +60,8 @@ BEGIN
 	SELECT A.* FROM ACTOR A, ActorMovie WHERE  ActorMovie.idMovie = @id AND ActorMovie.idActor= A.idActor
 END
 
+
+
 CREATE PROCEDURE GetSerieCast(
  @id int
 )
@@ -108,6 +110,67 @@ BEGIN
 	INSERT INTO UserMovie VALUES (@userID, @idMovie, GETDATE(), @stars, @review)
 END
 
+CREATE PROCEDURE CalculateMoviePunctuation (
+	@idMovie int
+)
+AS 
+BEGIN
+	DECLARE @punctuation float
+
+	SELECT @punctuation = AVG(stars) FROM UserMovie WHERE idMovie = @idMovie
+
+	UPDATE MOVIE SET punctuation = @punctuation WHERE idMovie = @idMovie
+END
+
+
+
+EXEC CalculateMoviePunctuation 2000
+
+CREATE PROCEDURE CalculateSeriePunctuation (
+	@idSerie int
+)
+AS 
+BEGIN
+	DECLARE @punctuation float
+
+	SELECT @punctuation = AVG(stars) FROM UserSerie WHERE idSerie = @idSerie
+
+	UPDATE SERIE SET punctuation = @punctuation WHERE idSerie = @idSerie
+END
+
+CREATE PROCEDURE GetAllMovies 
+AS 
+BEGIN
+	SELECT * FROM MOVIE 
+END
+
+CREATE PROCEDURE GetAllSeries
+AS 
+BEGIN
+	SELECT * FROM SERIE 
+END
+
+CREATE PROCEDURE GetAllGenders
+AS
+BEGIN
+	SELECT * FROM GENDER
+END
+
+CREATE PROCEDURE GetMoviesByName (
+	@name varchar(50)
+)
+AS
+BEGIN
+	SELECT * FROM MOVIE WHERE name = @name
+END
+
+CREATE PROCEDURE GetSeriesByName (
+	@name varchar(50)
+)
+AS
+BEGIN
+	SELECT * FROM SERIE WHERE name = @name
+END
 
 --
 UPDATE SERIE SET trailer = 

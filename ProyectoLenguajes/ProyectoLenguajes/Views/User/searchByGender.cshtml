@@ -1,9 +1,14 @@
-﻿@using ProyectoLenguajes.Data;
+﻿
+
+
+@using ProyectoLenguajes.Data;
 @using Microsoft.AspNetCore.Mvc;
 @using Microsoft.EntityFrameworkCore;
-@model IEnumerable<ProyectoLenguajes.Models.MoviesAndSeries>
+@model ProyectoLenguajes.Models.MoviesAndSeries
+
+
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "searchByGender";
 }
 
 <head>
@@ -39,7 +44,7 @@
                 <div class="collapse navbar-collapse" id="opciones">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">Home</a>
+                            <a class="nav-link" href="#">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Profile</a>
@@ -58,91 +63,90 @@
             </nav>
         </div>
     </header>
-     
-        <hr />
+
+    <hr />
 
 
     <br />
     <main>
 
+        <h1 style="text-align: center; font-family: Rajdhani; font-size: 45px; color:white">Search by gender</h1>
+
         <!--MOVIES AND SERIES-->
         <div class="box-wrap">
 
-            @foreach (var item in Model)
-            {
-                <section class="container">
-                    <h1 class="subtitle">@item.genderName Movies</h1>
-                    <div id="slider-@item.genderName" class="slider">
-                        @if (@item.movies.Count() > 0)
+            <section class="container">
+                <h1 class="subtitle">@Model.genderName Movies</h1>
+                <div id="slider-@Model.genderName" class="slider">
+                    @if (@Model.movies.Count() > 0)
+                    {
+                        @foreach (var movie in @Model.movies)
                         {
-                            @foreach (var movie in @item.movies)
-                            {
 
-                                <div class="card">
-                                    <div class="cardContent">
-                                        <div class="image">
-                                            <img src="@movie.img">
-                                        </div>
-                                        <div class="infoMovie">
-                                            <h2>@movie.name</h2>
-                                            <h3>@movie.distributor</h3>
-                                            <h3>@movie.duration</h3>
-                                            <h3>Director: @movie.director</h3>
-                                        </div>
-                                        <button class="more">
-                                            <a asp-action="MovieDetails"
+                            <div class="card">
+                                <div class="cardContent">
+                                    <div class="image">
+                                        <img src="@movie.img">
+                                    </div>
+                                    <div class="infoMovie">
+                                        <h2>@movie.name</h2>
+                                        <h3>@movie.distributor</h3>
+                                        <h3>@movie.duration</h3>
+                                        <h3>Director: @movie.director</h3>
+                                    </div>
+                                    <button class="more">
+                                        <a asp-action="MovieDetails"
                                    asp-route-id="@movie.idMovie" style="text-align: center;">
-                                                View More
-                                            </a>
-                                        </button>
-                                    </div>
+                                            View More
+                                        </a>
+                                    </button>
                                 </div>
-                            }
+                            </div>
                         }
-                        else
+                    }
+                    else
+                    {
+                        <h2 class="subtitle">No movies in this gender</h2>
+                    }
+
+                </div>
+
+                <h1 class="subtitle">@Model.genderName Series</h1>
+                <div id="slider-@Model.genderName" class="slider">
+                    @if (@Model.series.Count() > 0)
+                    {
+                        @foreach (var serie in @Model.series)
                         {
-                            <h2 class="subtitle">No movies in this gender</h2>
-                        }
 
-                    </div>
-
-                    <h1 class="subtitle">@item.genderName Series</h1>
-                    <div id="slider-@item.genderName" class="slider">
-                        @if (@item.series.Count() > 0)
-                        {
-                            @foreach (var serie in @item.series)
-                            {
-
-                                <div class="card">
-                                    <div class="cardContent">
-                                        <div class="image">
-                                            <img src="@serie.img">
-                                        </div>
-                                        <div class="infoMovie">
-                                            <h2>@serie.name</h2>
-                                            <h3>@serie.distributor</h3>
-                                            <h3>Seasons: @serie.seasons</h3>
-                                            <h3>Director: @serie.director</h3>
-                                        </div>
-                                        <button class="more">
-                                            <a asp-action="SerieDetails"
+                            <div class="card">
+                                <div class="cardContent">
+                                    <div class="image">
+                                        <img src="@serie.img">
+                                    </div>
+                                    <div class="infoMovie">
+                                        <h2>@serie.name</h2>
+                                        <h3>@serie.distributor</h3>
+                                        <h3>Seasons: @serie.seasons</h3>
+                                        <h3>Director: @serie.director</h3>
+                                    </div>
+                                    <button class="more">
+                                        <a asp-action="SerieDetails"
                                    asp-route-id="@serie.idSerie" style="text-align: center;">
-                                                View More
-                                            </a>
-                                        </button>
-                                    </div>
+                                            View More
+                                        </a>
+                                    </button>
                                 </div>
-                            }
+                            </div>
                         }
-                        else
-                        {
-                            <h2 class="subtitle">No series in this gender</h2>
-                        }
+                    }
+                    else
+                    {
+                        <h2 class="subtitle">No series in this gender</h2>
+                    }
 
-                    </div>
-                </section>
-                
-            }
+                </div>
+            </section>
+
 
 
         </div>
