@@ -1,0 +1,83 @@
+﻿@model IEnumerable<ProyectoLenguajes.Models.SERIE>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<link rel="stylesheet" href="~/css/user.css">
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.seasons)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.year)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.director)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.distributor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.img)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.punctuation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.trailer)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.seasons)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.year)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.director)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.distributor)
+            </td>
+            <td>
+                    <div class="image"><img src="@item.img"></div>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.punctuation)
+            </td>
+            <td>
+                    <iframe class="trailer" src="@item.trailer" frameborder="1"></iframe>
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.idSerie">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.idSerie">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.idSerie">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

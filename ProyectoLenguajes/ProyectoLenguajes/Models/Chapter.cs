@@ -21,5 +21,5 @@ public partial class CHAPTER
 
     public string? description { get; set; }
 
-    public virtual SERIE idSerieNavigation { get; set; } = null!;
+    public virtual SERIE? idSerieNavigation { get; set; } = null!;
 }

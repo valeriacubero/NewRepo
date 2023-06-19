@@ -352,4 +352,11 @@ public partial class TestUCRContext : DbContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+    public DbSet<ProyectoLenguajes.Models.AddMovie>? AddMovie { get; set; }
+
+    public DbSet<ProyectoLenguajes.Models.AddSerie>? AddSerie { get; set; }
+
+    public DbSet<ProyectoLenguajes.Models.AddEpisode>? AddEpisode { get; set; }
+
 }

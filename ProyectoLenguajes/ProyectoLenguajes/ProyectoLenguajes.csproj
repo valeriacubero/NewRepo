@@ -12,6 +12,25 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Views\Actor\Create.cshtml" />
+    <None Include="Views\Episodes\Create.cshtml" />
+    <None Include="Views\Episodes\Delete.cshtml" />
+    <None Include="Views\Episodes\Details.cshtml" />
+    <None Include="Views\Episodes\Edit.cshtml" />
+    <None Include="Views\Episodes\Index.cshtml" />
+    <None Include="Views\Movie\Create.cshtml" />
+    <None Include="Views\Movie\Delete.cshtml" />
+    <None Include="Views\Movie\Details.cshtml" />
+    <None Include="Views\Movie\Edit.cshtml" />
+    <None Include="Views\Movie\Index.cshtml" />
+    <None Include="Views\Series\Create.cshtml" />
+    <None Include="Views\Series\Delete.cshtml" />
+    <None Include="Views\Series\Details.cshtml" />
+    <None Include="Views\Series\Edit.cshtml" />
+    <None Include="Views\Series\Index.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.5">
       <PrivateAssets>all</PrivateAssets>

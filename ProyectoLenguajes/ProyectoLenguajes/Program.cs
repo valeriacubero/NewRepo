@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using ProyectoLenguajes.Data;
 using ProyectoLenguajes.Models.Domain;
 using ProyectoLenguajes.Repositories.Abstract;
 using ProyectoLenguajes.Repositories.Implementation;
@@ -13,6 +14,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<DatabaseContext>()
     .AddDefaultTokenProviders();
 builder.Services.AddScoped<MyUserManager>();//////////
+builder.Services.AddScoped<TestUCRContext>();
 builder.Services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
 builder.Services.ConfigureApplicationCookie(op => op.LoginPath = "/UserAuthentication/Login"); //cookies
 
