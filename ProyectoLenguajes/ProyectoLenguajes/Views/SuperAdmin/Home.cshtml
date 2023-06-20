@@ -1,0 +1,107 @@
+﻿@model ACCOUNT
+@using System.Security.Claims;
+@using ProyectoLenguajes.Data;
+@{
+    ViewData["Title"] = "Home";
+    TestUCRContext db = new TestUCRContext();
+
+    var userNameM = User.FindFirstValue(ClaimTypes.Name);//To get the username of current account
+    var id = db.ACCOUNTs
+    .Where(a => a.userName == userNameM)
+    .Select(a => a.idAccount)
+    .FirstOrDefault();//To get the id of de current account in our database
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/superadmin.css">
+    <title>Tu Título</title>
+    <style>
+        body {
+            padding: 1em;
+            text-align: center;
+        }
+
+        .app-name {
+            font-size: 24px;
+            margin-bottom: 1em;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            background: linear-gradient(to left, mediumslateblue 30%, #330867 80%);
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+            cursor: pointer;
+            margin-bottom: 1em;
+        }
+
+            .button:hover {
+                background-color: #333;
+                color: #fff;
+            }
+
+        .full-width-button {
+            width: 100%;
+            margin-bottom: 1em;
+        }
+
+        .width-button {
+            width: 49%;
+            margin-bottom: 1em;
+        }
+
+        .height-buttom {
+            height: 70px;
+        }
+
+        .Home2 {
+            padding-top: 3em;
+        }
+    </style>
+</head>
+<body>
+    <div class="Home">
+        <div>
+            <div class="app-name">
+
+                <h1>Hello!</h1>
+            </div>
+        </div>
+        <div class="Home2">
+            <div>
+                <a href="/SuperAdmin/Details/@id" class="button full-width-button height-buttom">
+                    @ViewBag.UserName
+                </a>
+            </div>
+
+            <div class="d-flex">
+                <a href="URL-Options" class="button width-button">Options</a>
+
+                <a href="/SuperAdmin/Display" class="button width-button">Accounts</a>
+
+            </div>
+
+            <div>
+                <a href="URL-About" class="button width-button">About</a>
+                @*<a href="URL-Reports" class="button width-button">Reports</a>*@
+                <form asp-controller="SuperAdmin" asp-action="DownloadPDF">
+                    @*<a href="#" class="button width-button">Reports</a>*@
+                    <button class="button width-button" type="submit" id="btnReport">Report</button>
+                </form>
+            </div>
+
+            <a href="/UserAuthentication/Logout" class="button full-width-button">
+                Log Out
+            </a>
+        </div>
+    </div>
+</body>
+</html>

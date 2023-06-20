@@ -61,7 +61,6 @@ namespace APPClient.Controllers
                 {
                     return BadRequest("problemas");
                 }
-                //return View();
             }
         }
 
@@ -104,7 +103,30 @@ namespace APPClient.Controllers
         // GET: ClientController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            using (var client = new HttpClient())
+            {
+                var url = "https://localhost:7218/api/Movies/" + id;
+
+                //HTTP POST
+                var responseTask = client.GetAsync(url);
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadFromJsonAsync<MOVIE>();
+                    readTask.Wait();
+
+                    var movie = readTask.Result;
+                    return View(movie);
+
+                }
+                else //si la api arroja algun error
+                {
+                    return BadRequest("problemas");
+                }
+            }
         }
 
         // POST: ClientController/Edit/5
@@ -140,7 +162,30 @@ namespace APPClient.Controllers
         // GET: ClientController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            using (var client = new HttpClient())
+            {
+                var url = "https://localhost:7218/api/Movies/" + id;
+
+                //HTTP POST
+                var responseTask = client.GetAsync(url);
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadFromJsonAsync<MOVIE>();
+                    readTask.Wait();
+
+                    var movie = readTask.Result;
+                    return View(movie);
+
+                }
+                else //si la api arroja algun error
+                {
+                    return BadRequest("problemas");
+                }
+            }
         }
 
         // POST: ClientController/Delete/5
@@ -163,14 +208,14 @@ namespace APPClient.Controllers
                     if (result.IsSuccessStatusCode)
                     {
                         text = "Datos eliminados";
-                        //var readTask = result.Content.ReadFromJsonAsync<Person>();
-                        //readTask.Wait();
+                        var readTask = result.Content.ReadFromJsonAsync<MOVIE>();
+                        readTask.Wait();
 
                     }
                     else //si la api arroja algun error
                     {
                         text = "Datos NO eliminados";
-                        //return BadRequest("problemas");
+                        return BadRequest("problemas");
                     }
                 }
                 return RedirectToAction(nameof(Index));

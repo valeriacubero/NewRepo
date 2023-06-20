@@ -1,8 +1,5 @@
---USE [ProyLenguP]
---GO
 USE Lenguajes_Proyecto_VJE
 GO
-
 --PROCEDIMIENTOS ALMACENADOS
 
 --SP TO GET ALL ACCOUNTS
@@ -23,7 +20,25 @@ BEGIN
 		END
 END
 GO
---SP TO GET USERS ACCOUNTS
+--SP TO GET ALL ACCOUNTS
+--DROP PROCEDURE GetAdminsAccounts
+CREATE PROCEDURE GetAdminsAccounts
+AS
+BEGIN
+	DECLARE @ErrorMessage VARCHAR(200)
+	
+	IF EXISTS(SELECT * FROM ACCOUNT WHERE roll = 'admin')
+		BEGIN
+			SELECT * FROM ACCOUNT WHERE roll = 'admin'
+		END
+	ELSE
+		BEGIN
+			SET @ErrorMessage = 'There is not admins accounts in the data base'
+			SELECT @ErrorMessage
+		END
+END
+GO
+--SP TO GET ALL ACCOUNTS
 --DROP PROCEDURE GetUsersAccounts
 CREATE PROCEDURE GetUsersAccounts
 AS
@@ -41,16 +56,12 @@ BEGIN
 		END
 END
 GO
---SP TO ADD ACCOUNTS
---DROP PROCEDURE InsertAccounts
-CREATE PROCEDURE InsertAccounts
+--SP TO DELETE ACCOUNTS
+--DROP PROCEDURE DeleteAccount
+CREATE PROCEDURE DeleteAccount
 (
 	@userAccount VARCHAR(50),
-	@name VARCHAR(70),
-	@email VARCHAR(50),
-	@roll VARCHAR(10),
-	@userName VARCHAR(20),
-	@password VARCHAR(20)
+	@idAccount VARCHAR(50)
 )
 AS
 BEGIN
@@ -58,30 +69,22 @@ DECLARE @ErrorMessage VARCHAR(200)
 	BEGIN TRY
 		BEGIN TRANSACTION
 
-		DECLARE @userID INT
+		DECLARE @userID INT, @role VARCHAR(20), @name VARCHAR(50)
+
 		SET @userID = (SELECT idAccount FROM ACCOUNT WHERE userName like @userAccount)
+		SET @idAccount = CAST(@idAccount AS INT)
+		SET @role = (SELECT roll FROM ACCOUNT WHERE idAccount = @idAccount)
+		SET @name = (SELECT name FROM ACCOUNT WHERE idAccount = @idAccount)
 
 		IF EXISTS(SELECT [idAccount] FROM [dbo].[ACCOUNT]
-				  WHERE [idAccount] = @userID AND [roll] != 'user' AND dbo.HasNumbers(@name) = 0)
-			BEGIN
-				IF NOT EXISTS(SELECT [email], [userName], [password]
-						  FROM [dbo].[ACCOUNT]
-						  WHERE email = @email OR userName = @userName OR [password] = @password)
-				BEGIN					
-					INSERT INTO [dbo].[ACCOUNT]
-					           ([name]
-					           ,[email]
-					           ,[roll]
-					           ,[userName]
-					           ,[password])
-					     VALUES
-					           (@name
-					           ,@email
-					           ,@roll
-					           ,@userName
-					           ,@password)
-					
-					INSERT INTO [dbo].[AUDIT]
+				  WHERE [idAccount] = @idAccount)
+		   BEGIN
+				IF EXISTS(SELECT [idAccount] FROM [dbo].[ACCOUNT]
+						  WHERE [idAccount] = @userID AND [roll] = 'superA')
+				   BEGIN
+						DELETE FROM ACCOUNT WHERE idAccount = @idAccount
+
+						INSERT INTO [dbo].[AUDIT]
 					           ([action]
 					           ,[tableName]
 					           ,[nameOf]
@@ -89,23 +92,44 @@ DECLARE @ErrorMessage VARCHAR(200)
 					           ,[description]
 					           ,[idUser])
 					     VALUES
-					           ('Insert'
+					           ('DELETE'
 					           ,'ACCOUNT'
 					           ,@name
-					           ,SCOPE_IDENTITY()
-					           ,'Adding a new account'
+					           ,@idAccount
+					           ,'Permanently deleting account.'
 					           ,@userID)
-				END
+				   END
 				ELSE
-				BEGIN
-					SET @ErrorMessage = 'Error: email, username or password already exist'
-					ROLLBACK TRANSACTION
-				END
-			END
-			ELSE
+				IF EXISTS(SELECT [idAccount] FROM [dbo].[ACCOUNT]
+						  WHERE [idAccount] = @userID AND [roll] = 'admin' AND @role = 'user')
+				   BEGIN
+						DELETE FROM ACCOUNT WHERE idAccount = @idAccount
+
+						INSERT INTO [dbo].[AUDIT]
+					           ([action]
+					           ,[tableName]
+					           ,[nameOf]
+					           ,[idOf]
+					           ,[description]
+					           ,[idUser])
+					     VALUES
+					           ('DELETE'
+					           ,'ACCOUNT'
+					           ,@name
+					           ,@idAccount
+					           ,'Permanently deleting account.'
+					           ,@userID)
+				   END
+				ELSE
+					BEGIN
+						 SET @ErrorMessage = 'Error: You do not have permission to perform this action'
+						 ROLLBACK TRANSACTION
+					END
+		END
+		ELSE 
 			BEGIN
-				SET @ErrorMessage = 'Error: superadmin or admin account does not exist or does not have permission or the name has numbers'
-				ROLLBACK TRANSACTION
+				 SET @ErrorMessage = 'Error: The account does not exist'
+				 ROLLBACK TRANSACTION
 			END
 	COMMIT TRANSACTION
 	END TRY
@@ -232,12 +256,17 @@ DECLARE @ErrorMessage VARCHAR(200)
 SELECT @ErrorMessage AS ErrorMessage
 END
 GO
---SP TO DELETE ACCOUNTS
---DROP PROCEDURE DeleteAccount
-CREATE PROCEDURE DeleteAccount
+--SP TO UPDATE ACCOUNTS
+--DROP PROCEDURE UpdateMyAccount
+CREATE PROCEDURE UpdateMyAccount
 (
 	@userAccount VARCHAR(50),
-	@idAccount VARCHAR(50)
+	@idAccount VARCHAR(50),
+	@name VARCHAR(70),
+	@email VARCHAR(50),
+	@username VARCHAR(20),
+	@password VARCHAR(20),
+	@img VARCHAR(2000)
 )
 AS
 BEGIN
@@ -245,20 +274,19 @@ DECLARE @ErrorMessage VARCHAR(200)
 	BEGIN TRY
 		BEGIN TRANSACTION
 
-		DECLARE @userID INT, @role VARCHAR(20), @name VARCHAR(50)
+		DECLARE @userID INT, @role VARCHAR(20)
 
 		SET @userID = (SELECT idAccount FROM ACCOUNT WHERE userName like @userAccount)
 		SET @idAccount = CAST(@idAccount AS INT)
-		SET @role = (SELECT roll FROM ACCOUNT WHERE idAccount = @idAccount)
-		SET @name = (SELECT name FROM ACCOUNT WHERE idAccount = @idAccount)
 
 		IF EXISTS(SELECT [idAccount] FROM [dbo].[ACCOUNT]
-				  WHERE [idAccount] = @idAccount)
-		   BEGIN
-				IF EXISTS(SELECT [idAccount] FROM [dbo].[ACCOUNT]
-						  WHERE [idAccount] = @userID AND [roll] = 'superA')
-				   BEGIN
-						DELETE FROM ACCOUNT WHERE idAccount = @idAccount
+				  WHERE [idAccount] = @idAccount AND dbo.HasNumbers(@name) = 0)
+			BEGIN
+						UPDATE ACCOUNT SET name = @name WHERE idAccount = @idAccount
+						UPDATE ACCOUNT SET email = @email WHERE idAccount = @idAccount
+						UPDATE ACCOUNT SET username = @username WHERE idAccount = @idAccount
+						UPDATE ACCOUNT SET password = @password WHERE idAccount = @idAccount
+						UPDATE ACCOUNT SET img = @img WHERE idAccount = @idAccount
 
 						INSERT INTO [dbo].[AUDIT]
 					           ([action]
@@ -268,43 +296,16 @@ DECLARE @ErrorMessage VARCHAR(200)
 					           ,[description]
 					           ,[idUser])
 					     VALUES
-					           ('DELETE'
+					           ('UPDATE'
 					           ,'ACCOUNT'
 					           ,@name
 					           ,@idAccount
-					           ,'Permanently deleting account.'
+					           ,'Update my account.'
 					           ,@userID)
-				   END
-				ELSE
-				IF EXISTS(SELECT [idAccount] FROM [dbo].[ACCOUNT]
-						  WHERE [idAccount] = @userID AND [roll] = 'admin' AND @role = 'user')
-				   BEGIN
-						DELETE FROM ACCOUNT WHERE idAccount = @idAccount
-
-						INSERT INTO [dbo].[AUDIT]
-					           ([action]
-					           ,[tableName]
-					           ,[nameOf]
-					           ,[idOf]
-					           ,[description]
-					           ,[idUser])
-					     VALUES
-					           ('DELETE'
-					           ,'ACCOUNT'
-					           ,@name
-					           ,@idAccount
-					           ,'Permanently deleting account.'
-					           ,@userID)
-				   END
-				ELSE
-					BEGIN
-						 SET @ErrorMessage = 'Error: You do not have permission to perform this action'
-						 ROLLBACK TRANSACTION
-					END
-		END
+			END
 		ELSE 
 			BEGIN
-				 SET @ErrorMessage = 'Error: The account does not exist'
+				 SET @ErrorMessage = 'Error: The account does not exist or the name it is not correct'
 				 ROLLBACK TRANSACTION
 			END
 	COMMIT TRANSACTION
@@ -326,10 +327,94 @@ DECLARE @ErrorMessage VARCHAR(200)
 SELECT @ErrorMessage AS ErrorMessage
 END
 GO
----------------------------------------------------------
+--SP TO ADD ACCOUNTS
+--DROP PROCEDURE InsertAccounts
+CREATE PROCEDURE InsertAccounts
+(
+	@userAccount VARCHAR(50),
+	@name VARCHAR(70),
+	@email VARCHAR(50),
+	@roll VARCHAR(10),
+	@userName VARCHAR(20),
+	@password VARCHAR(20)
+)
+AS
+BEGIN
+DECLARE @ErrorMessage VARCHAR(200)
+	BEGIN TRY
+		BEGIN TRANSACTION
+
+		DECLARE @userID INT
+		SET @userID = (SELECT idAccount FROM ACCOUNT WHERE userName like @userAccount)
+
+		IF EXISTS(SELECT [idAccount] FROM [dbo].[ACCOUNT]
+				  WHERE [idAccount] = @userID AND [roll] != 'user' AND dbo.HasNumbers(@name) = 0)
+			BEGIN
+				IF NOT EXISTS(SELECT [email], [userName], [password]
+						  FROM [dbo].[ACCOUNT]
+						  WHERE email = @email OR userName = @userName OR [password] = @password)
+				BEGIN					
+					INSERT INTO [dbo].[ACCOUNT]
+					           ([name]
+					           ,[email]
+					           ,[roll]
+					           ,[userName]
+					           ,[password])
+					     VALUES
+					           (@name
+					           ,@email
+					           ,@roll
+					           ,@userName
+					           ,@password)
+					
+					INSERT INTO [dbo].[AUDIT]
+					           ([action]
+					           ,[tableName]
+					           ,[nameOf]
+					           ,[idOf]
+					           ,[description]
+					           ,[idUser])
+					     VALUES
+					           ('Insert'
+					           ,'ACCOUNT'
+					           ,@name
+					           ,SCOPE_IDENTITY()
+					           ,'Adding a new account'
+					           ,@userID)
+				END
+				ELSE
+				BEGIN
+					SET @ErrorMessage = 'Error: email, username or password already exist'
+					ROLLBACK TRANSACTION
+				END
+			END
+			ELSE
+			BEGIN
+				SET @ErrorMessage = 'Error: superadmin or admin account does not exist or does not have permission or the name has numbers'
+				ROLLBACK TRANSACTION
+			END
+	COMMIT TRANSACTION
+	END TRY
+	BEGIN CATCH
+		IF (@ErrorMessage != 'NULL')
+			BEGIN
+				SET @ErrorMessage = @ErrorMessage + ' ' +ERROR_MESSAGE()
+			END
+		ELSE 
+			BEGIN
+				SET @ErrorMessage = ERROR_MESSAGE()
+			END
+		IF @@TRANCOUNT > 0
+			BEGIN
+				ROLLBACK TRANSACTION
+			END
+	END CATCH
+SELECT @ErrorMessage AS ErrorMessage
+END
+GO
 --SP TO ADD MOVIES
 --DROP PROCEDURE InsertMovie
-CREATE PROCEDURE InsertMovie --MOVIE, ACTOR, ActorMovie, GenderMovie, AUDIT
+CREATE PROCEDURE InsertMovie 
 (
 	@userID VARCHAR(10),
 	@nameM VARCHAR(50),
@@ -339,6 +424,7 @@ CREATE PROCEDURE InsertMovie --MOVIE, ACTOR, ActorMovie, GenderMovie, AUDIT
 	@distributor VARCHAR(50),
 	@img VARCHAR(100),
 	@description VARCHAR(2000),
+	@trailer VARCHAR(5000),
 	@actors ActorList READONLY, --Actors List
 	@genders GenderList READONLY --Gender List
 )
@@ -346,8 +432,7 @@ AS
 BEGIN
 DECLARE @ErrorMessage VARCHAR(200)
 	BEGIN TRY
-		BEGIN TRANSACTION
-
+		BEGIN TRANSACTION;
 		SET @userID = CAST(@userID AS INT)
 
 		IF EXISTS(SELECT [idAccount] FROM [dbo].[ACCOUNT]--if account exists
@@ -367,7 +452,8 @@ DECLARE @ErrorMessage VARCHAR(200)
 					           ,[director]
 					           ,[distributor]
 					           ,[img]
-					           ,[description])
+					           ,[description]
+							   ,[trailer])
 					     VALUES
 					           (@nameM
 					           ,@duration
@@ -375,12 +461,13 @@ DECLARE @ErrorMessage VARCHAR(200)
 					           ,@director
 					           ,@distributor
 					           ,@img
-					           ,@description)					
+					           ,@description
+							   ,@trailer)
 					DECLARE @idMovie INT
 					SET @idMovie = SCOPE_IDENTITY() --To get the generated auto-id
 					
-					INSERT INTO ACTOR (name, lastName, birth)
-					SELECT nameT, lastNameT, birthT
+					INSERT INTO ACTOR (name, lastName, birth, img)
+					SELECT nameT, lastNameT, birthT, imgT
 					FROM @actors a
 					WHERE NOT EXISTS (
 					    SELECT 1
@@ -473,6 +560,7 @@ CREATE PROCEDURE InsertSerie --SERIE, ACTOR, ActorSerie, GenderSerie, AUDIT
 	@distributor VARCHAR(50),
 	@img VARCHAR(100),
 	@description VARCHAR(2000),
+	@trailer VARCHAR(5000),
 	@actors ActorList READONLY, --Actors List
 	@genders GenderList READONLY --Gender List
 )
@@ -502,7 +590,8 @@ DECLARE @ErrorMessage VARCHAR(200)
 					           ,[director]
 					           ,[distributor]
 					           ,[img]
-					           ,[description])
+					           ,[description]
+							   ,[trailer])
 					     VALUES
 					           (@nameS
 					           ,@seasons
@@ -510,12 +599,13 @@ DECLARE @ErrorMessage VARCHAR(200)
 					           ,@director
 					           ,@distributor
 					           ,@img
-					           ,@description)					
+					           ,@description
+							   ,@trailer)					
 					DECLARE @idSerie INT
 					   SET @idSerie = SCOPE_IDENTITY() --To get the generated auto-id
 					
-					INSERT INTO ACTOR (name, lastName, birth)
-					SELECT nameT, lastNameT, birthT
+					INSERT INTO ACTOR (name, lastName, birth, img)
+					SELECT nameT, lastNameT, birthT, imgT
 					FROM @actors a
 					WHERE NOT EXISTS (
 					    SELECT 1
@@ -659,7 +749,7 @@ DECLARE @ErrorMessage VARCHAR(200)
 						           ,'CHAPTER'
 						           ,@nameC
 						           ,SCOPE_IDENTITY()
-						           ,'Adding a chapter for the serie: ' + @nameC
+						           ,'Adding a chapter for the serie: '+ @nameC
 						           ,@userID)
 				END
 				ELSE
@@ -714,4 +804,3 @@ DECLARE @ErrorMessage VARCHAR(200)
 			SELECT @ErrorMessage
 		END
 END
-

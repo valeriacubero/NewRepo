@@ -1,9 +1,21 @@
 ﻿@using ProyectoLenguajes.Data;
 @using Microsoft.AspNetCore.Mvc;
 @using Microsoft.EntityFrameworkCore;
+@using System.Security.Claims;
 @model IEnumerable<ProyectoLenguajes.Models.MoviesAndSeries>
 @{
     ViewData["Title"] = "Index";
+    TestUCRContext db = new TestUCRContext();
+
+    var userNameM = User.FindFirstValue(ClaimTypes.Name);//To get the username of current account
+    var id = db.ACCOUNTs
+    .Where(a => a.userName == userNameM)
+    .Select(a => a.idAccount)
+    .FirstOrDefault();//To get the id of de current account in our database
+    var imge = db.ACCOUNTs
+    .Where(a => a.userName == userNameM)
+    .Select(a => a.img)
+    .FirstOrDefault();//To get the img of the current account in our database
 }
 
 <head>
@@ -29,7 +41,7 @@
 
             <h2 class="title">Hello!</h2>
 
-            <nav class="navbar navbar-expand-sm navbar navbar-light" style="background-color: #e3f2fd;" ">
+            <nav class="navbar navbar-expand-sm navbar navbar-light" style="background-color: #e3f2fd;">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#opciones">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -42,7 +54,7 @@
                             <a class="nav-link active" href="#">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Profile</a>
+                            <a class="nav-link" href="/User/Details/@id">Profile</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="@Url.Action("Search", "User")">Search</a>

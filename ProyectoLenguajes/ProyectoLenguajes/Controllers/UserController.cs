@@ -8,6 +8,9 @@ using System.Security.Principal;
 using Microsoft.AspNetCore.Identity;
 using System;
 using Microsoft.AspNetCore.Hosting.Server;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
+using ProyectoLenguajes.Repositories.Abstract;
 
 namespace ProyectoLenguajes.Controllers
 {
@@ -15,6 +18,11 @@ namespace ProyectoLenguajes.Controllers
     {
         //instance of db context
         private TestUCRContext db = new TestUCRContext();
+        private readonly IUserAuthenticationService _service;
+        public UserController(IUserAuthenticationService service)
+        {
+            this._service = service;
+        }
 
         public IActionResult Index()
         {
@@ -179,6 +187,99 @@ namespace ProyectoLenguajes.Controllers
             db.Database.ExecuteSqlRaw("EXEC CommentSerie @idAccount, @idSerie, @review, @stars", parameter.ToArray());
 
             return Json(new { mensaje = "Datos recibidos correctamente" });
+        }
+
+        [Authorize(Roles = "user")]
+        public ActionResult Details(int id)
+        {
+            var acc = db.ACCOUNTs.Find(id);
+            return View(acc);
+        }
+
+        [Authorize(Roles = "user")]
+        public ActionResult Edit(int id)
+        {
+            var person = db.ACCOUNTs.Find(id);
+            return View(person);
+        }
+
+        // POST: PersonController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, ACCOUNT acc)//Viene con el username nuevo
+        {
+            try
+            {
+                // Obtener todos los campos públicos del modelo
+                var fields = acc.GetType().GetProperties();
+
+                foreach (var field in fields)
+                {
+                    var value = field.GetValue(acc);
+                    if (value == null)
+                    {
+                        // Si se encuentra un campo nulo, retorna la vista con un mensaje de error
+                        TempData["msg"] = "No puede dejar campos vacíos.";
+                        return View();
+                    }
+                }
+                ACCOUNT act = db.ACCOUNTs.Find(acc.idAccount);//Viene con el username viejo
+
+                var userId = User.FindFirstValue(ClaimTypes.Name);
+
+                var parameter = new List<SqlParameter>();
+                parameter.Add(new SqlParameter("@userID", userId));
+                parameter.Add(new SqlParameter("@idAccount", acc.idAccount));
+                parameter.Add(new SqlParameter("@name", acc.name));
+                parameter.Add(new SqlParameter("@email", acc.email));
+                parameter.Add(new SqlParameter("@username", acc.userName));
+                parameter.Add(new SqlParameter("@password", acc.password));
+                parameter.Add(new SqlParameter("@img", acc.img));
+
+                var rs = Task.Run(() => db.Database
+                .ExecuteSqlRaw(@"exec UpdateMyAccount @userID, @idAccount, @name, @email, @username, @password, @img", parameter.ToArray()));
+
+                var result = await _service.UpdateUserAsync(acc, act.userName); //se llama el metodo que hicimos
+                TempData["msg"] = result.Message;
+
+                return RedirectToAction(nameof(Edit));
+
+            }
+            catch (Exception e)
+            {
+                //var rr = db.ERRORs.FromSqlRaw("exec UpdateAccount @userID, @idAccount, @name, @email, @username, @password, @img").ToList();
+                //var a = ViewBag.Error = rr[0].error.ToString();
+                return View();
+            }
+        }
+
+        [Authorize(Roles = "user")]
+        public ActionResult FilterIcons()
+        {
+            var iconList = new List<Models.Icon>();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:7249/api/Icons");
+                //HTTP GET
+                var responseTask = client.GetAsync("Icons");
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadFromJsonAsync<List<Models.Icon>>();
+                    readTask.Wait();
+
+                    iconList = readTask.Result;
+                }
+                else //si la api arroja algun error
+                {
+                    return BadRequest("problemas");
+                }
+            }
+
+            return Json(iconList);
         }
 
 

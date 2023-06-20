@@ -64,7 +64,7 @@ namespace ProyectoLenguajes.Controllers
 
                 if (role[0].ToString() =="superA") //para meterle codigo de c#
                 {
-                    return RedirectToAction("Display", "SuperAdmin");
+                    return RedirectToAction("Home", "SuperAdmin");
                 }
                 else if (role[0].ToString() == "admin")
                 {

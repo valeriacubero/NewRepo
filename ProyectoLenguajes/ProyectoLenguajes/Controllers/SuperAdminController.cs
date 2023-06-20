@@ -6,6 +6,8 @@ using ProyectoLenguajes.Data;
 using ProyectoLenguajes.Models;
 using ProyectoLenguajes.Models.DTO;
 using ProyectoLenguajes.Repositories.Abstract;
+using QuestPDF.Fluent;
+using QuestPDF.Helpers;
 using System;
 using System.Data;
 using System.Security.Claims;
@@ -40,7 +42,7 @@ public class SuperAdminController : Controller
                 var userId = User.FindFirstValue(ClaimTypes.Name);
                 var d = ViewBag.Error = userId;
 
-                personList = db.ACCOUNTs.FromSqlRaw("exec dbo.GetAllAccounts").ToList();
+                personList = db.ACCOUNTs.FromSqlRaw("exec dbo.GetAdminsAccounts").ToList();
                 return View(personList);
 
             }
@@ -196,6 +198,98 @@ public class SuperAdminController : Controller
                 //var a = ViewBag.Error = rr[0].error.ToString();
                 return View();
             }
+        }
+
+        [Authorize(Roles = "superA")]
+        public ActionResult FilterIcons()
+        {
+            var iconList = new List<Models.Icon>();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:7249/api/Icons");
+                //HTTP GET
+                var responseTask = client.GetAsync("Icons");
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadFromJsonAsync<List<Models.Icon>>();
+                    readTask.Wait();
+
+                    iconList = readTask.Result;
+                }
+                else //si la api arroja algun error
+                {
+                    return BadRequest("problemas");
+                }
+            }
+
+            return Json(iconList);
+        }
+
+        [Authorize(Roles = "superA")]
+        public ActionResult Home()
+        {
+            var userNameM = User.FindFirstValue(ClaimTypes.Name);
+            var userNameC = ViewBag.UserName = userNameM;
+            var id = db.ACCOUNTs
+    .Where(a => a.userName == userNameM)
+    .Select(a => a.idAccount)
+    .FirstOrDefault();
+            var acc = db.ACCOUNTs.Find(id);
+            return View(acc);
+        }
+
+        [Authorize(Roles = "superA")]
+        public IActionResult DownloadPDF()
+        {
+            var userList = new List<ACCOUNT>();
+            userList = db.ACCOUNTs.FromSqlRaw("exec dbo.GetAdminsAccounts").ToList();
+
+            var documentpdf = Document.Create(container =>
+            {
+                container.Page(page =>
+                {
+
+                    page.Content().PaddingVertical(10).Column(col =>
+                    {
+                        col.Item().Table(table =>
+                        {
+                            table.ColumnsDefinition(columns =>
+                            {
+                                columns.RelativeColumn();
+                                columns.RelativeColumn();
+                                columns.RelativeColumn();
+                                columns.RelativeColumn();
+                            });//columns headers
+
+                            table.Header(header =>
+                            {
+                                header.Cell().Background("#257272").Padding(2).Text("UserName").FontColor("#fff").FontSize(13);
+                                header.Cell().Background("#257272").Padding(2).Text("Name").FontColor("#fff").FontSize(13);
+                                header.Cell().Background("#257272").Padding(2).Text("Email").FontColor("#fff").FontSize(13);
+                                header.Cell().Background("#257272").Padding(2).Text("Role").FontColor("#fff").FontSize(13);
+                            });
+
+                            //save info in pdf
+                            //borderBottom defines a border
+                            foreach (var user in userList)
+                            {
+                                table.Cell().Border(0.5f).BorderColor(Colors.Black).Padding(2).Text(user.userName).FontColor("#000").FontSize(10);
+                                table.Cell().Border(0.5f).BorderColor(Colors.Black).Padding(2).Text(user.name).FontColor("#000").FontSize(10);
+                                table.Cell().Border(0.5f).BorderColor(Colors.Black).Padding(2).Text(user.email).FontColor("#000").FontSize(10);
+                                table.Cell().Border(0.5f).BorderColor(Colors.Black).Padding(2).Text(user.roll).FontColor("#000").FontSize(10);
+                            }
+                        });
+                    });
+
+                });
+            }).GeneratePdf(); //returns pdf
+
+            var stream = new MemoryStream(documentpdf); //save pdf in memory
+            return File(stream, "application/pdf", "AdminsList.pdf"); //name and type of pdf
         }
     }
 }

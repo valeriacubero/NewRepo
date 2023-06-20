@@ -24,7 +24,7 @@
         <iframe class="trailer" src="@Model.trailer" frameborder="1"></iframe>
     </div>
 <div>
-    <h4>MOVIE</h4>
+        <h4><center>MOVIE</center></h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -75,12 +75,12 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.description)
         </dd>
-        <dt class = "col-sm-2">
+        @*<dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.trailer)
-        </dt>
-        <dd class = "col-sm-10">
+        </dt>*@
+        @*<dd class = "col-sm-10">
             @Html.DisplayFor(model => model.trailer)
-        </dd>
+        </dd>*@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.punctuation)
         </dt>
@@ -91,6 +91,6 @@
 </div>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Edit", "Edit", new { id=@Model.idMovie  }) |
     <a asp-action="Index">Back to List</a>
 </div>

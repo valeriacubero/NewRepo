@@ -1,9 +1,20 @@
 ﻿@model IEnumerable<ProyectoLenguajes.Models.ACCOUNT>
-
+@using System.Security.Claims;
+@using ProyectoLenguajes.Data;
 @{
     ViewData["Title"] = "Display";
+    TestUCRContext db = new TestUCRContext();
+
+    var userNameM = User.FindFirstValue(ClaimTypes.Name);//To get the username of current account
+    var id = db.ACCOUNTs
+    .Where(a => a.userName == userNameM)
+    .Select(a => a.idAccount)
+    .FirstOrDefault();//To get the id of de current account in our database
+    var imge = db.ACCOUNTs
+    .Where(a => a.userName == userNameM)
+    .Select(a => a.img)
+    .FirstOrDefault();//To get the img of the current account in our database
 }
-@ViewBag.Error
 
 <head>
     <meta charset="UTF-8">
@@ -23,11 +34,18 @@
 <body class="navbar navbar-expand-lg navbar-light bg-light">
     <header>
         <div class="container">
-            <h2 class="title"></h2>
-            <a href="Index" class="active">Home</a>
-            <a href="#">Profile</a>
-            <a href="#">Search</a>
-            <a href="#">My List</a>
+            <div>
+                <!--To our username and img-->
+                <div>
+                    <img class="ic image-container" src="@imge" />
+                </div>
+                <div><h4 class="userN">@ViewBag.Error</h4></div>
+            </div>
+            <h2 class="title">Hello!</h2>
+            <a href="Home" class="active">Home</a>
+            <a href="/SuperAdmin/Details/@id">Profile</a>
+            <a href="#">Options</a>
+            <a href="#">About of</a>
             <a href="/UserAuthentication/Logout">Log Out</a>
         </div>
     </header>
@@ -37,6 +55,9 @@
     <p>
         <a asp-action="Create" class="btn btn-primary glyphicon glyphicon-plus-sign"></a>
     </p>
+    <form asp-controller="SuperAdmin" asp-action="DownloadPDF">
+        <button class="btn btn-success" type="submit" id="btnReport">Report</button>
+    </form>
     <div class="table-responsive">
         <table class="table">
             <thead>

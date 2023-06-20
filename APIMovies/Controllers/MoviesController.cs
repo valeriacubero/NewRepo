@@ -20,20 +20,19 @@ namespace APIMovies.Controllers
         {
             try
             {
-                //_context2.MOVIEs.AddRange(_context.MOVIEs.ToList());
-                //_context2.SaveChanges();
-                //return Ok(_context2.MOVIEs.ToList());
-                var moviesToAdd = _context.MOVIEs.ToList();
-
-                foreach (var movie in moviesToAdd)
+                if (!_context2.MOVIEs.Any())
                 {
-                    if (!_context2.MOVIEs.Any(m => m.idMovie == movie.idMovie))
-                    {
-                        _context2.MOVIEs.Add(movie);
-                    }
-                }
+                    var moviesToAdd = _context.MOVIEs.ToList();
 
-                _context2.SaveChanges();
+                    foreach (var movie in moviesToAdd)
+                    {
+                        if (!_context2.MOVIEs.Any(m => m.idMovie == movie.idMovie))
+                        {
+                            _context2.MOVIEs.Add(movie);
+                        }
+                    }
+                    _context2.SaveChanges();
+                }
 
                 return Ok(_context2.MOVIEs.ToList());
 
@@ -100,7 +99,7 @@ namespace APIMovies.Controllers
                 var movie = _context2.MOVIEs.Where(c => c.idMovie == id).FirstOrDefault();
                 _context2.MOVIEs.Remove(movie);
                 _context2.SaveChanges();
-                return Ok();
+                return Ok(movie);
 
             }
             catch (Exception ex)

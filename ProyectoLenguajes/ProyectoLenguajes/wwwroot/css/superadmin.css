@@ -1,5 +1,6 @@
 ﻿body {
 }
+
 :root {
     --titlesFont: "Bebas Neue";
     --subtitlesFont: "Rajdhani";
@@ -7,7 +8,6 @@
     --backgroundColor: linear-gradient(to top, #30cfd0 0%, #330867 100%);
     --titlesColor: #65C0BA;
     --cardsAndBtnsColor: #DDE9F8;
-    --generalTextColor: #ffffff;
 }
 
 html {
@@ -68,7 +68,6 @@ h1 {
 .greater {
     margin-top: 10em;
     display: flex;
-    /*justify-content: space-between;*/
 }
 
 .color1 {
@@ -84,7 +83,7 @@ img {
     align-content: center;
 }
 
-.buttoms{
+.buttoms {
     margin-top: 3em;
 }
 
@@ -125,6 +124,7 @@ h3 {
     margin-top: 1px;
     text-align: center;
 }
+
 h4 {
     font-style: italic;
     color: black;
@@ -158,27 +158,7 @@ h4 {
     font-size: 25px;
 }
 
-/*MOVIE DETAILS*/
-.trailer {
-    min-width: 45%;
-    max-width: 45%;
-    height: 350px;
-}
-
-.movieContainer {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 5px;
-    max-height: 400px;
-}
-
-.movieInfo {
-    margin-left: 20px;
-    font-size: 16px;
-}
-
-/*Circular buttons*/
+Circular buttons
 .circular {
     width: 30px;
     height: 30px;
@@ -211,9 +191,9 @@ th {
 }
 
 
-   th {
-        background-color: #330867;
-     }
+th {
+    background-color: #330867;
+}
 
 
 tbody {
@@ -250,7 +230,7 @@ td {
 }
 }
 
-/*Other options*/
+Other options
 .moreButton {
     width: 100px;
     height: 50px;
@@ -260,3 +240,118 @@ td {
     border-color: #A9CCE3;
     border-radius: 5px;
 }
+
+.tooltip {
+    position: absolute;
+    display: none;
+    background-color: #000;
+    color: red;
+    padding: 5px;
+    border-radius: 5px;
+    top: 7em;
+    left: 1em;
+}
+
+.closeModal2 {
+    color: white;
+    float: right;
+    font-size: 28px;
+    padding: 15px;
+}
+
+    .closeModal2:hover,
+    .closeModal2:focus {
+        color: red;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+.commentDiv {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    justify-content: space-around;
+}
+
+.textC {
+    padding: 20px;
+    margin-bottom: 10px;
+    color: black;
+}
+
+COMMENTS
+.reviewsDiv {
+    width: 500px;
+    background-color: var(--cardsAndBtnsColor);
+    margin-top: 20px;
+    padding: 20px;
+    color: black;
+    border-radius: 5px;
+    display: flex;
+}
+
+.infoComment span hr {
+    font-size: 17px;
+    color: black;
+}
+
+.icon-container {
+    position: relative;
+    top: 7em;
+    left: 1em;
+}
+
+#popup {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 70%;
+    transform: translate(-50%, -50%);
+}
+
+#icon-matrix img {
+    width: 50px;
+    height: 50px;
+}
+
+#icon-matrix {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 10px;
+}
+
+.ic {
+    margin-top: 1em;
+    margin-left: 2em;
+    width: 35px;
+    height: 35px;
+}
+
+.userN {
+    color: aqua;
+}
+
+.image-container {
+    background-color: black;
+    display: inline-block; /* o inline-flex según tu diseño */
+    overflow: hidden;
+    border-radius: 65px;
+}
+
+.modal-content {
+    background: linear-gradient(to left, #A9CCE3 30%, #330867 80%);
+}
+
+.alert {
+    color: red;
+}
+
+.great {
+    margin-top: 5em;
+    display: flex;
+}
+
+    .great .ag {
+        margin-bottom: 10em;
+        display: flex;
+    }

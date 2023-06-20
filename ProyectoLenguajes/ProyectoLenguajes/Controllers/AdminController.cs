@@ -6,6 +6,8 @@ using ProyectoLenguajes.Data;
 using ProyectoLenguajes.Models;
 using ProyectoLenguajes.Models.DTO;
 using ProyectoLenguajes.Repositories.Abstract;
+using QuestPDF.Fluent;
+using QuestPDF.Helpers;
 using System.Data;
 using System.Security.Claims;
 
@@ -187,6 +189,56 @@ namespace ProyectoLenguajes.Controllers
                 var a = ViewBag.Error = rr[0].error.ToString();*/
                 return View();
             }
+        }
+
+        [Authorize(Roles = "admin")]
+        public IActionResult DownloadPDF()
+        {
+            var userList = new List<ACCOUNT>();
+            userList = db.ACCOUNTs.FromSqlRaw("exec dbo.GetUsersAccounts").ToList();
+
+            var documentpdf = Document.Create(container =>
+            {
+                container.Page(page =>
+                {
+
+                    page.Content().PaddingVertical(10).Column(col =>
+                    {
+                        col.Item().Table(table =>
+                        {
+                            table.ColumnsDefinition(columns =>
+                            {
+                                columns.RelativeColumn();
+                                columns.RelativeColumn();
+                                columns.RelativeColumn();
+                                columns.RelativeColumn();
+                            });//columns headers
+
+                            table.Header(header =>
+                            {
+                                header.Cell().Background("#257272").Padding(2).Text("UserName").FontColor("#fff").FontSize(13);
+                                header.Cell().Background("#257272").Padding(2).Text("Name").FontColor("#fff").FontSize(13);
+                                header.Cell().Background("#257272").Padding(2).Text("Email").FontColor("#fff").FontSize(13);
+                                header.Cell().Background("#257272").Padding(2).Text("Role").FontColor("#fff").FontSize(13);
+                            });
+
+                            //save info in pdf
+                            //borderBottom defines a border
+                            foreach (var user in userList)
+                            {
+                                table.Cell().Border(0.5f).BorderColor(Colors.Black).Padding(2).Text(user.userName).FontColor("#000").FontSize(10);
+                                table.Cell().Border(0.5f).BorderColor(Colors.Black).Padding(2).Text(user.name).FontColor("#000").FontSize(10);
+                                table.Cell().Border(0.5f).BorderColor(Colors.Black).Padding(2).Text(user.email).FontColor("#000").FontSize(10);
+                                table.Cell().Border(0.5f).BorderColor(Colors.Black).Padding(2).Text(user.roll).FontColor("#000").FontSize(10);
+                            }
+                        });
+                    });
+
+                });
+            }).GeneratePdf(); //returns pdf
+
+            var stream = new MemoryStream(documentpdf); //save pdf in memory
+            return File(stream, "application/pdf", "UsersList.pdf"); //name and type of pdf
         }
 
     }

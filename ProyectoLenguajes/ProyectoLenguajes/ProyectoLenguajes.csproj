@@ -7,11 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\css\.editorconfig" />
-    <Content Remove="wwwroot\css\user - Copia.css" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="Views\Actor\Create.cshtml" />
     <None Include="Views\Episodes\Create.cshtml" />
     <None Include="Views\Episodes\Delete.cshtml" />
@@ -42,6 +37,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.14" />
+    <PackageReference Include="QuestPDF" Version="2022.12.6" />
   </ItemGroup>
 
 </Project>
