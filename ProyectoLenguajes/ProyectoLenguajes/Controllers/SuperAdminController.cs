@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using ProyectoLenguajes.Data;
 using ProyectoLenguajes.Models;
+using ProyectoLenguajes.Models.Domain;
 using ProyectoLenguajes.Models.DTO;
 using ProyectoLenguajes.Repositories.Abstract;
 using QuestPDF.Fluent;
@@ -25,11 +27,13 @@ namespace ProyectoLenguajes.Controllers
     //    });
 public class SuperAdminController : Controller
     {
-        private TestUCRContext db = new TestUCRContext();
-        private readonly IUserAuthenticationService _service;
-        public SuperAdminController(IUserAuthenticationService service)
+        private TestUCRContext db = new TestUCRContext(); //We call our database
+        private readonly IUserAuthenticationService _service; //We call the utilities of the other base
+        private readonly UserManager<ApplicationUser> userManager; //We call application user
+        public SuperAdminController(IUserAuthenticationService service, UserManager<ApplicationUser> userManager)
         {
             this._service = service;
+            this.userManager = userManager;
         }
 
         [Authorize(Roles = "superA")]
@@ -38,11 +42,11 @@ public class SuperAdminController : Controller
             var personList = new List<ACCOUNT>();
             //var error = new Errors();
             try
-            {
+            {//To obtain the username of the migration database and search for it in our database
                 var userId = User.FindFirstValue(ClaimTypes.Name);
                 var d = ViewBag.Error = userId;
 
-                personList = db.ACCOUNTs.FromSqlRaw("exec dbo.GetAdminsAccounts").ToList();
+                personList = db.ACCOUNTs.FromSqlRaw("exec dbo.GetAdminsAccounts").ToList();//get only admins
                 return View(personList);
 
             }
@@ -67,10 +71,12 @@ public class SuperAdminController : Controller
             //var error = new Errors();
             try
             {
+                //If it's not valid, don't believe it.
                 if (!ModelState.IsValid)
                 {
                     return View(model);
                 }
+                //to get the migration username
                 var userId = User.FindFirstValue(ClaimTypes.Name);
 
                 var parameter = new List<SqlParameter>();
@@ -81,11 +87,11 @@ public class SuperAdminController : Controller
                 parameter.Add(new SqlParameter("@userName", model.UserName));
                 parameter.Add(new SqlParameter("@password", model.Password));
 
-                var rs = Task.Run(() => db.Database
+                var rs = Task.Run(() => db.Database //we pass the parameters to the SP
                 .ExecuteSqlRaw(@"exec InsertAccounts @userID, @name, @email, @roll, @userName, @password", parameter.ToArray()));
 
-                model.Role = "admin";
-                var result = await _service.RegistrationAsync(model); //se llama el metodo que hicimos
+                model.Role = "admin";//we forcefully assign the role of admin
+                var result = await _service.RegistrationAsync(model); //the method we did is called
                 TempData["msg"] = result.Message;
 
                 return RedirectToAction(nameof(Create));
@@ -119,7 +125,7 @@ public class SuperAdminController : Controller
         {
             try
             {
-                // Obtener todos los campos públicos del modelo
+                //get all public fields of the model
                 var fields = acc.GetType().GetProperties();
 
                 foreach (var field in fields)
@@ -127,12 +133,12 @@ public class SuperAdminController : Controller
                     var value = field.GetValue(acc);
                     if (value == null)
                     {
-                        // Si se encuentra un campo nulo, retorna la vista con un mensaje de error
-                        TempData["msg"] = "No puede dejar campos vacíos.";
+                        //if a null field is found, return the view with an error message
+                        TempData["msg"] = "You cannot leave fields empty.";
                         return View();
                     }
                 }
-                ACCOUNT act = db.ACCOUNTs.Find(acc.idAccount);//Viene con el username viejo
+                ACCOUNT act = db.ACCOUNTs.Find(acc.idAccount);//It comes with the old username
 
                 var userId = User.FindFirstValue(ClaimTypes.Name);
 
@@ -148,7 +154,7 @@ public class SuperAdminController : Controller
                 var rs = Task.Run(() => db.Database
                 .ExecuteSqlRaw(@"exec UpdateAccount @userID, @idAccount, @name, @email, @username, @password, @img", parameter.ToArray()));
 
-                var result = await _service.UpdateUserAsync(acc, act.userName); //se llama el metodo que hicimos
+                var result = await _service.UpdateUserAsync(acc, act.userName); //the method we did is called
                 TempData["msg"] = result.Message;
 
                 return RedirectToAction(nameof(Edit));
@@ -176,9 +182,9 @@ public class SuperAdminController : Controller
         {
             try
             {
-                ACCOUNT act = db.ACCOUNTs.Find(acc.idAccount);
+                ACCOUNT act = db.ACCOUNTs.Find(acc.idAccount);//to find the account with this id
 
-                var result = await _service.DeleteUserAsync(act); //se llama el metodo que hicimos
+                var result = await _service.DeleteUserAsync(act); //the method we did is called
                 TempData["msg"] = result.Message;
 
                 var userId = User.FindFirstValue(ClaimTypes.Name);
@@ -187,6 +193,7 @@ public class SuperAdminController : Controller
                 parameter.Add(new SqlParameter("@userID", userId));
                 parameter.Add(new SqlParameter("@idAccount", act.idAccount));
 
+                //to use the SP
                 var rs = Task.Run(() => db.Database
                 .ExecuteSqlRaw(@"exec DeleteAccount @userID, @idAccount", parameter.ToArray()));
 
@@ -200,13 +207,14 @@ public class SuperAdminController : Controller
             }
         }
 
+        //Here we uses the ICONAPI
         [Authorize(Roles = "superA")]
         public ActionResult FilterIcons()
         {
             var iconList = new List<Models.Icon>();
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:7249/api/Icons");
+                client.BaseAddress = new Uri("https://localhost:7249/api/Icons");//The API service
                 //HTTP GET
                 var responseTask = client.GetAsync("Icons");
                 responseTask.Wait();
@@ -234,6 +242,7 @@ public class SuperAdminController : Controller
         {
             var userNameM = User.FindFirstValue(ClaimTypes.Name);
             var userNameC = ViewBag.UserName = userNameM;
+            //here we find our account
             var id = db.ACCOUNTs
     .Where(a => a.userName == userNameM)
     .Select(a => a.idAccount)
@@ -243,7 +252,7 @@ public class SuperAdminController : Controller
         }
 
         [Authorize(Roles = "superA")]
-        public IActionResult DownloadPDF()
+        public IActionResult DownloadPDF()//to the pdf of admins
         {
             var userList = new List<ACCOUNT>();
             userList = db.ACCOUNTs.FromSqlRaw("exec dbo.GetAdminsAccounts").ToList();
@@ -290,6 +299,76 @@ public class SuperAdminController : Controller
 
             var stream = new MemoryStream(documentpdf); //save pdf in memory
             return File(stream, "application/pdf", "AdminsList.pdf"); //name and type of pdf
+        }
+        [Authorize(Roles = "superA")]
+        public ActionResult AboutOf()//here he go to the about view
+        {
+            return View();
+        }
+
+        //we find the accounts and allow or deny your access
+        [Authorize(Roles = "superA")]
+        public IActionResult Options()
+        {
+            var personList = new List<ACCOUNT>();
+            //var error = new Errors();
+            try
+            {
+                var userId = User.FindFirstValue(ClaimTypes.Name);
+                var d = ViewBag.Error = userId;
+
+                personList = db.ACCOUNTs.FromSqlRaw("exec dbo.GetAdminsAccounts").ToList();
+                return View(personList);
+
+            }
+            catch (Exception ex)
+            {
+                //var result = db.ERRORs.FromSqlRaw("exec dbo.GetAllAccounts").ToList();
+                //var a = ViewBag.Error = result[0].error.ToString();
+                return View(personList);
+            }
+
+        }
+
+        [Authorize(Roles = "superA")]
+        public IActionResult RemoveAdminPrivilege(string userName)
+        {
+            //search for the user by their username
+            var user = userManager.FindByNameAsync(userName).Result;
+
+            if (user != null)
+            {
+                //check if user has admin role
+                if (userManager.IsInRoleAsync(user, "admin").Result)
+                {
+                    //remove the administrator role from the user
+                    userManager.RemoveFromRoleAsync(user, "admin").Wait();
+
+                    return RedirectToAction("Options", "SuperAdmin"); //redirect to admin page
+                }
+            }
+
+            return RedirectToAction("Index", "Error"); //redirect to an error page if the user does not exist or does not have the admin role
+        }
+        [Authorize(Roles = "superA")]
+        public IActionResult AddAdminPrivilege(string userName)
+        {
+            //search for the user by their username
+            var user = userManager.FindByNameAsync(userName).Result;
+
+            if (user != null)
+            {
+                //check if user has admin role
+                if (!userManager.IsInRoleAsync(user, "admin").Result)
+                {
+                    //assign the administrator role to the user
+                    userManager.AddToRoleAsync(user, "admin").Wait();
+
+                    return RedirectToAction("Options", "SuperAdmin"); //redirect to admin page
+                }
+            }
+
+            return RedirectToAction("Index", "Error"); //redirect to an error page if the user does not exist or does not have the admin role
         }
     }
 }

@@ -83,17 +83,19 @@
             </div>
 
             <div class="d-flex">
-                <a href="URL-Options" class="button width-button">Options</a>
+                <form asp-controller="SuperAdmin" asp-action="Options">
+                    <button class="button width-button" type="submit" id="btnReport">Options</button>
+                </form>
 
                 <a href="/SuperAdmin/Display" class="button width-button">Accounts</a>
 
             </div>
 
             <div>
-                <a href="URL-About" class="button width-button">About</a>
-                @*<a href="URL-Reports" class="button width-button">Reports</a>*@
+                <form asp-controller="SuperAdmin" asp-action="AboutOf">
+                    <button class="button width-button" type="submit" id="btnReport">About</button>
+                </form>
                 <form asp-controller="SuperAdmin" asp-action="DownloadPDF">
-                    @*<a href="#" class="button width-button">Reports</a>*@
                     <button class="button width-button" type="submit" id="btnReport">Report</button>
                 </form>
             </div>

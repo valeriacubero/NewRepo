@@ -1,22 +1,26 @@
-﻿function showEditTooltip() {
+﻿//To show in the profile icon that can be edited, but not funka: V
+function showEditTooltip() {
     var tooltip = document.getElementById('edit-tooltip');
     tooltip.style.display = 'block';
 }
 
+//To open the popup every time it is called
 function openPopup() {
     var popup = document.getElementById('popup');
     popup.style.display = 'block';
 
-    // Cargar los iconos al abrir el popup
+    // Load the icons when opening the popup
     filterIcons();
     filterIconsU();
 }
 
+//To close the popup, although it seems to me that I no longer use it as such
 function closePopup() {
     var popup = document.getElementById('popup');
     popup.style.display = 'none';
 }
 
+//To write to the input and detect letter by letter
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('suggestions-input').addEventListener('keyup', function () {
         console.log('Tecla presionada');
@@ -25,10 +29,11 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+//Here we load the matrix, we can filter and select
 function filterIcons() {
     var searchText = document.getElementById('suggestions-input').value.toLowerCase();
 
-    // Realizar la solicitud AJAX al controlador para obtener la lista de iconos filtrados 
+    // Make AJAX request to controller to get list of filtered icons
     $.ajax({
         url: '/SuperAdmin/FilterIcons',
         type: 'GET',
@@ -36,10 +41,10 @@ function filterIcons() {
         success: function (data) {
             var filteredIcons;
             if (searchText === '') {
-                // Si no hay texto de búsqueda, mostrar todos los iconos
+                // If there is no search text, show all icons
                 filteredIcons = data;
             } else {
-                // Filtrar los iconos según el texto de búsqueda
+                // Filter icons based on search text
                 filteredIcons = data.filter(function (icon) {
                     var iconName = icon.nameIcon.toLowerCase();
                     return iconName.includes(searchText);
@@ -49,16 +54,7 @@ function filterIcons() {
             var iconMatrix = document.getElementById('icon-matrix');
             iconMatrix.innerHTML = '';
 
-            //for (var i = 0; i < filteredIcons.length; i++) {
-            //    var icon = filteredIcons[i];
-            //    var iconElement = document.createElement('div');
-            //    iconElement.classList.add('icon');
-            //    iconElement.innerHTML = '<img src="' + icon.url + '" alt="' + icon.nameIcon + '">';
-
-            //    iconMatrix.appendChild(iconElement);
-            //}
-
-            // Genera los elementos icon y establece el atributo data-url
+            // Generate the icon elements and set the data-url attribute
             filteredIcons.forEach(function (url) {
                 var icon = document.createElement('div');
                 icon.className = 'icon';
@@ -75,28 +71,27 @@ function filterIcons() {
                 iconMatrix.appendChild(icon);
             });
 
-            // Obtener todos los elementos con la clase "icon" dentro del popup
+            // Get all elements with class "icon" inside the popup
             var selectedIconInput = document.getElementById('selected-icon-url');
             var imgInput = document.getElementById('img');
             var icons = document.querySelectorAll('#icon-matrix .icon');
 
-            // Adjuntar un controlador de eventos a cada elemento
+            // Attach an event handler to each element
             icons.forEach(function (icon) {
                 icon.addEventListener('click', function () {
                     var url = icon.getAttribute('data-url');
-                    // Actualizar la imagen del popup con la URL seleccionada
+                    // Update the popup image with the selected URL
                     document.getElementById('edit-icon').src = url;
-                    // Actualizar el valor del input hidden con la URL seleccionada
+                    // Update the value of the hidden input with the selected URL
                     selectedIconInput.value = url;
-                    // Actualizar el valor del input visible con la URL seleccionada
+                    // Update visible input value with selected URL
                     imgInput.value = url;
-                    //document.getElementById('selected-icon-url').value = url;
                     closePopup();
                 });
             });
         },
         error: function (xhr, status, error) {
-            console.log(error); // Manejar el error en caso de que ocurra
+            console.log(error); // Handle the error in case it occurs
         }
     });
 }
@@ -104,7 +99,7 @@ function filterIcons() {
 function filterIconsU() {
     var searchText = document.getElementById('suggestions-input').value.toLowerCase();
 
-    // Realizar la solicitud AJAX al controlador para obtener la lista de iconos filtrados 
+    // Make AJAX request to controller to get list of filtered icons
     $.ajax({
         url: '/User/FilterIcons',
         type: 'GET',
@@ -112,10 +107,10 @@ function filterIconsU() {
         success: function (data) {
             var filteredIcons;
             if (searchText === '') {
-                // Si no hay texto de búsqueda, mostrar todos los iconos
+                // If there is no search text, show all icons
                 filteredIcons = data;
             } else {
-                // Filtrar los iconos según el texto de búsqueda
+                // Filter icons based on search text
                 filteredIcons = data.filter(function (icon) {
                     var iconName = icon.nameIcon.toLowerCase();
                     return iconName.includes(searchText);
@@ -141,28 +136,27 @@ function filterIconsU() {
                 iconMatrix.appendChild(icon);
             });
 
-            // Obtener todos los elementos con la clase "icon" dentro del popup
+            // Get all elements with class "icon" inside the popup
             var selectedIconInput = document.getElementById('selected-icon-url');
             var imgInput = document.getElementById('img');
             var icons = document.querySelectorAll('#icon-matrix .icon');
 
-            // Adjuntar un controlador de eventos a cada elemento
+            // Attach an event handler to each element
             icons.forEach(function (icon) {
                 icon.addEventListener('click', function () {
                     var url = icon.getAttribute('data-url');
-                    // Actualizar la imagen del popup con la URL seleccionada
+                    // Update the popup image with the selected URL
                     document.getElementById('edit-icon').src = url;
-                    // Actualizar el valor del input hidden con la URL seleccionada
+                    // Update the value of the hidden input with the selected URL
                     selectedIconInput.value = url;
-                    // Actualizar el valor del input visible con la URL seleccionada
+                    // Update visible input value with selected URL
                     imgInput.value = url;
-                    //document.getElementById('selected-icon-url').value = url;
                     closePopup();
                 });
             });
         },
         error: function (xhr, status, error) {
-            console.log(error); // Manejar el error en caso de que ocurra
+            console.log(error); // Handle the error in case it occurs
         }
     });
 }

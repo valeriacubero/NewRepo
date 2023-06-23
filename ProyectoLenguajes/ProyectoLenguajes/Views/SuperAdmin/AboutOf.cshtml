@@ -1,0 +1,169 @@
+﻿@using ProyectoLenguajes.Data;
+@using Microsoft.AspNetCore.Mvc;
+@using Microsoft.EntityFrameworkCore;
+@using System.Security.Claims;
+@{
+    ViewData["Title"] = "Index";
+    TestUCRContext db = new TestUCRContext();
+
+    var userNameM = User.FindFirstValue(ClaimTypes.Name);//To get the username of current account
+    var id = db.ACCOUNTs
+    .Where(a => a.userName == userNameM)
+    .Select(a => a.idAccount)
+    .FirstOrDefault();//To get the id of de current account in our database
+    var imge = db.ACCOUNTs
+    .Where(a => a.userName == userNameM)
+    .Select(a => a.img)
+    .FirstOrDefault();//To get the img of the current account in our database
+}
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Hello</title>
+    <link rel="stylesheet" href="~/css/superadmin.css">
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.3.11/slick.css" />
+    <link rel="stylesheet" type="text/css" href="slick/slick.css" />
+    <link rel="stylesheet" type="text/css" href="slick/slick-theme.css" />
+    <!-- CSS de Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Scripts de Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<style>
+    .carousel-item img {
+        height: 600px; 
+        width: 0px;
+        margin: auto; 
+    }
+</style>
+
+<body>
+    <header>
+
+        <div class="container">
+            <h2 class="title">Hello!</h2>
+
+            <!--NAVBAR-->
+            <nav class="navbar navbar-expand-sm navbar navbar-light">
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#opciones" style="background-color: #DDE9F8">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="opciones">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/SuperAdmin/Home" style="color: #ffffff;">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/SuperAdmin/Details/@id" style="color: #ffffff;">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/SuperAdmin/Options" style="color: #ffffff;">Options</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/SuperAdmin/Display" style="color: #ffffff;">Accounts</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/UserAuthentication/Logout" style="color: #ffffff;">Log Out</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <div>
+        <div>
+            <h1><center>Proyect Lenguajes</center></h1>
+            <br/>
+            <img src="https://static.emol.cl/emol50/Fotos/2020/03/24/file_20200324114817.jpg" class=" w-100" />
+        </div>
+        <div>
+            <h2>
+                HELLO!
+            </h2>
+            <div class="aboutOfD">
+            <text class="aboutOfD">
+                This work was done without profit, in order to learn programming and show what can be achieved with web programming.
+                <br/>
+                Here we show the API to consume our movies:
+                    <br />
+                https://localhost:7249/swagger/v1/swagger.json
+                    <br />
+                    <center>JSON <br />
+                    openapi : "3.0.1" <br />
+                    info <br />
+                    title : "IconAPI" <br />
+                    version : "1.0" <br />
+                    paths <br />
+                    /api/Icons <br />
+                    get <br />
+                    tags <br />
+                    0 : "Icons" <br />
+                    responses <br />
+                    200 <br />
+                    description : "Success" <br />
+                    contents <br />
+                    post <br />
+                    /api/Icons/{id} <br />
+                    get <br />
+                    put <br />
+                    delete <br />
+                    /WeatherForecast <br />
+                    components <br />
+                    schematics <br />
+                    icons <br />
+                        WeatherForecast <br />
+                    </center>
+            </text>
+            </div>
+        </div><!--Carousel info-->
+        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="https://anotherdayanotherbug.files.wordpress.com/2014/09/swaggerui_01.png" class="d-block w-100" alt="Image 1">
+                    <div class="carousel-caption">
+                        <h5 class="aboutOfT">Swagger</h5>
+                        <p class="aboutOfD">You can see the swagger that performs the actions</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="https://i.stack.imgur.com/6QDjm.png" class="d-block w-100" alt="Image 2">
+                    <div class="carousel-caption">
+                        <h5 class="aboutOfT">JSON</h5>
+                        <p class="aboutOfD">Our Json code, to find the endpoints</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="https://blog.codeinside.eu/assets/wp-images-de/image1837.png" class="d-block w-100" alt="Image 3">
+                    <div class="carousel-caption">
+                        <h5 class="aboutOfT">Stack Hu</h5>
+                        <p class="aboutOfD">You can access the Hu stack for more ease</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="https://i.blogs.es/de5398/starplus1_/450_1000.jpeg" class="d-block w-100" alt="Image 4">
+                    <div class="carousel-caption">
+                        <h5 class="aboutOfT">App</h5>
+                        <p class="aboutOfD">And so achieve something like this:</p>
+                    </div>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExample" role="button" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExample" role="button" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </a>
+        </div>
+    </div>
+</body>

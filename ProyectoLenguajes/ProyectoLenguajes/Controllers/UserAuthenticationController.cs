@@ -33,7 +33,7 @@ namespace ProyectoLenguajes.Controllers
                 return View(model);
             }
             model.Role = "user";
-            var result = await _service.RegistrationAsync(model); //se llama el metodo que hicimos
+            var result = await _service.RegistrationAsync(model); //the method we did is called
             TempData["msg"] = result.Message;
 
             return RedirectToAction(nameof(Registration));
@@ -52,34 +52,40 @@ namespace ProyectoLenguajes.Controllers
                 return View(model);
             }
             var result = await _service.LoginAsync(model);
-            if (result.StatusCode == 1) //es porque pudo hacerlo
+            if (result.StatusCode == 1) //it's because he could do it
             {
-                // Autenticar al usuario en la sesión
+                // Authenticate user in session
                 var user = await _userManager.FindByNameAsync(model.UserName);
                 await _signInManager.SignInAsync(user, isPersistent: false);
 
-                // Actualizar la sesión del usuario con los roles más recientes
+                // Update user session with latest roles
                 await _signInManager.RefreshSignInAsync(user);
                 var role = await _userManager.GetRolesAsync(user);
 
-                if (role[0].ToString() =="superA") //para meterle codigo de c#
+                if (role.Count != 0)
                 {
-                    return RedirectToAction("Home", "SuperAdmin");
+                    if (role[0].ToString() == "superA") //It's because a super admin came in
+                    {
+                        return RedirectToAction("Home", "SuperAdmin");
+                    }
+                    else if (role[0].ToString() == "admin")//It's because an admin entered
+                    {
+                        return RedirectToAction("Index", "Admin");
+                    }
+                    else//it is because it is neither admin nor superadmin
+                    {
+                        return RedirectToAction("Index", "User");
+                    }
                 }
-                else if (role[0].ToString() == "admin")
+                else//It is because it does not have a role assigned
                 {
-                    return RedirectToAction("Index", "Admin");
+                    return RedirectToAction(nameof(NoAdmin));
                 }
-                else
-                {
-                    return RedirectToAction("Index", "User");
-                }
-                //return RedirectToAction("_Layout", "Shared");
             }
             else
             {
-                TempData["msg"] = result.Message; //es como un viewbag message
-                return RedirectToAction(nameof(Login)); //no se pudo registrar el usuario
+                TempData["msg"] = result.Message; //it's like a viewbag message
+                return RedirectToAction(nameof(Login)); //failed to register user
             }
         }
 
@@ -88,6 +94,12 @@ namespace ProyectoLenguajes.Controllers
         {
             await _service.LogoutAsync();
             return RedirectToAction(nameof(Login));
+        }
+
+        [Authorize]
+        public ActionResult NoAdmin()
+        {
+            return View();
         }
 
         //public async Task<IActionResult> Reg()

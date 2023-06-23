@@ -66,7 +66,7 @@
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Save" class="btn btn-primary" /> |
-                    <a class="btn btn-info btn-primary m-2" href="/SuperAdmin/Display">Back to List</a>
+                    <a class="succe btn btn-info btn-primary m-2" href="/SuperAdmin/Display">Back to List</a>
                 </div>
                 @if (TempData["msg"] != null)
                 {
@@ -77,19 +77,19 @@
             </form>
         </div>
         <div>
-
+            <!--To the icon-->
             <div class="icon-container image-container">
                 <img id="edit-icon" src="@Model.img" data-url="@Model.img" onmouseover="showEditTooltip()" onclick="openPopup()" />
                 <span id="edit-tooltip" class="tooltip">Edit</span>
             </div>
-
+            <!--Popup to icon matriz-->
             <div id="popup" class="modal" style="width: 600px;">
                 <div class="modal-content">
                     <span id="closePopupButton" class="closeModal2">&times;</span>
                     <div class="commentDiv">
                         <input id="suggestions-input" type="text" />
                         <div id="icon-matrix" class="d-flex" style="max-height: 200px; overflow-y: auto;">
-                            <!-- Aquí se mostrarán los iconos del sistema según lo escrito en el input -->
+                            <!-- Here the system icons will be displayed as written in the input -->
 
 
                         </div>
@@ -99,6 +99,11 @@
 
         </div>
     </div>
+
+    <!--JS-->
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script>
         var modal = document.getElementById("popup");
@@ -126,5 +131,12 @@
             var selectedIconInput = document.getElementById('selected-icon-url');
             selectedIconInput.value = selectedIconUrl;
         }
+
+        $('.succe').click(function () {
+            swal("Allow", "Account edited", "success")
+
+            $('.textC').val("");
+            $('.textS').val(0);
+        });
     </script>
 </body>
