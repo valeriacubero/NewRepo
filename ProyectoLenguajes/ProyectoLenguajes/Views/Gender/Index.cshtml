@@ -1,0 +1,51 @@
+﻿@model IEnumerable<ProyectoLenguajes.Models.GENDER>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<link rel="stylesheet" href="~/css/tables.css">
+<header>
+    <div class="navbar">
+        @{
+            Html.RenderPartial("_Navbar");
+        }
+    </div>
+</header>
+<h1>Genders List</h1>
+
+<div>
+    <button class="createBTN">
+        <a asp-action="Create">Create New</a>
+    </button>
+</div>
+<br />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.typeG)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+                <td data-cell="Gender Name">
+                @Html.DisplayFor(modelItem => item.typeG)
+            </td>
+                <td data-cell="Options">
+                    <div class="button-container">
+                    <div>
+                        <button> <a asp-action="Edit" asp-route-id="@item.idGender">Edit</a> </button>
+                    </div>
+                    <br>
+                    <div>
+                        <button> <a asp-action="Delete" asp-route-id="@item.idGender">Delete</a> </button>
+                    </div>
+                    </div>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

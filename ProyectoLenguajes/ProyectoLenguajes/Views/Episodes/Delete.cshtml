@@ -3,61 +3,55 @@
 @{
     ViewData["Title"] = "Delete";
 }
-
+<link rel="stylesheet" href="~/css/tables.css">
+<header>
+    <div class="navbar">
+        @{
+            Html.RenderPartial("_Navbar");
+        }
+    </div>
+</header>
 <h1>Delete</h1>
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
     <h4>CHAPTER</h4>
     <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.numChapter)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.numChapter)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.duration)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.duration)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.season)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.season)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.img)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.img)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.idSerieNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.idSerieNavigation.idSerie)
-        </dd>
-    </dl>
+    <table>
+        <tr>
+            <th>Num Chapter</th>
+            <td>@Html.DisplayFor(model => model.numChapter)</td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td>@Html.DisplayFor(model => model.name)</td>
+        </tr>
+        <tr>
+            <th>Duration</th>
+            <td>@Html.DisplayFor(model => model.duration)</td>
+        </tr>
+        <tr>
+            <th>Season</th>
+            <td>@Html.DisplayFor(model => model.season)</td>
+        </tr>
+        <tr>
+            <th>Image</th>
+            <td><div class="image"><img src="@Model.img"></div></td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>@Html.DisplayFor(model => model.description)</td>
+        </tr>
+        <tr>
+            <th>ID Serie</th>
+            <td>@Html.DisplayFor(model => model.idSerie)</td>
+        </tr>
+    </table>
+
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="idChapter" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index" asp-controller="Series">Back to List</a>
+        <button> <a asp-action="Index" asp-controller="Series">Cancel</a></button>
     </form>
 </div>

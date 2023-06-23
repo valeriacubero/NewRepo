@@ -413,6 +413,18 @@ namespace ProyectoLenguajes.Controllers
             return Json(iconList);
         }
 
+        public ActionResult Save(int id)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.Name);
 
-    }
+
+            var parameter = new List<SqlParameter>();
+            parameter.Add(new SqlParameter("@idUser", userId));
+            parameter.Add(new SqlParameter("@idMovie", id));
+
+            db.Database.ExecuteSqlRaw("EXEC SaveMovie @idAccount, @idMovie", parameter.ToArray());
+
+            return Json(new { mensaje = "Datos recibidos correctamente" });
+        }
+    } 
 }

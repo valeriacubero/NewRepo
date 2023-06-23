@@ -1,0 +1,64 @@
+﻿:root {
+    --titlesFont: "Bebas Neue";
+    --subtitlesFont: "Rajdhani";
+    --generalTextFont: "Calibri";
+    --backgroundColor: linear-gradient(to top, #30cfd0 0%, #330867 100%);
+    --titlesColor: #65C0BA;
+    --cardsAndBtnsColor: #DDE9F8;
+    --generalTextColor: #ffffff;
+}
+
+/*NAVBAR*/
+.navbar {
+    margin-top: 20px;
+}
+
+
+.title {
+    font-family: var(--titlesFont);
+    font-weight: normal;
+    color: var(--titlesColor);
+    font-size: 45px;
+}
+
+header a {
+    color: var(--generalTextColor);
+    font-family: var(--subtitlesFont);
+    text-decoration: none;
+    margin-right: 20px;
+    color: white;
+    font-size: 20px;
+}
+
+    header a:hover {
+        color: var(--titlesColor);
+    }
+
+    header a.active {
+        font-style: italic;
+    }
+
+
+
+@media (max-width: 650px) {
+    .navbar-nav {
+        display: none;
+        text-align: center;
+    }
+
+        .navbar-nav li {
+            display: block;
+        }
+
+    .navbar-collapse.collapse.in {
+        display: block;
+    }
+
+    .navbar-header {
+        text-align: center;
+    }
+
+    .navbar-toggle {
+        display: block;
+    }
+}

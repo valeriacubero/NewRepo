@@ -1,0 +1,55 @@
+﻿@model ProyectoLenguajes.Models.ACTOR
+
+@{
+    ViewData["Title"] = "Details";
+}
+<link rel="stylesheet" href="~/css/tables.css">
+<header>
+    <div class="navbar">
+        @{
+            Html.RenderPartial("_Navbar");
+        }
+    </div>
+</header>
+<h1>Details</h1>
+
+<div>
+    <h4>ACTOR</h4>
+    <hr />
+    <table>
+        <tr>
+            <th>Name</th>
+            <td>@Html.DisplayFor(model => model.name)</td>
+        </tr>
+        <tr>
+            <th>Last Name</th>
+            <td>@Html.DisplayFor(model => model.lastName)</td>
+        </tr>
+        <tr>
+            <th>Birth</th>
+            <td>@Html.DisplayFor(model => model.birth)</td>
+        </tr>
+        <tr>
+            <th>Image</th>
+            <td>
+                <div class="image">
+                    <img src="@Model.img" />
+                </div>
+            </td>
+        </tr>
+    </table>
+
+</div>
+<div>
+    <div class="button-container">
+        <div>
+            <button> <a asp-action="Edit" asp-route-id="@Model?.idActor">Edit</a> | </button>
+        </div>
+        <br>
+        <div>
+            <button> <a asp-action="Index">Return</a> </button>
+        </div>
+    </div>
+    
+    
+</div>

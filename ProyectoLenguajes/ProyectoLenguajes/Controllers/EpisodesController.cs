@@ -84,7 +84,10 @@ public async Task<ActionResult> CreateAsync(AddEpisode episode)
             return rsInsertChapter;
         });
 
-                return RedirectToAction("Index", "Series");
+                //return RedirectToAction("Index", "Series");
+                //return RedirectToAction("Index", "Series");
+                return RedirectToAction("Details", "Series", new { id = episode.idSerie });
+
             }
 
     return View();

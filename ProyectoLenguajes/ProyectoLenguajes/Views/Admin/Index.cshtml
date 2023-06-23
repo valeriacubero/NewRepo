@@ -4,59 +4,103 @@
     ViewData["Title"] = "Index";
 }
 @ViewBag.Error
-<h1>Display</h1>
+<html>
+    <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<form asp-controller="Admin" asp-action="DownloadPDF">
-    <button class="btn btn-success" type="submit" id="btnReport">Report</button>
-</form>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.roll)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.userName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.password)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.roll)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.userName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.password)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.idAccount">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.idAccount">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.idAccount">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <link rel="stylesheet" href="~/css/tables.css">
+    </head>
+    <body>
+        <header>
+        <div class ="navbar">
+            @{
+                Html.RenderPartial("_Navbar");
+            }
+            </div>
+        </header>
+
+        <main>
+        <h1>All Users List</h1>
+
+        
+        <form asp-controller="Admin" asp-action="DownloadPDF">
+            <button class="btn btn-success" type="submit" id="btnReport">Report</button>
+        </form>
+        <br />
+        <div>
+            <button class="createBTN">
+                <a asp-action="Create">Create New</a>
+            </button>
+        </div>
+        <br />
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.email)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.roll)
+                    </th>
+                    <th>
+                        
+                        @Html.DisplayNameFor(model => model.userName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.password)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td data-cell ="Name">
+                            @Html.DisplayFor(modelItem => item.name)
+                        </td>
+                        <td data-cell="Email">
+                            @Html.DisplayFor(modelItem => item.email)
+                        </td>
+                        <td data-cell ="Role">
+                            @Html.DisplayFor(modelItem => item.roll)
+                        </td>
+                        <td data-cell="UserName">
+                            @Html.DisplayFor(modelItem => item.userName)
+                        </td>
+                        <td data-cell="Password">
+                            @Html.DisplayFor(modelItem => item.password)
+                        </td>
+                        <td data-cell="Options">
+                            <div class="button-container">
+                            <div>
+                                <button> <a asp-action="Edit" asp-route-id="@item.idAccount">Edit</a> </button>
+                            </div>
+                            <br>
+                            <div>
+                                <button> <a asp-action="Details" asp-route-id="@item.idAccount">Details</a> </button>
+                            </div>
+                            <br>
+                            <div>
+                                <button> <a asp-action="Delete" asp-route-id="@item.idAccount">Delete</a> </button>
+                            </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        </main>
+
+    </body>
+</html>
+
+
+
+

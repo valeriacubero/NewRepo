@@ -3,70 +3,76 @@
 @{
     ViewData["Title"] = "Details";
 }
-
+<link rel="stylesheet" href="~/css/tables.css">
+<header>
+    <div class="navbar">
+        @{
+            Html.RenderPartial("_Navbar");
+        }
+    </div>
+</header>
 <h1>Details</h1>
 
 <div>
     <h4>MOVIE</h4>
     <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.duration)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.duration)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.year)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.year)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.director)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.director)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.distributor)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.distributor)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.img)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.img)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.trailer)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.trailer)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.punctuation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.punctuation)
-        </dd>
-    </dl>
+    <table>
+        <tr>
+            <th>Name</th>
+            <td>@Html.DisplayFor(model => model.name)</td>
+        </tr>
+        <tr>
+            <th>Duration</th>
+            <td>@Html.DisplayFor(model => model.duration)</td>
+        </tr>
+        <tr>
+            <th>Year</th>
+            <td>@Html.DisplayFor(model => model.year)</td>
+        </tr>
+        <tr>
+            <th>Director</th>
+            <td>@Html.DisplayFor(model => model.director)</td>
+        </tr>
+        <tr>
+            <th>Distributor</th>
+            <td>@Html.DisplayFor(model => model.distributor)</td>
+        </tr>
+        <tr>
+            <th>Image</th>
+            <td>
+                <div class="image">
+                    <img src="@Model.img" />
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>@Html.DisplayFor(model => model.description)</td>
+        </tr>
+        <tr>
+            <th>Trailer</th>
+            <td>
+                <div>
+                    <iframe class="trailer" src="@Model.trailer" frameborder="1"></iframe>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th>Punctuation</th>
+            <td>@Html.DisplayFor(model => model.punctuation)</td>
+        </tr>
+    </table>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.idMovie">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <div class="button-container">
+        <div>
+            <button> <a asp-action="Edit" asp-route-id="@Model?.idMovie">Edit</a>  </button>
+        </div>
+        <br>
+        <div>
+            <button> <a asp-action="Index">Return</a> </button>
+        </div>
+    </div>
+    |
+    
 </div>

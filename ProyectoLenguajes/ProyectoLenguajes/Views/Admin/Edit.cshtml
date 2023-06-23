@@ -4,7 +4,14 @@
     ViewData["Title"] = "Edit";
 }
 @ViewBag.Error
-
+<link rel="stylesheet" href="~/css/tables.css">
+<header>
+    <div class="navbar">
+        @{
+            Html.RenderPartial("_Navbar");
+        }
+    </div>
+</header>
 <h1>Edit</h1>
 
 <h4>ACCOUNT</h4>

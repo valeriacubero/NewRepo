@@ -3,82 +3,112 @@
 @{
     ViewData["Title"] = "Index";
 }
-<link rel="stylesheet" href="~/css/user.css">
-<h1>Index</h1>
-
-<p>
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/tables.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            @{
+                Html.RenderPartial("_Navbar");
+            }
+        </div>
+    </header>
+<h1>Movies List</h1>
+<div>
+        <button class="createBTN">
     <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.duration)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.year)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.director)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.distributor)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.img)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.trailer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.punctuation)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.duration)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.year)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.director)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.distributor)
-            </td>
-            <td>
-                    <div class="image"><img src="@item.img"></div>
+</button>
+</div>
+    <br />
+    <div class="wrapper">
+            <table class="table">
+                <caption>
+                    All Movies
+                </caption>
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.name)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.duration)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.year)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.director)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.distributor)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.img)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.description)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.trailer)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.punctuation)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+            @foreach (var item in Model) {
+                    <tr>
+                        <td data-cell="Name">
+                            @Html.DisplayFor(modelItem => item.name)
+                        </td>
+                        <td data-cell="Duration">
+                            @Html.DisplayFor(modelItem => item.duration)
+                        </td>
+                        <td data-cell="Year">
+                            @Html.DisplayFor(modelItem => item.year)
+                        </td>
+                        <td data-cell="Director">
+                            @Html.DisplayFor(modelItem => item.director)
+                        </td>
+                        <td data-cell="Distributor">
+                            @Html.DisplayFor(modelItem => item.distributor)
+                        </td>
+                        <td data-cell="Image">
+                                <div class="image"><img src="@item.img"></div>
                     
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.description)
-            </td>
-            <td>
-                    <iframe class="trailer" src="@item.trailer" frameborder="1"></iframe>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.punctuation)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.idMovie">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.idMovie">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.idMovie">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                        </td>
+                        <td data-cell="Description">
+                            @Html.DisplayFor(modelItem => item.description)
+                        </td>
+                        <td>
+                                <iframe class="trailer" src="@item.trailer" frameborder="1"></iframe>
+                        </td>
+                        <td data-cell="Punctuation">
+                            @Html.DisplayFor(modelItem => item.punctuation)
+                        </td>
+                        <td data-cell="Options">
+                            <div class="button-container">
+                                <div>
+                                    <button> <a asp-action="Edit" asp-route-id="@item.idMovie">Edit</a> </button>
+                                </div>
+                                <br>
+                                <div>
+                                    <button> <a asp-action="Details" asp-route-id="@item.idMovie">Details</a> </button>
+                                </div>
+                                <br>
+                                <div>
+                                    <button> <a asp-action="Delete" asp-route-id="@item.idMovie">Delete</a> </button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+            }
+                </tbody>
+            </table>
+    </div>
+</body>
+</html>

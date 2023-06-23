@@ -1,0 +1,178 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/*variables*/
+:root {
+    --titlesFont: "Bebas Neue";
+    --subtitlesFont: "Rajdhani";
+    --generalTextFont: "Calibri";
+    --backgroundColor: linear-gradient(to top, #30cfd0 0%, #330867 100%);
+    --titlesColor: #65C0BA;
+    --cardsAndBtnsColor: #DDE9F8;
+    --generalTextColor: #ffffff;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    background-image: var(--backgroundColor);
+    font-family: var(--generalTextFont);
+    color: var(--generalTextColor) !important;
+    
+}
+
+.wrapper{
+    width: min(900px, 100% - 3rem);
+}
+
+.title {
+    font-family: var(--titlesFont);
+    font-weight: normal;
+    color: var(--titlesColor);
+    font-size: 45px;
+}
+
+img {
+    height: 220px;
+    width: 150px;
+    object-fit: cover;
+    border-radius: 5px;
+    align-content: center;
+}
+
+.image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/*h2 {
+    font-size: 20px;
+    margin-bottom: 4px;
+    text-align: center;
+}
+
+h3 {
+    font-size: 15px;
+    margin-top: 1px;
+    text-align: center;
+}*/
+
+/* BOTONES */
+button {
+    width: 70px;
+    height: 40px;
+    color: black;
+    padding: 10px;
+    background-color: #A9CCE3;
+    border-color: #A9CCE3;
+    border-radius: 5px;
+}
+
+.createBTN {
+    width: 100px;
+    height: 50px;
+    color: black;
+    padding: 10px;
+    background-color: #A9CCE3;
+    border-color: #A9CCE3;
+    border-radius: 5px;
+}
+
+.button-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+    .button-container button {
+        margin: 5px;
+    }
+
+/*  TABLAS  */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #212020 !important;
+    
+}
+
+caption,th{
+    text-align:left;
+}
+
+caption, th, td {
+    padding: 1rem;
+    font-size: 1.5rem;
+}
+
+caption{
+    background:hsl(0 0% 0%);
+    font-size: 1.5rem;
+    font-weight:700;
+    text-transform:uppercase;
+}
+
+th {
+    background: hsl(0 0% 0% / 0.5);
+    text-align: center !important;
+}
+
+td {
+    text-align: center;
+    padding: 10px;
+    vertical-align: middle !important;
+}
+
+tr:nth-of-type(2n) {
+    background: #423c3c;
+}
+
+.table-container{
+    max-width: 100%;
+    overflow-x:auto;
+}
+
+
+    /*******************************RESPONSIVE TABLES**********************************/
+    @media (max-width: 650px) {
+        th {
+            display: none;
+        }
+
+        td {
+            display: grid;
+            gap: 0.5rem 1rem;
+            grid-template-columns: 15ch auto;
+            padding: 0.5rem 1rem;
+        }
+
+            td:first-child {
+                padding-top: 2rem;
+            }
+
+            td:last-child {
+                padding-bottom: 2rem;
+            }
+
+            td::before {
+                content: attr(data-cell) ": ";
+                font-weight: 700;
+                text-transform: capitalize;
+            }
+        button {
+            width: 80%;
+            height: 30px;
+            
+        }
+    }
+
+

@@ -1,0 +1,31 @@
+﻿@model ProyectoLenguajes.Models.GENDER
+
+@{
+    ViewData["Title"] = "Details";
+}
+<link rel="stylesheet" href="~/css/tables.css">
+<header>
+    <div class="navbar">
+        @{
+            Html.RenderPartial("_Navbar");
+        }
+    </div>
+</header>
+<h1>Details</h1>
+
+<div>
+    <h4>GENDER</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.typeG)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.typeG)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.idGender">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

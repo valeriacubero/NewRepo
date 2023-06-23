@@ -166,7 +166,12 @@
 
             <!--MY LIST OPTION-->
             <button class="moreButton glyphicon glyphicon-bookmark"><br>MyList</button>
-
+            <button class="moreButton glyphicon glyphicon-bookmark">
+                <a asp-action="Save"
+                   asp-route-id="@Model.movie.idMovie" style="text-align: center;">
+                    <br>MyList
+                </a>
+            </button>
             <!--COMMENTS VIEW BELOW THE TRAILER MOVIE-->
             <div class="reviews">
                 

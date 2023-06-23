@@ -3,59 +3,62 @@
 @{
     ViewData["Title"] = "Details";
 }
-
+<link rel="stylesheet" href="~/css/tables.css">
+<header>
+    <div class="navbar">
+        @{
+            Html.RenderPartial("_Navbar");
+        }
+    </div>
+</header>
 <h1>Details</h1>
 
 <div>
     <h4>CHAPTER</h4>
     <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.numChapter)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.numChapter)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.duration)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.duration)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.season)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.season)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.img)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.img)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.idSerieNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.idSerieNavigation.idSerie)
-        </dd>
-    </dl>
+    <table>
+        <tr>
+            <th>Num Chapter</th>
+            <td>@Html.DisplayFor(model => model.numChapter)</td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td>@Html.DisplayFor(model => model.name)</td>
+        </tr>
+        <tr>
+            <th>Duration</th>
+            <td>@Html.DisplayFor(model => model.duration)</td>
+        </tr>
+        <tr>
+            <th>Season</th>
+            <td>@Html.DisplayFor(model => model.season)</td>
+        </tr>
+        <tr>
+            <th>Image</th>
+            <td>
+                <div class="image">
+                    <img src="@Model.img" />
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>@Html.DisplayFor(model => model.description)</td>
+        </tr>
+        <tr>
+            <th>Id Serie</th>
+            <td>@Html.DisplayFor(model => model.idSerie)</td>
+        </tr>
+    </table>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.idChapter">Edit</a> |
-    <a asp-action="Index" asp-controller="Series">Back to List</a>
-    
+    <div class="button-container">
+        <div>
+            <button> <a asp-action="Edit" asp-route-id="@Model?.idChapter">Edit</a> </button>
+        </div>
+        <br>
+        <div>
+            <button> <a asp-action="Index" asp-controller="Series">Return</a> </button>
+        </div>
+    </div>
 </div>

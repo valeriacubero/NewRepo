@@ -1,0 +1,32 @@
+﻿@model ProyectoLenguajes.Models.GENDER
+
+@{
+    ViewData["Title"] = "Delete";
+}
+<link rel="stylesheet" href="~/css/tables.css">
+<header>
+    <div class="navbar">
+        @{
+            Html.RenderPartial("_Navbar");
+        }
+    </div>
+</header>
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>GENDER</h4>
+    <hr />
+    <table>
+        <tr>
+            <th>Type</th>
+            <td>@Html.DisplayFor(model => model.typeG)</td>
+        </tr>
+    </table>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="idGender" />
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <button> <a asp-action="Index">Cancel</a></button>
+    </form>
+</div>
