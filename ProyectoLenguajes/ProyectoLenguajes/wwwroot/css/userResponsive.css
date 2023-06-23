@@ -1,0 +1,178 @@
+﻿/*******************************RESPONSIVE USER**********************************/
+/*Small devices*/
+@media (max-width: 576px) {
+    /******MOVIE DETAILS******/
+    .trailer {
+        min-width: 400px;
+        min-height: 250px;
+        margin-bottom: 20px;
+    }
+
+    .moreButton {
+        width: 90px;
+        font-size: 13px;
+        margin-top: 20px;
+    }
+
+    .reviewsDiv {
+        width: 400px;
+        margin-left: 0px;
+        font-size: 13px;
+    }
+
+    .movieContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 5px;
+        margin-bottom: 200px;
+    }
+
+
+    /*Modal 1 - Actors*/
+    .modal-content {
+        max-width: 375px;
+    }
+
+    .castDiv {
+        flex-direction: column;
+        justify-content: space-evenly;
+        margin: 2px;
+        align-items: center;
+    }
+
+    .cardActor {
+        margin-bottom: 25px;
+    }
+
+    /*Modal 3 - Chapters*/
+    .cardChapterContent {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        color: black;
+    }
+
+    .cardChapter {
+        background-color: var(--cardsAndBtnsColor);
+        padding: 20px;
+        width: 315px;
+        margin: 20px;
+        border-radius: 5px;
+        font-size: 12px;
+        align-items: center;
+    }
+
+    .infoChapter h2 {
+        font-family: Rajdhani;
+        color: black;
+        font-size: 18px;
+        text-align: left;
+        margin-top: 20px;
+    }
+}
+
+/*Medium devices*/
+@media (min-width: 577px) and (max-width: 830px) {
+    /******MOVIE DETAILS******/
+    .trailer {
+        min-width: 500px;
+        min-height: 300px;
+        margin-bottom: 20px;
+    }
+
+    .reviewsDiv {
+        width: 500px;
+        margin-left: 0px;
+        font-size: 15px;
+    }
+
+    .movieContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 5px;
+        margin-bottom: 250px;
+    }
+
+    /*Modal 1 - Actors*/
+    .modal-content {
+        max-width: 550px;
+    }
+
+    .castDiv {
+        justify-content: space-evenly;
+        margin: 2px;
+    }
+
+    /*Modal 3 - Chapters*/
+    .cardChapterContent {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        color: black;
+    }
+
+    .cardChapter {
+        background-color: var(--cardsAndBtnsColor);
+        padding: 20px;
+        width: 475px;
+        margin: 20px;
+        border-radius: 5px;
+        font-size: 12px;
+    }
+
+    
+}
+
+/*Large devices*/
+@media (min-width: 831px) and (max-width: 1100px) {
+    /******MOVIE DETAILS******/
+    .trailer {
+        min-width: 800px;
+        min-height: 500px;
+        margin-bottom: 20px;
+    }
+
+    .reviewsDiv {
+        width: 800px;
+        margin-left: 80px;
+        font-size: 18px;
+    }
+
+    .movieContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 5px;
+        margin-bottom: 425px;
+        font-size: 30px;
+    }
+
+    /*Modal 1 - Actors*/
+    .modal-content {
+        max-width: 800px;
+    }
+
+    .castDiv {
+        justify-content: space-evenly;
+        margin: 2px;
+    }
+
+    /*Modal 3 - Chapters*/
+    .cardChapterContent {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        color: black;
+    }
+
+    .cardChapter {
+        background-color: var(--cardsAndBtnsColor);
+        padding: 20px;
+        width: 700px;
+        margin: 20px;
+        border-radius: 5px;
+        font-size: 15px;
+    }
+}

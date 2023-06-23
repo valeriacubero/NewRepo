@@ -7,6 +7,7 @@
 
 @{
     ViewData["Title"] = "MovieDetails";
+
     TestUCRContext db = new TestUCRContext();
 
     var userNameM = User.FindFirstValue(ClaimTypes.Name);//To get the username of current account
@@ -18,6 +19,10 @@
     .Where(a => a.userName == userNameM)
     .Select(a => a.img)
     .FirstOrDefault();//To get the img of the current account in our database
+
+
+    //get some information of the serie
+
     var dateMovie = DateOnly.FromDateTime(Model.movie.year);
     DateOnly dateActor;
     @foreach (var actor in Model.actors)
@@ -38,6 +43,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Hello</title>
     <link rel="stylesheet" href="~/css/user.css">
+    <link rel="stylesheet" href="~/css/userResponsive.css">
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.3.11/slick.css" />
     <link rel="stylesheet" type="text/css" href="slick/slick.css" />
     <link rel="stylesheet" type="text/css" href="slick/slick-theme.css" />
@@ -46,33 +52,31 @@
 
     <header>
         <div class="container">
-
-
             <h2 class="title">Hello!</h2>
 
-            <nav class="navbar navbar-expand-sm navbar navbar-light" style="background-color: #e3f2fd;">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#opciones">
+            <!--NAVBAR-->
+            <nav class="navbar navbar-expand-sm navbar navbar-light">
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#opciones" style="background-color: #DDE9F8">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-
-                <!-- enlaces -->
                 <div class="collapse navbar-collapse" id="opciones">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="/User/Index">Home</a>
+                            <a class="nav-link" href="/User/Index" style="color: #ffffff;">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/User/Details/@id">Profile</a>
+                            <a class="nav-link" href="/User/Details/@id" style="color: #ffffff;">Profile</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Search", "User")">Search</a>
+                            <a class="nav-link" href="@Url.Action("Search", "User")" style="color: #ffffff;">Search</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">My List</a>
+                            <a class="nav-link" href="#" style="color: #ffffff;">My List</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/UserAuthentication/Logout">Log Out</a>
+                            <a class="nav-link" href="/UserAuthentication/Logout" style="color: #ffffff;">Log Out</a>
                         </li>
                     </ul>
                 </div>
@@ -82,19 +86,20 @@
     <hr />
     
     <main>
-        @{
-            
-        }
+        <!--Get the movie name-->
         <h1 class="subtitle">Movie Details: @Model.movie.name</h1>
 
         <div class="movieContainer">
+            <!--Get the movie trailer-->
             <iframe class="trailer" src="@Model.movie.trailer" frameborder="1"></iframe>
+            <!--Get the movie information-->
             <div class="movieInfo">
                 <h2 class="subtitle">Description</h2>
                 <span>@Model.movie.description</span>
                 <br />
-
+                <br />
                 <h2 class="subtitle">Details</h2>
+                <br />
                 <span>Duration: @Model.movie.duration</span>
                 <br />
                 <span>Director: @Model.movie.director</span>
@@ -103,22 +108,17 @@
                 <br />
                 <span>Release date: @dateMovie</span>
                 <br />
-
                 <span>Punctuation: @Model.movie.punctuation</span>
                 <br />
-                
             </div>
         </div>
 
         <div>
-            <!--modal button 1-->
+            <!--MODAL 1 - ACTORS-->
             
-            <!-- Trigger/Open The Modal -->
             <button id="openModal1" class="moreButton glyphicon glyphicon-heart-empty"><br>Cast</button>
 
-            <!-- The Modal 1 -->
             <div id="modal1" class="modal">
-
                 <!-- Modal content -->
                 <div class="modal-content">
                     <span class="closeModal1">&times;</span>
@@ -142,20 +142,18 @@
 
             </div>
 
-            <!--modal button 2-->
+            <!--MODAL 2 - COMMENTS-->
             <button id="openModal2" class="moreButton glyphicon glyphicon-thumbs-up"><br>Comment</button>
 
             <div id="modal2" class="modal">
-
                 <!-- Modal content -->
                 <div class="modal-content">
                     <span class="closeModal2">&times;</span>
                     <div class="commentDiv">
                         <label for="comment" class="subtitle">Comment on this movie</label>
                         <textarea id="@Model.movie.idMovie" class="textC" required></textarea>
-                        
-                        <h2 class="subtitle">Rate this movie for 1 to 10</h2>
                         <br />
+                        <h2 class="subtitle">Rate this movie for 1 to 10</h2>
                         <div class="inputRate">
                             <input type="number" class="textS" id="tentacles" name="tentacles" min="0" max="10" style="width: 150px;height: 35px;color: black;">
                         </div>
@@ -166,18 +164,17 @@
 
             </div>
 
-            <!--My List-->
+            <!--MY LIST OPTION-->
             <button class="moreButton glyphicon glyphicon-bookmark"><br>MyList</button>
 
-
-            <!--Comments-->
+            <!--COMMENTS VIEW BELOW THE TRAILER MOVIE-->
             <div class="reviews">
                 
                 <div class="reviewsDiv">
                     <h2 class="subtitle" style="color: black;">Last 10 movie reviews</h2>
                     <div class="cardReview">
                         <div class="cardReviewContent">
-                            @foreach(var review in Model.reviews)
+                            @foreach(var review in Model.commentsPerPage)
                             {
                                 <div class="infoComment">
                                     <span>@review.review</span>
@@ -185,6 +182,17 @@
                                     <span>@review.reviewTime</span>
                                     <hr/>
                                 </div>
+                            }
+
+                        </div>
+
+                        <div id="pagination">
+                            @if (Model.totalPages > 1)
+                            {
+                                @for (int i = 1; i <= Model.totalPages; i++)
+                                {
+                                    <a href="@Url.Action("MovieDetails", "User", new { id = Model.movie.idMovie, page = i })">@i</a>
+                                }
                             }
                         </div>
                     </div>
@@ -200,7 +208,7 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script>
-        /***COMMENTSS***/
+        /***SEND COMMENTS INFORMATION TO THE CONTROLLER***/
         $('.btnC').click(function () {
             //get form data
             var datos = {
@@ -215,23 +223,22 @@
                 type: 'GET',
                 data: datos
                 
-                
             });
             
+            //SUCCESFULL MESSAGE
             swal("YAY", "Thank you for you review!", "success")
 
             $('.textC').val("");
             $('.textS').val(0);
         });
-
-
     </script>
         
     <script>
 
         /***SCRIPT MODALS***/
 
-        //MODAL 1
+        //MODAL 1 - ACTORS
+
         // Get the modal
         var modal = document.getElementById("modal1");
         // Get the button that opens the modal
@@ -243,24 +250,22 @@
         btn.onclick = function () {
             modal.style.display = "block";
         }
-
         // When the user clicks on <span> (x), close the modal
         span.onclick = function () {
             modal.style.display = "none";
         }
-
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function (event) {
             if (event.target == modal) {
                 modal.style.display = "none";
             }
         }
-
     </script>
 
     <script>
 
-        //MODAL 2
+        //MODAL 2 - COMMENTS
+
         // Get the modal
         var modal1 = document.getElementById("modal2");
         // Get the button that opens the modal
@@ -272,19 +277,16 @@
         btn1.onclick = function () {
             modal1.style.display = "block";
         }
-
         // When the user clicks on <span> (x), close the modal
         span1.onclick = function () {
             modal1.style.display = "none";
         }
-
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function (event) {
             if (event.target == modal1) {
                 modal1.style.display = "none";
             }
         }
-
-
     </script>
+
 </body>

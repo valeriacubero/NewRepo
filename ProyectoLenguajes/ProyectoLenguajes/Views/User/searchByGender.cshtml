@@ -1,6 +1,4 @@
-﻿
-
-
+﻿@using System.Security.Claims;
 @using ProyectoLenguajes.Data;
 @using Microsoft.AspNetCore.Mvc;
 @using Microsoft.EntityFrameworkCore;
@@ -9,6 +7,17 @@
 
 @{
     ViewData["Title"] = "searchByGender";
+    TestUCRContext db = new TestUCRContext();
+
+    var userNameM = User.FindFirstValue(ClaimTypes.Name);//To get the username of current account
+    var id = db.ACCOUNTs
+    .Where(a => a.userName == userNameM)
+    .Select(a => a.idAccount)
+    .FirstOrDefault();//To get the id of de current account in our database
+    var imge = db.ACCOUNTs
+    .Where(a => a.userName == userNameM)
+    .Select(a => a.img)
+    .FirstOrDefault();//To get the img of the current account in our database
 }
 
 <head>
@@ -28,58 +37,54 @@
 </head>
 <body>
 
-    <header>
+<header>
         <div class="container">
-
-
             <h2 class="title">Hello!</h2>
 
-            <nav class="navbar navbar-expand-sm navbar navbar-light" style="background-color: #e3f2fd;" ">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#opciones">
+            <!--NAVBAR-->
+            <nav class="navbar navbar-expand-sm navbar navbar-light">
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#opciones" style="background-color: #DDE9F8">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-
-                <!-- enlaces -->
                 <div class="collapse navbar-collapse" id="opciones">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Home</a>
+                            <a class="nav-link" href="/User/Index" style="color: #ffffff;">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Profile</a>
+                            <a class="nav-link" href="/User/Details/@id" style="color: #ffffff;">Profile</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Search", "User")">Search</a>
+                            <a class="nav-link active" href="@Url.Action("Search", "User")" style="color: #ffffff;">Search</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">My List</a>
+                            <a class="nav-link" href="#" style="color: #ffffff;">My List</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/UserAuthentication/Logout">Log Out</a>
+                            <a class="nav-link" href="/UserAuthentication/Logout" style="color: #ffffff;">Log Out</a>
                         </li>
                     </ul>
                 </div>
             </nav>
         </div>
     </header>
-
     <hr />
 
-
-    <br />
     <main>
-
         <h1 style="text-align: center; font-family: Rajdhani; font-size: 45px; color:white">Search by gender</h1>
 
-        <!--MOVIES AND SERIES-->
         <div class="box-wrap">
 
             <section class="container">
+                <!--get the gender name-->
                 <h1 class="subtitle">@Model.genderName Movies</h1>
+                <!--movie slider of the actual gender-->
                 <div id="slider-@Model.genderName" class="slider">
                     @if (@Model.movies.Count() > 0)
                     {
+                        <!--get the movies information-->
                         @foreach (var movie in @Model.movies)
                         {
 
@@ -94,9 +99,10 @@
                                         <h3>@movie.duration</h3>
                                         <h3>Director: @movie.director</h3>
                                     </div>
+                                    <!--send the id to controller to see the details of the movie-->
                                     <button class="more">
                                         <a asp-action="MovieDetails"
-                                   asp-route-id="@movie.idMovie" style="text-align: center;">
+                                                asp-route-id="@movie.idMovie" style="text-align: center;">
                                             View More
                                         </a>
                                     </button>
@@ -111,8 +117,11 @@
 
                 </div>
 
+                <!--get the gender name-->
                 <h1 class="subtitle">@Model.genderName Series</h1>
+                <!--serie slider of the actual gender-->
                 <div id="slider-@Model.genderName" class="slider">
+                    <!--get the series information-->
                     @if (@Model.series.Count() > 0)
                     {
                         @foreach (var serie in @Model.series)
@@ -129,9 +138,10 @@
                                         <h3>Seasons: @serie.seasons</h3>
                                         <h3>Director: @serie.director</h3>
                                     </div>
+                                    <!--send the id to controller to see the details of the serie-->
                                     <button class="more">
                                         <a asp-action="SerieDetails"
-                                   asp-route-id="@serie.idSerie" style="text-align: center;">
+                                                asp-route-id="@serie.idSerie" style="text-align: center;">
                                             View More
                                         </a>
                                     </button>
@@ -146,11 +156,7 @@
 
                 </div>
             </section>
-
-
-
         </div>
-
 
     </main>
 
@@ -163,31 +169,28 @@
     <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.3.11/slick.min.js"></script>
 
-    @{
-        var slidernum = 4;
-    }
     <script type="text/javascript">
-        //RESPONSIVE SLIDER
+        //RESPONSIVE SLIDER FOR MOVIES AND SERIES PER GENDER
         $(document).ready(function () {
             $('.slider').slick({
                 infinite: true,
                 autoplay: true,
                 arrow: true,
-                slidesToShow: @slidernum,
+                slidesToShow: 4,
                 slidesToScroll: 1,
                 adaptiveHeight: true,
                 adaptiveWidth: true,
-                responsive: [
+                responsive: responsive: [
                     {
-                        breakpoint: 1024,
+                        breakpoint: 1000,
                         settings: {
-                            slidesToShow: 2,
+                            slidesToShow: 3,
                             slidesToScroll: 1,
                             infinite: true
                         }
                     },
                     {
-                        breakpoint: 600,
+                        breakpoint: 730,
                         settings: {
                             slidesToShow: 2,
                             slidesToScroll: 1
@@ -204,7 +207,7 @@
             });
         });
 
-        //RANDOM
+        //RANDOM SLIDERS
         var random = $("section.container").get().sort(function () {
             return Math.round(Math.random()) - 0.5;
         }).slice(0.4)
