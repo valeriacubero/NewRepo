@@ -1063,3 +1063,104 @@ EXEC InsertMovie --MOVIE, ACTOR, ActorMovie, GenderMovie, AUDIT
 	'After graduating from Emory University, top student and athlete Christopher McCandless abandons his possessions, gives his entire $24,000 savings account to charity and hitchhikes to Alaska to live in the wilderness. Along the way, Christopher encounters a series of characters that shape his life.',
 	@actors, --Actors List
 	@genders --Gender List
+
+/*****HORROR*****/
+--1.
+DECLARE @actors ActorList;
+INSERT INTO @actors (nameT, lastNameT, birthT)
+VALUES ('Linda', 'Blair', '1959-01-22'), 
+       ('Ellen', 'Burstyn', '1932-12-07'), 
+	   ('Jason', 'Miller', '1939-04-22');
+	   
+DECLARE @genders GenderList;
+INSERT INTO @genders (typeG)
+VALUES ('Horror');
+
+EXEC InsertMovie --MOVIE, ACTOR, ActorMovie, GenderMovie, AUDIT
+	1001,
+	'The Exorcist',
+	'2h 2m',
+	'1973-12-26',
+	'William Friedkin',
+	'Warner Bros',
+	'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRqvU5RQ_ppeJUTwvuoRJZ3I4iBAEFW6vc7BlcQf7mc0qvh3Kue',
+	'When a teenage girl is possessed by a mysterious entity, her mother seeks the help of two priests to save her daughter.',
+	'https://www.youtube.com/embed/YDGw1MTEe9k',
+	@actors, --Actors List
+	@genders --Gender List
+
+UPDATE MOVIE SET img = 'https://irs.www.warnerbros.com/keyart-jpeg/exorcist_keyart.jpg' WHERE name = 'The Exorcist'
+
+--2.
+DECLARE @actors ActorList;
+INSERT INTO @actors (nameT, lastNameT, birthT)
+VALUES ('Vera', 'Faminga', '1973-08-06'), 
+       ('Patrick', 'Wilson', '1973-07-03'), 
+	   ('Taissa', 'Faminga', '1994-08-17');
+	   
+DECLARE @genders GenderList;
+INSERT INTO @genders (typeG)
+VALUES ('Horror');
+
+EXEC InsertMovie --MOVIE, ACTOR, ActorMovie, GenderMovie, AUDIT
+	1001,
+	'The Conjuring',
+	'1h 52m',
+	'2013-07-19',
+	'James Wan',
+	'Warner Bros',
+	'https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSPN0jFXkjp_5YGSBfMIWZb5VXfoECC9PFWmBci9gc4NhbUUa3m',
+	'Paranormal investigators Ed and Lorraine Warren work to help a family terrorized by a dark presence in their farmhouse.',
+	'https://www.youtube.com/embed/k10ETZ41q5o',
+	@actors, --Actors List
+	@genders --Gender List
+
+UPDATE MOVIE SET img = 'https://m.media-amazon.com/images/M/MV5BMTM3NjA1NDMyMV5BMl5BanBnXkFtZTcwMDQzNDMzOQ@@._V1_.jpg' WHERE name = 'The Conjuring'
+
+--3.
+DECLARE @actors ActorList;
+INSERT INTO @actors (nameT, lastNameT, birthT)
+VALUES ('Vera', 'Faminga', '1973-08-06'), 
+       ('Isabelle', 'Fihrman', '1997-02-25'), 
+	   ('Aryana', 'Engineer', '2001-03-06');
+	   
+DECLARE @genders GenderList;
+INSERT INTO @genders (typeG)
+VALUES ('Horror');
+
+EXEC InsertMovie --MOVIE, ACTOR, ActorMovie, GenderMovie, AUDIT
+	1001,
+	'Orphan',
+	'2h 03m',
+	'2009-07-24',
+	'Jaume Collet-Serra',
+	'Warner Bros',
+	'https://upload.wikimedia.org/wikipedia/en/4/47/Orphanposter.jpg',
+	'A husband and wife who recently lost their baby adopt a 9-year-old girl who is not nearly as innocent as she appears.',
+	'https://www.youtube.com/embed/m5BSLNAKIZs',
+	@actors, --Actors List
+	@genders --Gender List
+
+--4.
+DECLARE @actors ActorList;
+INSERT INTO @actors (nameT, lastNameT, birthT)
+VALUES ('Lauren', 'Cohan', '1982-01-07'), 
+       ('James', 'Russell', '1983-09-03'), 
+	   ('Jett', 'Klyne', '2009-06-15');
+	   
+DECLARE @genders GenderList;
+INSERT INTO @genders (typeG)
+VALUES ('Horror');
+
+EXEC InsertMovie --MOVIE, ACTOR, ActorMovie, GenderMovie, AUDIT
+	1001,
+	'The Boy',
+	'1h 37m',
+	'2009-07-24',
+	'William Brent Bell',
+	'Warner Bros',
+	'https://images-na.ssl-images-amazon.com/images/S/pv-target-images/0213470d5b170eaabf8e7a465064533a13a8355b593eab97aee2edf3b8607fa9._RI_TTW_.jpg',
+	'An American nanny is shocked that her new English family''s boy is actually a life-sized doll. After she violates a list of strict rules, disturbing events make her believe that the doll is really alive.',
+	'https://www.youtube.com/embed/XGbB9UQ6r1g',
+	@actors, --Actors List
+	@genders --Gender List

@@ -99,12 +99,12 @@ button {
 
 /*  TABLAS  */
 table {
-    width: 100% !important;
+    width: 70%;
     margin-left: 0 !important;
     margin-right: 0 !important;
     border-collapse: collapse;
     background: #212020 !important;
-    margin: 0 !important;
+    margin: 0;
 }
 
 caption,th{
