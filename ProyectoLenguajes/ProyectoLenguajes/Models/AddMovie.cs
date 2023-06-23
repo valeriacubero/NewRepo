@@ -28,15 +28,19 @@
 
         public string lastName1 { get; set; } = null!;
 
+        public string? imgA1 { get; set; }
+
         public DateTime birth1 { get; set; }
         public string? nameA2 { get; set; } = null!;
 
         public string? lastName2 { get; set; } = null!;
+        public string? imgA2 { get; set; }
 
         public DateTime ? birth2 { get; set; }
         public string? nameA3 { get; set; } = null!;
 
         public string? lastName3 { get; set; } = null!;
+        public string? imgA3 { get; set; }
 
         public DateTime ? birth3 { get; set; }
         //public List<ACTOR> actors { get; set; }
